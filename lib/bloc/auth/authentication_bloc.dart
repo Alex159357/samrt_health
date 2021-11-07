@@ -6,19 +6,31 @@ import 'package:samrt_health/state/auth/authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository _userRepository;
-
-  AuthenticationState get initialState => Uninitialized();
+  final UserRepository userRepo;
 
   AuthenticationBloc({required UserRepository? userRepository})
       : assert(userRepository != null),
-        _userRepository = userRepository!,
-        super(Uninitialized());
+        userRepo = userRepository!,
+        super(userRepository.getUser() != null
+            ? Authenticated.copyWith(user: userRepository.getUser()!)
+            : Unauthenticated());
 
   @override
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
+    if(event is CheckLogin){
+      final User? user = userRepo.getUser();
+      if (user != null) {
+        yield Authenticated.copyWith(user: user);
+      } else {
+        yield Unauthenticated();
+      }
+    }
+    if(event is SignOut){
+      await userRepo.signOut();
+      yield  Unauthenticated();
+    }
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn || event is LoginByGoogle) {
@@ -30,10 +42,14 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
-      final isSignedIn = await _userRepository.isSignedIn();
+      final isSignedIn = await userRepo.isSignedIn();
       if (isSignedIn) {
-        final User? user = await _userRepository.getUser();
-        yield Authenticated(user: user);
+        final User? user = userRepo.getUser();
+        if (user != null) {
+          yield Authenticated.copyWith(user: user);
+        } else {
+          yield Unauthenticated();
+        }
       } else {
         yield Unauthenticated();
       }
@@ -46,9 +62,9 @@ class AuthenticationBloc
       AuthenticationEvent event) async* {
     if (event is LoginByGoogle) {
       try {
-        final User? user = await _userRepository.signInWithGoogle();
+        final User? user = await userRepo.signInWithGoogle();
         if (user != null) {
-          yield Authenticated(user: user);
+          yield Authenticated.copyWith(user: user);
         } else {
           yield Unauthenticated();
         }
@@ -56,11 +72,11 @@ class AuthenticationBloc
         rethrow;
       }
     }
-    // yield Authenticated(await _userRepository.getUser());
+    yield Authenticated( userRepo.getUser()!);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
     yield Unauthenticated();
-    _userRepository.signOut();
+
   }
 }

@@ -15,7 +15,7 @@ class PageFour extends StatelessWidget {
           if (state is Authenticated) {
             if (state.user != null) {
               //Start login 2 page
-              final snackBar = SnackBar(content: Text("${state.user!.email}"));
+              final snackBar = SnackBar(content: Text("${state.user.email}"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           }

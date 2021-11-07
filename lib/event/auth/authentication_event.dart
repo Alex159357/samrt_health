@@ -3,19 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-abstract class AuthenticationEvent{
+abstract class AuthenticationEvent{}
 
-}
+class AppStarted extends AuthenticationEvent {}
 
-class AppStarted extends AuthenticationEvent {
-}
-
-class LoggedIn extends AuthenticationEvent {
-  User? user;
-
-  LoggedIn({required this.user});
-}
+class LoggedIn extends AuthenticationEvent {}
 
 class LoginByGoogle extends AuthenticationEvent{}
 
 class LoggedOut extends AuthenticationEvent {}
+
+class SignOut extends AuthenticationEvent{}
+
+class CheckLogin extends AuthenticationEvent{}

@@ -10,10 +10,13 @@ class Uninitialized extends AuthenticationState {
 }
 
 class Authenticated extends AuthenticationState {
-  final User? user;
+  final User user;
 
-  Authenticated({required this.user});
+  Authenticated(this.user);
+
+  static Authenticated copyWith({required User user})=> Authenticated(user);
 }
 
-class Unauthenticated extends AuthenticationState {
-}
+class AuthenticationFailed extends AuthenticationState{}
+
+class Unauthenticated extends AuthenticationState {}
