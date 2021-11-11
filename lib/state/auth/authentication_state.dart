@@ -17,6 +17,8 @@ class Authenticated extends AuthenticationState {
   static Authenticated copyWith({required User user})=> Authenticated(user);
 }
 
+class SocialLoginInProgress extends AuthenticationState{}
+
 class AuthenticationFailed extends AuthenticationState{}
 
 class Unauthenticated extends AuthenticationState {}

@@ -6,12 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/src/provider.dart';
 import 'package:samrt_health/cubit/main/main_nav_cubit.dart';
 import 'package:samrt_health/navigation/main/pages.dart';
+import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/buttons.dart';
 
 import '../../main.dart';
 
-class PageThree extends StatelessWidget {
-  const PageThree({Key? key}) : super(key: key);
+class PageThree extends BaseStateLess {
+  PageThree({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class PageThree extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  child: Text("Slogan 3", style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),),
+                  child: getTranslatedText( text: "Slogan 3", style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),),
                 ),
                 SizedBox(
                   width: 300,
@@ -38,8 +39,8 @@ class PageThree extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: const Center(child: SizedBox(width: 300, child:
-                  Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the ")
+                  child: Center(child: SizedBox(width: 300, child:
+                  getTranslatedText( text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the ")
                   )),
                 )
               ],
@@ -54,7 +55,8 @@ class PageThree extends StatelessWidget {
                               prefs.setBool("intro", true);
                               context.read<MainNavCubit>().goTeScreen(Pages.AUTH);
                             },
-                            text: "Sign in",
+                            text:  translation
+                                .getTranslate("signIn"),
                             background: Colors.white,
                             textColor: Color(0xff8167e6),
                             borderColor: Color(0xff8167e6)))

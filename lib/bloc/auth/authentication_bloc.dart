@@ -19,7 +19,7 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
-    if(event is CheckLogin){
+    if (event is CheckLogin) {
       final User? user = userRepo.getUser();
       if (user != null) {
         yield Authenticated.copyWith(user: user);
@@ -27,13 +27,15 @@ class AuthenticationBloc
         yield Unauthenticated();
       }
     }
-    if(event is SignOut){
+    if (event is SignOut) {
       await userRepo.signOut();
-      yield  Unauthenticated();
+      yield Unauthenticated();
     }
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
-    } else if (event is LoggedIn || event is LoginByGoogle) {
+    } else if (event is LoggedIn ||
+        event is LoginByGoogle ||
+        event is LoginByFacebook) {
       yield* _mapLoggedInToState(event);
     } else if (event is LoggedOut) {
       yield* _mapLoggedOutToState();
@@ -62,21 +64,19 @@ class AuthenticationBloc
       AuthenticationEvent event) async* {
     if (event is LoginByGoogle) {
       try {
-        final User? user = await userRepo.signInWithGoogle();
-        if (user != null) {
-          yield Authenticated.copyWith(user: user);
-        } else {
-          yield Unauthenticated();
-        }
+        yield SocialLoginInProgress();
+        await userRepo.signInWithGoogle();
       } catch (e) {
         rethrow;
       }
+    } else if (event is LoginByFacebook) {
+      yield SocialLoginInProgress();
+      await userRepo.signInWithFacebook();
     }
-    yield Authenticated( userRepo.getUser()!);
+    yield Authenticated(userRepo.getUser()!);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
     yield Unauthenticated();
-
   }
 }

@@ -3,17 +3,6 @@
 <plist version="1.0">
 <dict>
 
-<key>CFBundleURLTypes</key>
-<array>
-	<dict>
-		<key>CFBundleTypeRole</key>
-		<string>Editor</string>
-		<key>CFBundleURLSchemes</key>
-		<array>
-			<string>com.googleusercontent.apps.916123805421-u6fk05qi8h1tapmiim0nul00r7ivimsj</string>
-		</array>
-	</dict>
-</array>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -54,5 +43,34 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<!-- FACEBOOK&GOOGLE CONFIG START HERE -->
+    <key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>com.googleusercontent.apps.916123805421-u6fk05qi8h1tapmiim0nul00r7ivimsj</string>
+                <string>fb967321140883877</string>
+    		</array>
+    	</dict>
+    </array>
+    <!-- GOOGLE CONFIG END HERE -->
+     <!-- FACEBOOK CONFIG START HERE -->
+    <key>FacebookAppID</key>
+    <string>967321140883877</string>
+    <key>FacebookDisplayName</key>
+    <string>Smart Health</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+    </array>
+     <!-- FACEBOOK&GOOGLE CONFIG END HERE -->
+
 </dict>
 </plist>

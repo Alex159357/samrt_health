@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -33,6 +33,19 @@ dependencies:
   firebase_core: ^1.8.0
   font_awesome_flutter: ^9.2.0
   firebase_database: ^8.0.1
+  flutter_signin_button: ^2.0.0
+  flutter_facebook_auth: "^3.5.2"
+  flutter_local_notifications: ^9.0.3
+  device_info: ^2.0.2
+  flutter_native_timezone: ^2.0.0
+  image: ^3.0.8
+  rxdart: ^0.27.2
+  http: ^0.13.4
+  devicelocale: ^0.5.0
+  translator: ^0.1.7
+  html_unescape: ^2.0.0
+
+
 
 
 
@@ -52,6 +65,8 @@ flutter:
   assets:
     - assets/img/
     - assets/animation/
+    - icons/
+    - sound/
   # fonts:
   #   - family: Schyler
   #     fonts:

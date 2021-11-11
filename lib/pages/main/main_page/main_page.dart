@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
         //Todo check if user uid exists in fierebase -> show main screen else -> show enter data
 
         return Scaffold(
-          appBar: AppBar(title: Text(state.user.email!),
+          appBar: AppBar(title: Text("{state.user.email!}"),
               actions: [
                 IconButton(onPressed: (){
                   context.read<AuthenticationBloc>().add(SignOut());

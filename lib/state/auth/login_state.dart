@@ -1,12 +1,14 @@
-
-
 import '../form_submission_status.dart';
 
 class LoginState {
   final String username;
-  bool get isValidUsername => RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(username);
+
+  bool get isValidUsername => RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(username);
 
   final String password;
+
   bool get isValidPassword => password.length >= 6;
 
   final FormSubmissionStatus formStatus;
@@ -24,12 +26,11 @@ class LoginState {
     String? password,
     bool passwordIsVisible = false,
     FormSubmissionStatus? formStatus,
-  }) {
-    return LoginState(
-      username: username ?? this.username,
-      password: password ?? this.password,
-      passwordIsVisible: passwordIsVisible,
-      formStatus: formStatus ?? this.formStatus,
-    );
-  }
+  }) =>
+      LoginState(
+        username: username ?? this.username,
+        password: password ?? this.password,
+        passwordIsVisible: passwordIsVisible,
+        formStatus: formStatus ?? this.formStatus,
+      );
 }

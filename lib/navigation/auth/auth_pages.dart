@@ -2,5 +2,6 @@
 
 enum AuthPages{
   LOGIN,
-  REGISTRATION
+  REGISTRATION,
+  RESTORE_PASSWORD
 }

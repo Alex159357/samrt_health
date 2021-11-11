@@ -5,13 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:samrt_health/main.dart';
 import 'package:samrt_health/cubit/main/main_nav_cubit.dart';
 import 'package:samrt_health/navigation/main/pages.dart';
+import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/buttons.dart';
 
-class PageOne extends StatelessWidget {
-  const PageOne({Key? key}) : super(key: key);
+
+
+class PageOne extends BaseStateLess {
+  PageOne({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Material(
       child: Container(
         height: MediaQuery.of(context).size.height,
@@ -24,11 +28,12 @@ class PageOne extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  child: Text(
-                    "Slogan 1",
-                    style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),
-                  ),
+                  child: getTranslatedText(text: "Slogan 1", style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 26)))
+                  // Text(
+                  //   "Slogan 1",
+                  //   style:
+                  //       GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),
+                  // ).translate(),
                 ),
                 SizedBox(
                   width: 300,
@@ -37,11 +42,14 @@ class PageOne extends StatelessWidget {
                       semanticsLabel: 'Acme Logo'),
                 ),
                 Container(
-                  child: const Center(
+                  child:  Center(
                       child: SizedBox(
                           width: 300,
-                          child: Text(
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the "))),
+                          child:
+                          getTranslatedText(
+                              text:"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the ")
+                      )
+                  ),
                 ),
 
               ],
@@ -56,7 +64,8 @@ class PageOne extends StatelessWidget {
                                     prefs.setBool("intro", true);
                                     context.read<MainNavCubit>().goTeScreen(Pages.AUTH);
                                   },
-                                  text: "Skip",
+                                  text: translation
+                                      .getTranslate("skip"),
                                   background: Colors.white,
                                   textColor: Color(0xff8167e6),
                                   borderColor: Color(0xff8167e6)))))

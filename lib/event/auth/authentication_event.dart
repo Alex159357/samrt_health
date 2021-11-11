@@ -11,6 +11,8 @@ class LoggedIn extends AuthenticationEvent {}
 
 class LoginByGoogle extends AuthenticationEvent{}
 
+class LoginByFacebook extends AuthenticationEvent {}
+
 class LoggedOut extends AuthenticationEvent {}
 
 class SignOut extends AuthenticationEvent{}

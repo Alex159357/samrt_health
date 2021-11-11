@@ -30,19 +30,18 @@ class MainNav extends StatelessWidget {
             if (authState is Authenticated) {
               return EasyLocalization(
                   supportedLocales: const [
-                    Locale('en', 'US'),
-                    Locale('de', 'DE')
+                    Locale('he', 'IL'),
+                    Locale('en', 'US')
                   ],
                   path: 'assets/translations',
-                  fallbackLocale: const Locale('en', 'US'),
+                  fallbackLocale: const Locale('he', 'IL'),
                   child: const App());
-            }else if (authState is Unauthenticated) {
+            }else if (authState is Unauthenticated || authState is SocialLoginInProgress) {
               bool intro = prefs.getBool("intro") ?? false;
-
               if (!intro) {
                 return const MaterialApp(home: IntroPage());
               }else {
-                return const MaterialApp(home: AuthPage());
+                return MaterialApp(home: AuthPage());
               }
             }
             return Material(
