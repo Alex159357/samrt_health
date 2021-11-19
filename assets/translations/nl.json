@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Inlogfout probeer je aan te melden",
+"emailErrorText":"Ongeldig e-mailadres",
+"emailCaption":"e-mail",
+"passwordErrorText":"wachtwoord is te kort",
+"forgot_password":"Wachtwoord vergeten?",
+"skip":"Overslaan",
+"signUp":"inschrijven",
+"passwordCaption":"wachtwoord",
+"reset":"wachtwoord opnieuw instellen",
+"signIn":"Inloggen",
+"passwords_are_different":"wachtwoorden zijn anders",
+"email_not_found":"e-mail niet gevonden",
+"re_enter_password":"Voer paswoord opnieuw in"
+}

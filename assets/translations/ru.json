@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Ошибка входа попробуйте зарегистрироваться",
+"emailErrorText":"Неверный адрес электронной почты",
+"emailCaption":"Эл. почта",
+"passwordErrorText":"Пароль слишком короткий",
+"forgot_password":"забыл пароль?",
+"skip":"Пропускать",
+"signUp":"зарегистрироваться",
+"passwordCaption":"пароль",
+"reset":"Сброс пароля",
+"signIn":"войти",
+"passwords_are_different":"пароли разные",
+"email_not_found":"Электронная почта не найдена",
+"re_enter_password":"Повторно введите пароль"
+}

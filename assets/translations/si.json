@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"පුරනය වීමේ දෝෂය ලියාපදිංචි වීමට උත්සාහ කරන්න",
+"emailErrorText":"වලංගු නොවන ඊමේල් ලිපිනය",
+"emailCaption":"විද්යුත් තැපෑල",
+"passwordErrorText":"මුරපදය කෙටි වැඩියි",
+"forgot_password":"මුරපදය අමතක වුණා ද?",
+"skip":"මඟ හරින්න",
+"signUp":"ලියාපදිංචි වන්න",
+"passwordCaption":"රහස් පදය",
+"reset":"මුරපදය නැවත සකසන්න",
+"signIn":"පුරන්න",
+"passwords_are_different":"මුරපද වෙනස් වේ",
+"email_not_found":"විද්‍යුත් තැපෑල හමු නොවීය",
+"re_enter_password":"මුරපදය යළි ඇතුළු කරන්න"
+}

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Մուտքի սխալ՝ փորձեք գրանցվել",
+"emailErrorText":"անվավեր էլփոստի հասցե",
+"emailCaption":"էլ",
+"passwordErrorText":"գաղտնաբառը չափազանց կարճ է",
+"forgot_password":"Մոռացել եք գաղտնաբառը?",
+"skip":"Բաց թողնել",
+"signUp":"գրանցվել",
+"passwordCaption":"գաղտնաբառը",
+"reset":"վերականգնել գաղտնաբառը",
+"signIn":"Մուտք գործել",
+"passwords_are_different":"գաղտնաբառերը տարբեր են",
+"email_not_found":"Էլփոստը չի գտնվել",
+"re_enter_password":"նորից մուտքագրեք գաղտնաբառը"
+}

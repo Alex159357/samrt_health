@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ଲଗଇନ୍ ତ୍ରୁଟି ସାଇନ୍ ଅପ୍ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ |",
+"emailErrorText":"ଅବ inv ଧ ଇମେଲ ଠିକଣା |",
+"emailCaption":"ଇ-ମେଲ୍ |",
+"passwordErrorText":"ପାସୱାର୍ଡ ବହୁତ ଛୋଟ ଅଟେ |",
+"forgot_password":"ପାସୱାର୍ଡ଼ ଭୁଲି ଗଲେ କି?",
+"skip":"ଛାଡିଦିଅ |",
+"signUp":"ସାଇନ୍ ଅପ୍ କରନ୍ତୁ",
+"passwordCaption":"ପାସୱାର୍ଡ",
+"reset":"ପାସୱାର୍ଡ ପୁନ res ସେଟ୍ କରନ୍ତୁ |",
+"signIn":"ଚୁକ୍ତି କରିବା",
+"passwords_are_different":"ପାସୱାର୍ଡଗୁଡ଼ିକ ଭିନ୍ନ ଅଟେ |",
+"email_not_found":"ଇମେଲ୍ ମିଳିଲା ନାହିଁ |",
+"re_enter_password":"ପୁନ password ପାସୱାର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ |"
+}

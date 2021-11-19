@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Inloggningsfel försök att registrera dig",
+"emailErrorText":"Ogiltig e-postadress",
+"emailCaption":"e-post",
+"passwordErrorText":"lösenordet är för kort",
+"forgot_password":"glömt ditt lösenord?",
+"skip":"Hoppa",
+"signUp":"Bli Medlem",
+"passwordCaption":"Lösenord",
+"reset":"Återställ lösenord",
+"signIn":"logga in",
+"passwords_are_different":"lösenord är olika",
+"email_not_found":"E-post hittades inte",
+"re_enter_password":"Skriv lösenordet igen"
+}

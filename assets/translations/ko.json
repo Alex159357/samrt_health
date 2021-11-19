@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"로그인 오류 가입을 시도하십시오",
+"emailErrorText":"잘못된 이메일 주소",
+"emailCaption":"이메일",
+"passwordErrorText":"비밀번호가 너무 짧습니다",
+"forgot_password":"비밀번호를 잊으 셨나요?",
+"skip":"건너 뛰다",
+"signUp":"가입하기",
+"passwordCaption":"비밀번호",
+"reset":"암호를 재설정",
+"signIn":"로그인",
+"passwords_are_different":"비밀번호가 다릅니다",
+"email_not_found":"이메일을 찾을 수 없음",
+"re_enter_password":"비밀번호를 다시 입력하세요"
+}

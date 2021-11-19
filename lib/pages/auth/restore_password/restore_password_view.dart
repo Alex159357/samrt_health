@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,8 @@ import 'package:samrt_health/state/auth/restore_password_state.dart';
 import 'package:samrt_health/state/form_submission_status.dart';
 import 'package:samrt_health/view/auth_state_less.dart';
 import 'package:samrt_health/view/logo_view.dart';
+
+import '../../../main.dart';
 
 class RestorePasswordView extends AuthStateLess {
   RestorePasswordView({Key? key}) : super(key: key);
@@ -40,7 +43,7 @@ class RestorePasswordView extends AuthStateLess {
               return ScaleTransition(child: child, scale: animation);
             },
             child: state.formStatus is FormSubmitting
-                ? Center(child: loadingWhite)
+                ? Center(child: loadingWhite(context))
                 : Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
                     child: Form(
@@ -56,8 +59,8 @@ class RestorePasswordView extends AuthStateLess {
                               ),
                               padding: EdgeInsets.all(12),
                               margin: EdgeInsets.only(bottom: 12),
-                              child: const Text(
-                                  "You will receive email from 'NOREPLY' \n follow the link into description, change password and back here to login 😏")),
+                              child: getTranslatedText(
+                                  text: "You will receive email from 'NOREPLY' follow the link into description, change password and back here to login 😏")),
                           Container(child: _getEmailField()),
                           state.formStatus is SubmissionFailed
                               ? Center(
@@ -75,10 +78,10 @@ class RestorePasswordView extends AuthStateLess {
                                         ),
                                       ],
                                     ),
-                                    child: const Padding(
+                                    child: Padding(
                                       padding: EdgeInsets.all(12.0),
                                       child: Text(
-                                        "Email not found",
+                                        tr("email_not_found"),
                                         style: TextStyle(color: Colors.redAccent),
                                       ),
                                     ),
@@ -98,18 +101,18 @@ class RestorePasswordView extends AuthStateLess {
     return BlocBuilder<RestorePasswordBloc, RestorePasswordState>(
         builder: (BuildContext context, state) {
       return TextFormField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             borderSide: BorderSide.none,
           ),
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             FontAwesomeIcons.at,
             color: Colors.black12,
           ),
           filled: true,
           fillColor: Colors.white,
-          hintText: "email",
+          hintText: tr("emailCaption"),
         ),
         validator: (value) => state.isValidEmail ? null : 'email invalid',
         onChanged: (value) => context
@@ -126,7 +129,7 @@ class RestorePasswordView extends AuthStateLess {
         children: [
           TextButton(
               onPressed: () => context.read<AuthCubit>().goTo(AuthPages.LOGIN),
-              child: Text("sign in", style: TextStyle(color: Colors.black))),
+              child: Text(tr("signIn"), style: TextStyle(color: Colors.black))),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: ElevatedButton(
@@ -140,7 +143,7 @@ class RestorePasswordView extends AuthStateLess {
                         .add(RestorePasswordEventOnEmailSubmitted());
                   }
                 },
-                child: Text("reset")),
+                child: Text(tr("reset"))),
           ),
         ],
       );

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Жүйеге кіру қатесі тіркеліп көріңіз",
+"emailErrorText":"жарамсыз электрондық пошта мекенжайы",
+"emailCaption":"электрондық пошта",
+"passwordErrorText":"құпия сөз тым қысқа",
+"forgot_password":"Құпия сөзді ұмыттыңыз ба?",
+"skip":"Өткізіп жіберу",
+"signUp":"Тіркелу",
+"passwordCaption":"құпия сөз",
+"reset":"құпия сөзді қалпына келтіру",
+"signIn":"кіру",
+"passwords_are_different":"құпия сөздер әртүрлі",
+"email_not_found":"Электрондық пошта табылмады",
+"re_enter_password":"қайтадан құпия сөз"
+}

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Login fejl prøv at tilmelde dig",
+"emailErrorText":"ugyldig emailadresse",
+"emailCaption":"e-mail",
+"passwordErrorText":"adgangskoden er for kort",
+"forgot_password":"glemt kodeord?",
+"skip":"Springe",
+"signUp":"Tilmelde",
+"passwordCaption":"adgangskode",
+"reset":"nulstille kodeord",
+"signIn":"Log ind",
+"passwords_are_different":"adgangskoder er forskellige",
+"email_not_found":"E-mail ikke fundet",
+"re_enter_password":"Genindtast kodeord"
+}

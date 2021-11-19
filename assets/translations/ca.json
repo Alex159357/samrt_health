@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Error d&#39;inici de sessió intenta registrar-te",
+"emailErrorText":"correu electrònic erroni",
+"emailCaption":"correu electrònic",
+"passwordErrorText":"la contrasenya és massa curta",
+"forgot_password":"Has oblidat la contrasenya?",
+"skip":"Omet",
+"signUp":"Registra&#39;t",
+"passwordCaption":"contrasenya",
+"reset":"restablir la contrasenya",
+"signIn":"inicieu la sessió",
+"passwords_are_different":"les contrasenyes són diferents",
+"email_not_found":"No s&#39;ha trobat el correu electrònic",
+"re_enter_password":"torna a escriure la contrasenya"
+}

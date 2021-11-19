@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Anmeldefehler versuchen, sich anzumelden",
+"emailErrorText":"ungültige E-Mail-Adresse",
+"emailCaption":"Email",
+"passwordErrorText":"das Passwort ist zu kurz",
+"forgot_password":"Passwort vergessen?",
+"skip":"Überspringen",
+"signUp":"Anmeldung",
+"passwordCaption":"Passwort",
+"reset":"Passwort zurücksetzen",
+"signIn":"Einloggen",
+"passwords_are_different":"Passwörter sind anders",
+"email_not_found":"Email wurde nicht gefunden",
+"re_enter_password":"Kennwort erneut eingeben"
+}

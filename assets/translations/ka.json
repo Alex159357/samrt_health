@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"შესვლის შეცდომა სცადეთ დარეგისტრირება",
+"emailErrorText":"არასწორი ელფოსტის მისამართი",
+"emailCaption":"ელ.ფოსტა",
+"passwordErrorText":"პაროლი ძალიან მოკლეა",
+"forgot_password":"პაროლი დაგავიწყდა?",
+"skip":"გამოტოვება",
+"signUp":"დარეგისტრირდით",
+"passwordCaption":"პაროლი",
+"reset":"პაროლის გადატვირთვა",
+"signIn":"შებრძანდით",
+"passwords_are_different":"პაროლები განსხვავებულია",
+"email_not_found":"ელფოსტა ვერ მოიძებნა",
+"re_enter_password":"თავიდან შეიყვანეთ პაროლი"
+}

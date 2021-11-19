@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"登录错误尝试注册",
+"emailErrorText":"无效的邮件地址",
+"emailCaption":"电子邮件",
+"passwordErrorText":"密码太短",
+"forgot_password":"忘记密码？",
+"skip":"跳过",
+"signUp":"报名",
+"passwordCaption":"密码",
+"reset":"重设密码",
+"signIn":"登入",
+"passwords_are_different":"密码不一样",
+"email_not_found":"电子邮件没有找到",
+"re_enter_password":"重新输入密码"
+}

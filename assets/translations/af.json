@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Aanmeldingfout probeer om aan te meld",
+"emailErrorText":"ongeldige e-posadres",
+"emailCaption":"e-pos",
+"passwordErrorText":"wagwoord is te kort",
+"forgot_password":"Wagwoord vergeet?",
+"skip":"Huppel",
+"signUp":"teken aan",
+"passwordCaption":"wagwoord",
+"reset":"herstel wagwoord",
+"signIn":"teken aan",
+"passwords_are_different":"wagwoorde verskil",
+"email_not_found":"E-pos nie gevind nie",
+"re_enter_password":"voer wagwoord weer in"
+}

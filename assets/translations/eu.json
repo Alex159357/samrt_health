@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Saioa hasteko errorea saiatu erregistratzen",
+"emailErrorText":"helbide elektroniko baliogabea",
+"emailCaption":"posta elektronikoa",
+"passwordErrorText":"pasahitza laburregia da",
+"forgot_password":"Pasahitza ahaztua?",
+"skip":"Saltatu",
+"signUp":"Izena eman",
+"passwordCaption":"pasahitza",
+"reset":"pasahitza berrezarri",
+"signIn":"saioa hasi",
+"passwords_are_different":"pasahitzak desberdinak dira",
+"email_not_found":"Ez da aurkitu helbide elektronikoa",
+"re_enter_password":"sartu berriro pasahitza"
+}

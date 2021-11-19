@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Bejelentkezési hiba próbáljon meg regisztrálni",
+"emailErrorText":"Érvénytelen e-mail cím",
+"emailCaption":"email",
+"passwordErrorText":"a jelszó túl rövid",
+"forgot_password":"elfelejtett jelszó?",
+"skip":"Kihagyás",
+"signUp":"regisztrálj",
+"passwordCaption":"Jelszó",
+"reset":"Jelszó visszaállítása",
+"signIn":"Bejelentkezés",
+"passwords_are_different":"a jelszavak különbözőek",
+"email_not_found":"Az e-mail nem található",
+"re_enter_password":"írd be újra a jelszót"
+}

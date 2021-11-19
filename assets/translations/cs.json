@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Chyba přihlášení pokuste se zaregistrovat",
+"emailErrorText":"neplatná emailová adresa",
+"emailCaption":"e-mailem",
+"passwordErrorText":"heslo je příliš krátké",
+"forgot_password":"zapomenuté heslo?",
+"skip":"Přeskočit",
+"signUp":"Přihlásit se",
+"passwordCaption":"Heslo",
+"reset":"obnovit heslo",
+"signIn":"přihlásit se",
+"passwords_are_different":"hesla jsou různá",
+"email_not_found":"Email nenalezen",
+"re_enter_password":"znovu zadejte heslo"
+}

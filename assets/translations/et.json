@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Sisselogimisviga proovige registreeruda",
+"emailErrorText":"vale emaili aadress",
+"emailCaption":"e-mail",
+"passwordErrorText":"parool on liiga lühike",
+"forgot_password":"Unustasid parooli?",
+"skip":"Vahele jätma",
+"signUp":"Registreeri",
+"passwordCaption":"parool",
+"reset":"lähtestage parool",
+"signIn":"Logi sisse",
+"passwords_are_different":"paroolid on erinevad",
+"email_not_found":"Meili ei leitud",
+"re_enter_password":"Sisesta parool uuesti"
+}

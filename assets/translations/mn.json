@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Бүртгүүлэхээр оролдоно уу",
+"emailErrorText":"хүчингүй мэйл хаяг",
+"emailCaption":"цахим шуудан",
+"passwordErrorText":"нууц үг хэтэрхий богино байна",
+"forgot_password":"нууц үгээ мартсан?",
+"skip":"Алгасах",
+"signUp":"Бүртгүүлэх",
+"passwordCaption":"нууц үг",
+"reset":"нууц үгээ анхны байдалд нь оруулж",
+"signIn":"нэвтэрнэ үү",
+"passwords_are_different":"нууц үг өөр байна",
+"email_not_found":"Имэйл олдсонгүй",
+"re_enter_password":"Нууц үгээ дахин оруул"
+}

@@ -27,7 +27,8 @@ class AuthPage extends AuthStateLess {
         child: Container(
           height: MediaQuery.of(context).size.height,
           color: const Color(0xfff2f9fc),
-          child: Stack(
+          child:
+          Stack(
             children: [
             Opacity(
             opacity: 0.1,
@@ -52,7 +53,7 @@ class AuthPage extends AuthStateLess {
                       builder: (BuildContext context, state) {
                     if (state is SocialLoginInProgress) {
                       print("login_social");
-                      return Center(child: loadingWhite);
+                      return Center(child: loadingWhite(context));
                     } else {
                       return  BlocProvider(
                           create: (context) => AuthCubit(),

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Innskráningarvilla reyndu að skrá þig",
+"emailErrorText":"ógilt netfang",
+"emailCaption":"tölvupósti",
+"passwordErrorText":"lykilorðið er of stutt",
+"forgot_password":"Gleymt lykilorð?",
+"skip":"Sleppa",
+"signUp":"skráðu þig",
+"passwordCaption":"lykilorð",
+"reset":"endur stilla lykilorð",
+"signIn":"skráðu þig inn",
+"passwords_are_different":"lykilorð eru mismunandi",
+"email_not_found":"Tölvupóstur fannst ekki",
+"re_enter_password":"sláðu inn lykilorð aftur"
+}

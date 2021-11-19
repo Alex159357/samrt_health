@@ -1,0 +1,20 @@
+{
+  "Login_error_try_to_sign_up": "Login error try to sign up",
+  "emailErrorText": "invalid email address",
+  "emailCaption": "e-mail",
+  "passwordErrorText": "password is too short",
+  "forgot_password": "forgot password?",
+  "skip": "Skip",
+  "signUp": "sign up",
+  "passwordCaption": "password",
+  "reset": "reset password",
+  "signIn": "sign in",
+  "passwords_are_different": "passwords are different",
+  "email_not_found": "Email not found",
+  "re_enter_password": "re enter password",
+  "login_by_google": "sig in by Google",
+  "login_by_facebook": "sig in by Facebook",
+  "height": "Height",
+  "weight": "Weight",
+  "kg": "kg"
+}

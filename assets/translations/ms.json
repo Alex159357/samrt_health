@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Ralat log masuk cuba daftar",
+"emailErrorText":"alamat email tidak sah",
+"emailCaption":"e-mel",
+"passwordErrorText":"kata laluan terlalu pendek",
+"forgot_password":"lupa kata laluan?",
+"skip":"Langkau",
+"signUp":"mendaftar",
+"passwordCaption":"kata laluan",
+"reset":"menetapkan semula kata laluan",
+"signIn":"daftar masuk",
+"passwords_are_different":"kata laluan adalah berbeza",
+"email_not_found":"E-mel tidak ditemui",
+"re_enter_password":"masukkan semula kata laluan"
+}

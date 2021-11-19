@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"خطأ في تسجيل الدخول حاول التسجيل",
+"emailErrorText":"عنوان البريد الإلكتروني غير صالح",
+"emailCaption":"البريد الإلكتروني",
+"passwordErrorText":"كلمة المرور قصيرة جدا",
+"forgot_password":"هل نسيت كلمة السر؟",
+"skip":"يتخطى",
+"signUp":"اشتراك",
+"passwordCaption":"كلمه السر",
+"reset":"إعادة تعيين كلمة المرور",
+"signIn":"تسجيل الدخول",
+"passwords_are_different":"كلمات المرور مختلفة",
+"email_not_found":"البريد الإلكتروني غير موجود",
+"re_enter_password":"اعادة ادخال كلمة السر"
+}

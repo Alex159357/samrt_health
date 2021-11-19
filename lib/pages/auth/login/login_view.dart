@@ -39,7 +39,8 @@ class LoginView extends AuthStateLess {
           if (formStatus is SubmissionFailed) {}
           if (formStatus is SubmissionSuccess) {}
         },
-        child: Container(child: _getForm()),
+        child: Container(
+            child: _getForm()),
       ),
     );
   }
@@ -55,64 +56,63 @@ class LoginView extends AuthStateLess {
                 return ScaleTransition(child: child, scale: animation);
               },
               child: state.formStatus is FormSubmitting
-                  ? Center(child: loadingWhite)
+                  ? Center(child: loadingWhite(context))
                   : Padding(
                       padding: const EdgeInsets.only(left: 30, right: 30),
                       child: Form(
                         key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  appLogo,
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: _getUsernameField(),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: _getPasswordField(),
-                                  ),
-                                  state.formStatus is SubmissionFailed
-                                      ? Padding(
-                                          padding: EdgeInsets.all(12.0),
-                                          child: getTranslatedText(
-                                            text: "Login error, try to sign up",
-                                            style: TextStyle(
-                                                color: Colors.redAccent),
-                                          ),
-                                        )
-                                      : Container(),
-                                  _getLoginButton(),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        NotificationService
-                                            .showNotificationScheduled();
-                                      },
-                                      child: Text("child")),
-                                  googleButton,
-                                  facebookButton,
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: TextButton(
-                                      onPressed: () => context
-                                          .read<AuthCubit>()
-                                          .goTo(AuthPages.RESTORE_PASSWORD),
-                                      child: Text(
-                                        translation
-                                            .getTranslate("forgot_password"),
-                                        style: const TextStyle(
-                                            color: Color(0xff8167e6)),
+                        child:
+                            Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    appLogo,
+                                    Text(locale),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: _getUsernameField(),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: _getPasswordField(),
+                                    ),
+                                    state.formStatus is SubmissionFailed
+                                        ? Padding(
+                                            padding: EdgeInsets.all(12.0),
+                                            child: getTranslatedText(
+                                              text: tr("Login_error_try_to_sign_up"),
+                                              style: TextStyle(
+                                                  color: Colors.redAccent),
+                                            ),
+                                          )
+                                        : Container(),
+                                    _getLoginButton(),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          NotificationService
+                                              .showNotificationScheduled();
+                                        },
+                                        child: Text("child")),
+                                    googleButton,
+                                    facebookButton,
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: TextButton(
+                                        onPressed: () => context
+                                            .read<AuthCubit>()
+                                            .goTo(AuthPages.RESTORE_PASSWORD),
+                                        child: Text(
+                                          tr("forgot_password"),
+                                          style: const TextStyle(
+                                              color: Color(0xff8167e6)),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+
                       ),
                     ),
             ),
@@ -137,11 +137,11 @@ class LoginView extends AuthStateLess {
           ),
           filled: true,
           fillColor: Colors.white,
-          hintText: translation.getTranslate("emailCaption"),
+          hintText: tr("emailCaption"),
         ),
         validator: (value) => state.isValidUsername
             ? null
-            : translation.getTranslate("emailErrorText"),
+            : tr("emailErrorText"),
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginEventOnChangedUsername(username: value)),
@@ -175,14 +175,14 @@ class LoginView extends AuthStateLess {
                       LoginEventPasswordVisibility(!state.passwordIsVisible))),
           filled: true,
           fillColor: Colors.white,
-          hintText: translation.getTranslate("passwordCaption"),
+          hintText: tr("passwordCaption"),
         ),
         obscureText: !state.passwordIsVisible,
         enableSuggestions: false,
         autocorrect: false,
         validator: (value) => state.isValidPassword
             ? null
-            : translation.getTranslate("passwordErrorText"),
+            : tr("passwordErrorText"),
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginEventOnChangedPassword(password: value)),
@@ -206,14 +206,13 @@ class LoginView extends AuthStateLess {
                     context.read<LoginBloc>().add(LoginEventOnSubmitted());
                   }
                 },
-                child: Text(translation.getTranslate(
-                    "signIn")), //getTranslatedText(text: "sign in"),
+                child: Text(tr("signIn")), //getTranslatedText(text: "sign in"),
               ),
               TextButton(
                   onPressed: () =>
                       context.read<AuthCubit>().goTo(AuthPages.REGISTRATION),
                   child: Text(
-                  translation.getTranslate("signUp"),
+                  tr("signUp"),
                     style: TextStyle(color: Colors.black),
                   ))
             ],

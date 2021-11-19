@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Σφάλμα σύνδεσης προσπαθήστε να εγγραφείτε",
+"emailErrorText":"Μη έγκυρη διεύθυνση e-mail",
+"emailCaption":"ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ",
+"passwordErrorText":"ο κωδικός πρόσβασης είναι πολύ μικρός",
+"forgot_password":"Ξεχάσατε τον κωδικό?",
+"skip":"Παραλείπω",
+"signUp":"Εγγραφείτε",
+"passwordCaption":"Κωδικός πρόσβασης",
+"reset":"επαναφέρετε τον κωδικό πρόσβασης",
+"signIn":"Συνδεθείτε",
+"passwords_are_different":"οι κωδικοί πρόσβασης είναι διαφορετικοί",
+"email_not_found":"Το email δεν βρέθηκε",
+"re_enter_password":"πληκτρολογήστε ξανά τον κωδικό πρόσβασης"
+}

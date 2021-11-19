@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"لاگ ان کی غلطی سائن اپ کرنے کی کوشش کریں۔",
+"emailErrorText":"غلط ای میل ایڈریس",
+"emailCaption":"ای میل",
+"passwordErrorText":"پاس ورڈ بہت چھوٹا ہے۔",
+"forgot_password":"پاسورڈ بھول گے؟",
+"skip":"چھوڑ دو",
+"signUp":"سائن اپ",
+"passwordCaption":"پاس ورڈ",
+"reset":"پاس ورڈ ری سیٹ",
+"signIn":"سائن ان",
+"passwords_are_different":"پاس ورڈ مختلف ہیں",
+"email_not_found":"ای میل نہیں ملا",
+"re_enter_password":"پاس ورڈ دوبارہ درج"
+}

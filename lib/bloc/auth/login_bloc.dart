@@ -15,7 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginEventOnChangedUsername) {
-      yield state.copyWith(username: event.username);
+      yield state.copyWith(email: event.username);
     }
     if (event is LoginEventOnChangedPassword) {
       yield state.copyWith(password: event.password);
@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(formStatus: FormSubmitting());
       try {
         await Future.delayed(const Duration(milliseconds: 3000));
-        await userRepo.signInWithCredentials(state.username, state.password);
+        await userRepo.signInWithCredentials(state.email, state.password);
         yield state.copyWith(formStatus: SubmissionSuccess());
       } catch (e) {
         yield state.copyWith(formStatus: SubmissionFailed(e as Exception));

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Iphutha lokungena zama ukubhalisa",
+"emailErrorText":"ikheli le-imeyili elingavumelekile",
+"emailCaption":"i-imeyili",
+"passwordErrorText":"igama-mfihlo lifushane kakhulu",
+"forgot_password":"Ukhohlwe iphasiwedi?",
+"skip":"Yeqa",
+"signUp":"Bhalisela",
+"passwordCaption":"iphasiwedi",
+"reset":"setha kabusha iphasiwedi",
+"signIn":"Ngena ngemvume",
+"passwords_are_different":"amaphasiwedi ahlukile",
+"email_not_found":"I-imeyili ayitholakali",
+"re_enter_password":"Faka futhi iphasiwedi"
+}

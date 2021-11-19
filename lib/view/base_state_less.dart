@@ -6,7 +6,7 @@ import 'package:samrt_health/view/view.dart';
 abstract class BaseStateLess extends StatelessWidget with View{
   BaseStateLess({Key? key}) : super(key: key);
   
-  Widget get loadingWhite => loadingView.loadingWhiteBg();
+  Widget loadingWhite(BuildContext context) => loadingView.loadingWhiteBg(context);
 
   Widget get appLogo => logoView;
 

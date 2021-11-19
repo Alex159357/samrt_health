@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Prisijungimo klaida pabandykite prisiregistruoti",
+"emailErrorText":"Neteisingas el. pašto adresas",
+"emailCaption":"paštu",
+"passwordErrorText":"slaptažodis per trumpas",
+"forgot_password":"Pamiršote slaptažodį?",
+"skip":"Praleisti",
+"signUp":"Registruotis",
+"passwordCaption":"Slaptažodis",
+"reset":"Atstatyti slaptažodį",
+"signIn":"Prisijungti",
+"passwords_are_different":"slaptažodžiai skiriasi",
+"email_not_found":"El. pašto adresas nerastas",
+"re_enter_password":"Pakartokite slaptažodį"
+}

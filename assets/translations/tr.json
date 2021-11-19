@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Oturum açma hatası kaydolmayı deneyin",
+"emailErrorText":"Geçersiz e-posta adresi",
+"emailCaption":"e-posta",
+"passwordErrorText":"şifre çok kısa",
+"forgot_password":"Parolanızı mı unuttunuz?",
+"skip":"Atlamak",
+"signUp":"üye olmak",
+"passwordCaption":"parola",
+"reset":"şifreyi yenile",
+"signIn":"kayıt olmak",
+"passwords_are_different":"şifreler farklıdır",
+"email_not_found":"Email bulunamadı",
+"re_enter_password":"şifrenizi tekrar girin"
+}

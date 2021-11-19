@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"အကောင့်ဖွင့်ရန်ကြိုးစားရာတွင် အကောင့်ဝင်ခြင်းအမှား",
+"emailErrorText":"မမှန်ကန်သော အီးမေးလ်လိပ်စာ",
+"emailCaption":"အီးမေးလ်",
+"passwordErrorText":"စကားဝှက်သည် တိုလွန်းသည်။",
+"forgot_password":"စကားဝှက်ကိုမေ့နေပါသလား?",
+"skip":"ကျော်သွားပါ။",
+"signUp":"ဆိုင်းအပ်",
+"passwordCaption":"စကားဝှက်",
+"reset":"လျှို့ဝှတ်နံပါတ်အားမူလအတိုင်းပြန်လုပ်သည်",
+"signIn":"ဆိုင်းအင်လုပ်ခြင်း",
+"passwords_are_different":"password တွေက မတူပါဘူး။",
+"email_not_found":"အီးမေးလ် ရှာမတွေ့ပါ။",
+"re_enter_password":"စကားဝှက်ကိုပြန်လည်ထည့်ပါ"
+}

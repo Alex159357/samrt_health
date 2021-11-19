@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Roʻyxatdan oʻtishda xatolik yuz berdi",
+"emailErrorText":"noto&#39;g&#39;ri elektron pochta manzili",
+"emailCaption":"elektron pochta",
+"passwordErrorText":"parol juda qisqa",
+"forgot_password":"Parolni unutdingizmi?",
+"skip":"Oʻtkazib yuborish",
+"signUp":"Ro&#39;yxatdan o&#39;tish",
+"passwordCaption":"parol",
+"reset":"parolni tiklash",
+"signIn":"tizimga kirish",
+"passwords_are_different":"parollar har xil",
+"email_not_found":"Email topilmadi",
+"re_enter_password":"Mahfiy so&#39;zni qayta kiriting"
+}

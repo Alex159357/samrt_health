@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ການເຂົ້າສູ່ລະບົບຜິດພາດພະຍາຍາມລົງທະບຽນ",
+"emailErrorText":"ທີ່ຢູ່ອີເມວບໍ່ຖືກຕ້ອງ",
+"emailCaption":"ອີເມລ",
+"passwordErrorText":"ລະຫັດຜ່ານສັ້ນເກີນໄປ",
+"forgot_password":"ລືມລະຫັດຜ່ານ?",
+"skip":"ຂ້າມ",
+"signUp":"ລົງ​ທະ​ບຽນ",
+"passwordCaption":"ລະຫັດຜ່ານ",
+"reset":"ຣີເຊັດລະຫັດຜ່ານ",
+"signIn":"ເຂົ້າ​ສູ່​ລະ​ບົບ",
+"passwords_are_different":"ລະຫັດຜ່ານແມ່ນແຕກຕ່າງກັນ",
+"email_not_found":"ບໍ່ພົບອີເມວ",
+"re_enter_password":"ຕື່ມລະຫັດຜ່ານ"
+}

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Giriş xətası qeydiyyatdan keçməyə cəhd edin",
+"emailErrorText":"E-mail ünvanı səhvdir",
+"emailCaption":"e-poçt",
+"passwordErrorText":"parol çox qısadır",
+"forgot_password":"Şifrəni unutmusunuz?",
+"skip":"Keç",
+"signUp":"Abunə olun",
+"passwordCaption":"parol",
+"reset":"Parolu sıfırlamak",
+"signIn":"daxil olun",
+"passwords_are_different":"parollar fərqlidir",
+"email_not_found":"E-poçt tapılmadı",
+"re_enter_password":"Şifrəni yenidən daxil et"
+}

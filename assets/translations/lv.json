@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Pieteikšanās kļūda, mēģiniet reģistrēties",
+"emailErrorText":"nederīga e-pasta adrese",
+"emailCaption":"e-pasts",
+"passwordErrorText":"parole ir pārāk īsa",
+"forgot_password":"Aizmirsi paroli?",
+"skip":"Izlaist",
+"signUp":"Pierakstīties",
+"passwordCaption":"parole",
+"reset":"atiestatīt paroli",
+"signIn":"ielogoties",
+"passwords_are_different":"paroles ir dažādas",
+"email_not_found":"E-pasts nav atrasts",
+"re_enter_password":"ievadiet paroli vēlreiz"
+}

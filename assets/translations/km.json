@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"កំហុសក្នុងការចូលព្យាយាមចុះឈ្មោះ",
+"emailErrorText":"អាសយដ្ឋានអ៊ីមែលមិនត្រឹមត្រូវ",
+"emailCaption":"អ៊ីមែល",
+"passwordErrorText":"ពាក្យសម្ងាត់ខ្លីពេក",
+"forgot_password":"ភ្លេច​លេខសំងាត់​?",
+"skip":"រំលង",
+"signUp":"ចុះ​ឈ្មោះ",
+"passwordCaption":"ពាក្យសម្ងាត់",
+"reset":"កំណត់ពាក្យសម្ងាត់ឡើងវិញ",
+"signIn":"ចូល",
+"passwords_are_different":"ពាក្យសម្ងាត់គឺខុសគ្នា",
+"email_not_found":"រកមិនឃើញអ៊ីមែលទេ។",
+"re_enter_password":"បញ្ចូល​លេខសំងាត់​ម្តង​ទៀត"
+}

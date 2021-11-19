@@ -7,10 +7,10 @@ import 'logo_view.dart';
 
 class LoadingView{
 
-  Widget loadingWhiteBg(){
+  Widget loadingWhiteBg(BuildContext context){
     return SizedBox(
-        width: 300,
-        height: 300,
+        width: MediaQuery.of(context).size.width  - MediaQuery.of(context).size.width / 5,
+        height: MediaQuery.of(context).size.height  - MediaQuery.of(context).size.height / 2,
         child: Lottie.asset('assets/animation/loading_white.json'));
   }
 

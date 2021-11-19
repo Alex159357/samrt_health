@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ਲੌਗਇਨ ਗਲਤੀ ਸਾਈਨ ਅੱਪ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+"emailErrorText":"ਗਲਤ ਈਮੇਲ ਪਤਾ",
+"emailCaption":"ਈ - ਮੇਲ",
+"passwordErrorText":"ਪਾਸਵਰਡ ਬਹੁਤ ਛੋਟਾ ਹੈ",
+"forgot_password":"ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ?",
+"skip":"ਛੱਡੋ",
+"signUp":"ਸਾਇਨ ਅਪ",
+"passwordCaption":"ਪਾਸਵਰਡ",
+"reset":"ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰੋ",
+"signIn":"ਸਾਈਨ - ਇਨ",
+"passwords_are_different":"ਪਾਸਵਰਡ ਵੱਖਰੇ ਹਨ",
+"email_not_found":"ਈਮੇਲ ਨਹੀਂ ਮਿਲੀ",
+"re_enter_password":"ਪਾਸਵਰਡ ਦੋਬਾਰਾ ਭਰੋ"
+}

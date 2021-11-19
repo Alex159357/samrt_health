@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"د ننوتلو تېروتنه د لاسلیک کولو هڅه وکړئ",
+"emailErrorText":"ناسم بریښنالیک پته",
+"emailCaption":"بریښنالیک",
+"passwordErrorText":"پټنوم ډیر لنډ دی",
+"forgot_password":"خپل پټ نوم درڅخه هیر دی؟",
+"skip":"پریږده",
+"signUp":"ګډون کول",
+"passwordCaption":"رمز",
+"reset":"پټنوم بیا تنظیم کړئ",
+"signIn":"ننوزئ",
+"passwords_are_different":"پاسورډونه مختلف دي",
+"email_not_found":"بریښنالیک ونه موندل شو",
+"re_enter_password":"پټ نوم مو بیا ځلې ولیکئ"
+}

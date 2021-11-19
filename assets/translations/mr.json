@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"लॉगिन त्रुटी साइन अप करण्याचा प्रयत्न करा",
+"emailErrorText":"अवैध ई - मेल पत्ता",
+"emailCaption":"ई-मेल",
+"passwordErrorText":"पासवर्ड खूप लहान आहे",
+"forgot_password":"पासवर्ड विसरलात?",
+"skip":"वगळा",
+"signUp":"साइन अप करा",
+"passwordCaption":"पासवर्ड",
+"reset":"पासवर्ड रीसेट करा",
+"signIn":"साइन इन करा",
+"passwords_are_different":"पासवर्ड वेगळे आहेत",
+"email_not_found":"ईमेल सापडला नाही",
+"re_enter_password":"पासवर्ड पुन्हा प्रविष्ट करा"
+}

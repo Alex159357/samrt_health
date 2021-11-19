@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samrt_health/const/text.dart';
 import 'package:samrt_health/services/translate_api.dart';
 import 'package:samrt_health/view/loading_view.dart';
 
@@ -19,12 +18,9 @@ class View {
     return FutureBuilder(
       future: TranslateApi.translate2(text),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
-          return Text(snapshot.data!,
-              textDirection: TextList().langCodes.contains(locale)
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              style: style);
+        if (snapshot.connectionState == ConnectionState.done &&
+            !snapshot.hasError) {
+          return Text(snapshot.data!, style: style);
         }
         return Text(text, style: style);
       },

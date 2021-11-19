@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Памылка ўваходу, паспрабуйце зарэгістравацца",
+"emailErrorText":"несапраўдны адрас электроннай пошты",
+"emailCaption":"электронная пошта",
+"passwordErrorText":"пароль занадта кароткі",
+"forgot_password":"Забыліся на пароль?",
+"skip":"Прапусціць",
+"signUp":"зарэгістравацца",
+"passwordCaption":"пароль",
+"reset":"скінуць пароль",
+"signIn":"увайсці",
+"passwords_are_different":"паролі розныя",
+"email_not_found":"Электронная пошта не знойдзена",
+"re_enter_password":"Увядзіце пароль паўторна"
+}

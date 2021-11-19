@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Chyba pri prihlasovaní, skúste sa zaregistrovať",
+"emailErrorText":"neplatná emailová adresa",
+"emailCaption":"e-mail",
+"passwordErrorText":"heslo je príliš krátke",
+"forgot_password":"zabudol si heslo?",
+"skip":"Preskočiť",
+"signUp":"Prihlásiť Se",
+"passwordCaption":"heslo",
+"reset":"obnoviť heslo",
+"signIn":"Prihlásiť sa",
+"passwords_are_different":"heslá sú rôzne",
+"email_not_found":"E-mail sa nenašiel",
+"re_enter_password":"Zadajte znovu heslo"
+}

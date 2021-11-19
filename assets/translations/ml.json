@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ലോഗിൻ പിശക് സൈൻ അപ്പ് ചെയ്യാൻ ശ്രമിക്കുക",
+"emailErrorText":"അസാധുവായ ഇമെയിൽ വിലാസം",
+"emailCaption":"ഇ-മെയിൽ",
+"passwordErrorText":"പാസ്‌വേഡ് വളരെ ചെറുതാണ്",
+"forgot_password":"പാസ്വേഡ് മറന്നോ?",
+"skip":"ഒഴിവാക്കുക",
+"signUp":"സൈൻ അപ്പ് ചെയ്യുക",
+"passwordCaption":"password",
+"reset":"പാസ്‌വേഡ് പുനഃസജ്ജമാക്കുക",
+"signIn":"സൈൻ ഇൻ",
+"passwords_are_different":"പാസ്‌വേഡുകൾ വ്യത്യസ്തമാണ്",
+"email_not_found":"ഇമെയിൽ കണ്ടെത്തിയില്ല",
+"re_enter_password":"വീണ്ടും പാസ്സ് വേഡ് നല്കുക"
+}

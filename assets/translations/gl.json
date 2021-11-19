@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Erro de inicio de sesión tenta rexistrarte",
+"emailErrorText":"enderezo de correo electrónico non válido",
+"emailCaption":"correo electrónico",
+"passwordErrorText":"o contrasinal é demasiado curto",
+"forgot_password":"Esqueceu o contrasinal?",
+"skip":"Saltar",
+"signUp":"Rexistrarse",
+"passwordCaption":"contrasinal",
+"reset":"restablecer o contrasinal",
+"signIn":"Rexístrate",
+"passwords_are_different":"os contrasinais son diferentes",
+"email_not_found":"Non se atopou o correo electrónico",
+"re_enter_password":"Volve a escribir o contrasinal"
+}

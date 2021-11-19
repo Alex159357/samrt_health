@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Kesalahan masuk coba daftar",
+"emailErrorText":"alamat email salah",
+"emailCaption":"surel",
+"passwordErrorText":"kata sandi terlalu pendek",
+"forgot_password":"Tidak ingat kata sandi?",
+"skip":"Melewati",
+"signUp":"Daftar",
+"passwordCaption":"kata sandi",
+"reset":"setel ulang kata sandi",
+"signIn":"masuk",
+"passwords_are_different":"passwordnya beda",
+"email_not_found":"Email tidak ditemukan",
+"re_enter_password":"Masukkan Kembali password"
+}

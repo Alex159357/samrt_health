@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"लॉगिन त्रुटि साइन अप करने का प्रयास करें",
+"emailErrorText":"अमान्य ईमेल पता",
+"emailCaption":"ईमेल",
+"passwordErrorText":"पासवर्ड बहुत छोटा है",
+"forgot_password":"पासवर्ड भूल गए?",
+"skip":"छोड़ें",
+"signUp":"साइन अप करें",
+"passwordCaption":"पासवर्ड",
+"reset":"पासवर्ड रीसेट",
+"signIn":"साइन इन करें",
+"passwords_are_different":"पासवर्ड अलग हैं",
+"email_not_found":"ईमेल नहीं मिला",
+"re_enter_password":"पासवर्ड फिर से दर्ज करें"
+}

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"સાઇન અપ કરવાનો પ્રયાસ કરો લોગિન ભૂલ",
+"emailErrorText":"અમાન્ય ઇમેઇલ સરનામું",
+"emailCaption":"ઈ-મેલ",
+"passwordErrorText":"પાસવર્ડ ખૂબ નાનો છે",
+"forgot_password":"પાસવર્ડ ભૂલી ગયા છો?",
+"skip":"છોડો",
+"signUp":"સાઇન અપ કરો",
+"passwordCaption":"પાસવર્ડ",
+"reset":"પાસવર્ડ રીસેટ કરો",
+"signIn":"સાઇન ઇન કરો",
+"passwords_are_different":"પાસવર્ડ અલગ છે",
+"email_not_found":"ઈમેલ મળ્યો નથી",
+"re_enter_password":"પાસવર્ડ ફરીથી નાખો"
+}

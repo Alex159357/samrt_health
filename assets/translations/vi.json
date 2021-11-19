@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Lỗi đăng nhập cố gắng đăng ký",
+"emailErrorText":"địa chỉ email không hợp lệ",
+"emailCaption":"e-mail",
+"passwordErrorText":"mật khẩu quá ngắn",
+"forgot_password":"Quên mật khẩu?",
+"skip":"Nhảy",
+"signUp":"đăng ký",
+"passwordCaption":"mật khẩu mở khóa",
+"reset":"đặt lại mật khẩu",
+"signIn":"đăng nhập",
+"passwords_are_different":"mật khẩu khác nhau",
+"email_not_found":"Không tìm thấy email",
+"re_enter_password":"nhập lại mật khẩu"
+}

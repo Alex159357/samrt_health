@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Pogreška prilikom prijave pokušajte se prijaviti",
+"emailErrorText":"nevažeća adresa e-pošte",
+"emailCaption":"e-mail",
+"passwordErrorText":"lozinka je prekratka",
+"forgot_password":"Zaboravili ste lozinku?",
+"skip":"Preskočiti",
+"signUp":"prijavi se",
+"passwordCaption":"lozinka",
+"reset":"resetiranje lozinke",
+"signIn":"Prijaviti se",
+"passwords_are_different":"lozinke su različite",
+"email_not_found":"E-pošta nije pronađena",
+"re_enter_password":"ponovno unesite lozinku"
+}

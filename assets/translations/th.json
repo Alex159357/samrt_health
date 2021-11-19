@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ข้อผิดพลาดในการเข้าสู่ระบบ ลองลงทะเบียน",
+"emailErrorText":"ที่อยู่อีเมลที่ไม่ถูกต้อง",
+"emailCaption":"อีเมล",
+"passwordErrorText":"รหัสผ่านสั้นเกินไป",
+"forgot_password":"ลืมรหัสผ่าน?",
+"skip":"ข้าม",
+"signUp":"ลงชื่อ",
+"passwordCaption":"รหัสผ่าน",
+"reset":"รีเซ็ตรหัสผ่าน",
+"signIn":"เข้าสู่ระบบ",
+"passwords_are_different":"รหัสผ่านแตกต่างกัน",
+"email_not_found":"ไม่พบอีเมล",
+"re_enter_password":"ใส่รหัสผ่านอีกครั้ง"
+}

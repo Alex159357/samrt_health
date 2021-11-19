@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"የመግባት ስህተት ለመመዝገብ ይሞክሩ",
+"emailErrorText":"ልክ ያልሆነ የኢሜይል አድራሻ",
+"emailCaption":"ኢ-ሜይል",
+"passwordErrorText":"የይለፍ ቃል በጣም አጭር ነው።",
+"forgot_password":"መክፈቻ ቁልፉን ረሳኽው?",
+"skip":"ዝለል",
+"signUp":"ክፈት",
+"passwordCaption":"ፕስወርድ",
+"reset":"የይለፍ ቃል ዳግም አስጀምር",
+"signIn":"ስግን እን",
+"passwords_are_different":"የይለፍ ቃሎች የተለያዩ ናቸው።",
+"email_not_found":"ኢሜይል አልተገኘም።",
+"re_enter_password":"ሚስጥራዊ ቃል እንደገና አስገባ"
+}

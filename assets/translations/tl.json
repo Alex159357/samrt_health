@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Error sa pag-login subukang mag-sign up",
+"emailErrorText":"maling email address",
+"emailCaption":"e-mail",
+"passwordErrorText":"masyadong maikli ang password",
+"forgot_password":"Nakalimutan ang password?",
+"skip":"Laktawan",
+"signUp":"mag-sign up",
+"passwordCaption":"password",
+"reset":"i-reset ang password",
+"signIn":"mag-sign in",
+"passwords_are_different":"magkaiba ang mga password",
+"email_not_found":"Hindi nahanap ang email",
+"re_enter_password":"ipasok muli ang password"
+}

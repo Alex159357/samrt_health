@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Napaka pri prijavi, poskusite se prijaviti",
+"emailErrorText":"nepravilen e-mail naslov",
+"emailCaption":"E-naslov",
+"passwordErrorText":"geslo je prekratko",
+"forgot_password":"Ste pozabili geslo?",
+"skip":"Preskoči",
+"signUp":"prijavi se",
+"passwordCaption":"geslo",
+"reset":"ponastavitev gesla",
+"signIn":"prijaviti se",
+"passwords_are_different":"gesla so različna",
+"email_not_found":"E-poštnega naslova ni bilo mogoče najti",
+"re_enter_password":"Ponovno vpišite geslo"
+}

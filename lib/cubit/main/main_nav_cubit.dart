@@ -7,6 +7,6 @@ class MainNavCubit extends Cubit<Widget>{
 
   MainNavCubit(Widget initialState) : super(initialState);
 
-  void goTeScreen(Pages pages) => emit(pages.page);
+  void goToScreen(Pages pages) => emit(pages.page);
 
 }

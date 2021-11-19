@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Påloggingsfeil prøv å registrere deg",
+"emailErrorText":"ugyldig epostadresse",
+"emailCaption":"e-post",
+"passwordErrorText":"passordet er for kort",
+"forgot_password":"Glemt passord?",
+"skip":"Hopp over",
+"signUp":"melde deg på",
+"passwordCaption":"passord",
+"reset":"tilbakestille passord",
+"signIn":"Logg inn",
+"passwords_are_different":"passord er forskjellige",
+"email_not_found":"Finner ikke e-post",
+"re_enter_password":"Skriv inn passord på nytt"
+}

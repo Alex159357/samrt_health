@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,20 +35,20 @@ class PageTwo extends BaseStateLess {
                   ),
                 ),
                 SizedBox(
-                  width: 300,
-                  height: 300,
+                  width: MediaQuery.of(context).size.width  - MediaQuery.of(context).size.width / 5,
+                  height: MediaQuery.of(context).size.height  - MediaQuery.of(context).size.height / 2,
                   child: SvgPicture.asset("assets/img/slide_2.svg",
                       semanticsLabel: 'Acme Logo'),
                 ),
                 Container(
                   child: Center(
                       child: SizedBox(
-                          width: 300,
+                          width: MediaQuery.of(context).size.width  - MediaQuery.of(context).size.width / 5,
                           child: getTranslatedText(
-                            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
+                            text:
+                                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the",
                             style: TextStyle(color: Colors.white),
-                          )
-                      )),
+                          ))),
                 )
               ],
             ),
@@ -61,10 +62,9 @@ class PageTwo extends BaseStateLess {
                               prefs.setBool("intro", true);
                               context
                                   .read<MainNavCubit>()
-                                  .goTeScreen(Pages.AUTH);
+                                  .goToScreen(Pages.AUTH);
                             },
-                            text:  translation
-                                .getTranslate("skip"),
+                            text: tr("skip"),
                             background: Color(0xff8167e6),
                             textColor: Colors.white,
                             borderColor: Colors.white))))

@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"లాగిన్ లోపం సైన్ అప్ చేయడానికి ప్రయత్నించండి",
+"emailErrorText":"చెల్లని ఇమెయిల్ చిరునామా",
+"emailCaption":"ఇ-మెయిల్",
+"passwordErrorText":"పాస్వర్డ్ చాలా చిన్నది",
+"forgot_password":"పాస్వర్డ్ మర్చిపోయారా?",
+"skip":"దాటవేయి",
+"signUp":"చేరడం",
+"passwordCaption":"పాస్వర్డ్",
+"reset":"రహస్యపదాన్ని మార్చుకోండి",
+"signIn":"సైన్ ఇన్ చేయండి",
+"passwords_are_different":"పాస్వర్డ్లు భిన్నంగా ఉంటాయి",
+"email_not_found":"ఇమెయిల్ కనుగొనబడలేదు",
+"re_enter_password":"పాస్వర్డ్ను మళ్లీ నమోదు చేయండి"
+}

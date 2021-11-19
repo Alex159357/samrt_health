@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Error de inicio de sesión intente registrarse",
+"emailErrorText":"dirección de correo electrónico no válida",
+"emailCaption":"Email",
+"passwordErrorText":"la contraseña es demasiado corta",
+"forgot_password":"¿Has olvidado tu contraseña?",
+"skip":"Saltar",
+"signUp":"inscribirse",
+"passwordCaption":"contraseña",
+"reset":"restablecer la contraseña",
+"signIn":"iniciar sesión",
+"passwords_are_different":"las contraseñas son diferentes",
+"email_not_found":"El correo electrónico no encontrado",
+"re_enter_password":"Escriba la contraseña otra vez"
+}

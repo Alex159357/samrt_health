@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Eroare de conectare, încercați să vă înscrieți",
+"emailErrorText":"Adresa email invalida",
+"emailCaption":"e-mail",
+"passwordErrorText":"parola este prea scurtă",
+"forgot_password":"Ați uitat parola?",
+"skip":"Ocolire",
+"signUp":"Inscrie-te",
+"passwordCaption":"parola",
+"reset":"reseteaza parola",
+"signIn":"conectare",
+"passwords_are_different":"parolele sunt diferite",
+"email_not_found":"E-mail nu a fost găsit",
+"re_enter_password":"Reintrodu parola"
+}

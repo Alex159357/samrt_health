@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Kirjautumisvirhe yritä rekisteröityä",
+"emailErrorText":"epäkelpo sähköpostiosoite",
+"emailCaption":"sähköposti",
+"passwordErrorText":"salasana on liian lyhyt",
+"forgot_password":"Unohtuiko salasana?",
+"skip":"Ohita",
+"signUp":"Kirjaudu",
+"passwordCaption":"Salasana",
+"reset":"Nollaa salasana",
+"signIn":"Kirjaudu sisään",
+"passwords_are_different":"salasanat ovat erilaisia",
+"email_not_found":"Sähköpostia ei löydy",
+"re_enter_password":"Kirjoita salasana uudelleen"
+}

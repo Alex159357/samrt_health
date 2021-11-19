@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Gabim identifikimi provoni të regjistroheni",
+"emailErrorText":"adresë emaili e pavlefshme",
+"emailCaption":"e-mail",
+"passwordErrorText":"fjalëkalimi është shumë i shkurtër",
+"forgot_password":"keni harruar fjalëkalimin?",
+"skip":"Kapërceni",
+"signUp":"regjistrohu",
+"passwordCaption":"fjalëkalimin",
+"reset":"rivendosni fjalëkalimin",
+"signIn":"Hyni",
+"passwords_are_different":"fjalëkalimet janë të ndryshme",
+"email_not_found":"Email nuk u gjet",
+"re_enter_password":"rifutni fjalëkalimin"
+}

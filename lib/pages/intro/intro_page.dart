@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +30,14 @@ class _IntroPageState extends State<IntroPage> {
   ];
   final LiquidController _liquidController = LiquidController();
 
+
+
+  late Widget textTranslate1 = translation.getTranslatedText(text:"To change slide swipe from RIGHT to LEFT", style: GoogleFonts.roboto(color: Colors.white),);
+
+  void _updateState(){
+    textTranslate1 = translation.getTranslatedText(text:"To change slide swipe from RIGHT to LEFT", style: GoogleFonts.roboto(color: Colors.white),);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool hint = prefs.getBool("hint") ?? false;
@@ -45,7 +54,6 @@ class _IntroPageState extends State<IntroPage> {
                 pages: pages,
                 onPageChangeCallback: (i){
                   context.read<IntroCubit>().add(Intro.PAGE_CHANGED);
-                  //todo use cubit here to hide icon if end of
                 },
               ),
               state == Intro.SHOW_HINT?
@@ -65,24 +73,33 @@ class _IntroPageState extends State<IntroPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 30),
-                        child: Text("To change slide swipe ffrom RIGHT to LEFT", style: GoogleFonts.roboto(color: Colors.white),),
+                        child: textTranslate1,
                       ),
                       Container(
                           margin: const EdgeInsets.only(bottom: 50),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("press ", style: GoogleFonts.roboto(color: Colors.white),),
+
                               TextButton(
                                 onPressed: (){
-                                  prefs.setBool("hint", true);
+                                  // prefs.setBool("hint", true);
+                                  setState(() {});
                                   context.read<IntroCubit>().add(Intro.HIDE_HINT);
                                 },
                                 child: Text("okay", style: TextStyle(color: Color(0xff8167e6), fontWeight: FontWeight.bold, fontSize: 18),),
                               ),
-                              Text("to continue", style: GoogleFonts.roboto(color: Colors.white),)
                             ],
-                          ))
+                          )),
+                      // EasyLocalization.of(context)!.locale != Locale("en")?
+                      TextButton(
+                        onPressed: () {
+                            context.setLocale(Locale('en'));
+                            locale = EasyLocalization.of(context)!.locale.languageCode;
+                            _updateState();
+                        },
+                        child: const Text("Switch to English"),
+                      )//: Container(),
                     ],
                   ),
                 ),

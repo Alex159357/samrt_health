@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Грешка при влизане, опитайте се да се регистрирате",
+"emailErrorText":"Невалиден имейл адрес",
+"emailCaption":"електронна поща",
+"passwordErrorText":"паролата е твърде кратка",
+"forgot_password":"Забравена парола?",
+"skip":"Пропусни",
+"signUp":"Регистрирай се",
+"passwordCaption":"парола",
+"reset":"нулиране на паролата",
+"signIn":"Впиши се",
+"passwords_are_different":"паролите са различни",
+"email_not_found":"Имейл не е намерен",
+"re_enter_password":"въведете отново парола"
+}

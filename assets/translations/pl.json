@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Błąd logowania spróbuj się zarejestrować",
+"emailErrorText":"niepoprawny adres email",
+"emailCaption":"e-mail",
+"passwordErrorText":"hasło jest za krótkie",
+"forgot_password":"Zapomniałeś hasła?",
+"skip":"Pominąć",
+"signUp":"Zapisz się",
+"passwordCaption":"hasło",
+"reset":"Zresetuj hasło",
+"signIn":"Zaloguj się",
+"passwords_are_different":"hasła są różne",
+"email_not_found":"Email nie znaleziony",
+"re_enter_password":"Wprowadź ponownie hasło"
+}

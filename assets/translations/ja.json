@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ログインエラーサインアップしよう",
+"emailErrorText":"無効なメールアドレス",
+"emailCaption":"Eメール",
+"passwordErrorText":"パスワードが短すぎます",
+"forgot_password":"パスワードをお忘れですか？",
+"skip":"スキップ",
+"signUp":"サインアップ",
+"passwordCaption":"パスワード",
+"reset":"パスワードを再設定する",
+"signIn":"ログイン",
+"passwords_are_different":"パスワードが異なります",
+"email_not_found":"メールが見つかりません",
+"re_enter_password":"パスワード再入力"
+}

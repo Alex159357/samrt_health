@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"लगइन त्रुटि साइन अप गर्न प्रयास गर्नुहोस्",
+"emailErrorText":"अवैध इमेल ठेगाना",
+"emailCaption":"इ-मेल",
+"passwordErrorText":"पासवर्ड धेरै छोटो छ",
+"forgot_password":"पासवर्ड भुल्नु भयो?",
+"skip":"छोड्नुहोस्",
+"signUp":"साइन अप",
+"passwordCaption":"पासवर्ड",
+"reset":"पासवर्ड रिसेट",
+"signIn":"साइन इन गर्नुहोस्",
+"passwords_are_different":"पासवर्ड फरक छन्",
+"email_not_found":"इमेल फेला परेन",
+"re_enter_password":"पासवर्ड पुन: प्रविष्टि गर्नुहोस्"
+}

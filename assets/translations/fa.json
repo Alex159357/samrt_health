@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"خطای ورود سعی کنید ثبت نام کنید",
+"emailErrorText":"آدرس ایمیل نامعتبر",
+"emailCaption":"پست الکترونیک",
+"passwordErrorText":"رمز عبور خیلی کوتاه است",
+"forgot_password":"رمز عبور را فراموش کرده اید؟",
+"skip":"پرش کنید",
+"signUp":"ثبت نام",
+"passwordCaption":"کلمه عبور",
+"reset":"بازنشانی رمز عبور",
+"signIn":"ورود",
+"passwords_are_different":"رمزهای عبور متفاوت است",
+"email_not_found":"ایمیل پیدا نشد",
+"re_enter_password":"رمز عبور را دوباره وارد کنید"
+}

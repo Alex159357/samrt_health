@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Erro de login, tente se inscrever",
+"emailErrorText":"endereço de email invalido",
+"emailCaption":"o email",
+"passwordErrorText":"a senha é muito curta",
+"forgot_password":"Esqueceu sua senha?",
+"skip":"Pular",
+"signUp":"inscrever-se",
+"passwordCaption":"senha",
+"reset":"redefinir senha",
+"signIn":"entrar",
+"passwords_are_different":"as senhas são diferentes",
+"email_not_found":"email não encontrado",
+"re_enter_password":"Digite novamente a senha"
+}

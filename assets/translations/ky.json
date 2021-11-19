@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Кирүү катасы катталып көрүңүз",
+"emailErrorText":"жараксыз электрондук почта дареги",
+"emailCaption":"электрондук почта",
+"passwordErrorText":"сырсөз өтө кыска",
+"forgot_password":"сырсөздү унуттуңузбу?",
+"skip":"Өткөрүп жибер",
+"signUp":"Кирүү",
+"passwordCaption":"купуя сөз",
+"reset":"сырсөздү кайра коюу",
+"signIn":"Кирүү",
+"passwords_are_different":"сырсөздөр ар түрдүү",
+"email_not_found":"Электрондук почта табылган жок",
+"re_enter_password":"сырсөздү кайра киргизиңиз"
+}

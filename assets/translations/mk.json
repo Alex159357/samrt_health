@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Грешка при најавување, обидете се да се регистрирате",
+"emailErrorText":"неважечка адреса на е-пошта",
+"emailCaption":"е-пошта",
+"passwordErrorText":"лозинката е прекратка",
+"forgot_password":"Ја заборави лозинката?",
+"skip":"Прескокни",
+"signUp":"пријавете се",
+"passwordCaption":"лозинка",
+"reset":"Ресетирање на Лозинка",
+"signIn":"Најави се",
+"passwords_are_different":"лозинките се различни",
+"email_not_found":"Е-поштата не е пронајдена",
+"re_enter_password":"Внеси ја повторно лозинката"
+}

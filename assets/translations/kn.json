@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"ಲಾಗಿನ್ ದೋಷ ಸೈನ್ ಅಪ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ",
+"emailErrorText":"ಅಮಾನ್ಯ ಇಮೇಲ್ ವಿಳಾಸ",
+"emailCaption":"ಇಮೇಲ್",
+"passwordErrorText":"ಪಾಸ್ವರ್ಡ್ ತುಂಬಾ ಚಿಕ್ಕದಾಗಿದೆ",
+"forgot_password":"ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?",
+"skip":"ಬಿಟ್ಟುಬಿಡಿ",
+"signUp":"ಸೈನ್ ಅಪ್",
+"passwordCaption":"ಗುಪ್ತಪದ",
+"reset":"ಪಾಸ್ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ",
+"signIn":"ಸೈನ್ ಇನ್",
+"passwords_are_different":"ಪಾಸ್ವರ್ಡ್ಗಳು ವಿಭಿನ್ನವಾಗಿವೆ",
+"email_not_found":"ಇಮೇಲ್ ಕಂಡುಬಂದಿಲ್ಲ",
+"re_enter_password":"ಪಾಸ್ವರ್ಡ್ಅನ್ನು ಮತ್ತೆ ಹಾಕಿ"
+}

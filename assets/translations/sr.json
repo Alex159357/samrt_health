@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Грешка при пријављивању покушајте да се региструјете",
+"emailErrorText":"Погрешна емаил адреса",
+"emailCaption":"е-маил",
+"passwordErrorText":"лозинка је прекратка",
+"forgot_password":"Заборавили сте лозинку?",
+"skip":"Скип",
+"signUp":"пријави се",
+"passwordCaption":"Лозинка",
+"reset":"Ресетуј шифру",
+"signIn":"Пријавите се",
+"passwords_are_different":"лозинке су различите",
+"email_not_found":"Е-пошта није пронађена",
+"re_enter_password":"поново унеси лозинку"
+}

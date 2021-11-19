@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"שגיאת התחברות נסה להירשם",
+"emailErrorText":"כתובת אימייל לא חוקית",
+"emailCaption":"אימייל",
+"passwordErrorText":"הסיסמה קצרה מדי",
+"forgot_password":"שכחת ססמא?",
+"skip":"לדלג",
+"signUp":"הירשם",
+"passwordCaption":"סיסמה",
+"reset":"לאפס את הסיסמה",
+"signIn":"להתחבר",
+"passwords_are_different":"סיסמאות שונות",
+"email_not_found":"אימייל לא נמצא",
+"re_enter_password":"תכניס מחדש סיסמה"
+}

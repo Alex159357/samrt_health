@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:916123805421:android:ba5ab0fdd29c5bc9c54ee4",
+        "mobilesdk_app_id": "1:916123805421:android:ec2d5138c2dbd93bc54ee4",
         "android_client_info": {
           "package_name": "com.mda_soft.smart_health"
         }
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCxdAx1Xo4y4MT51UPkwoyW2pfWWFiAdbg"
+          "current_key": "AIzaSyBTmvR4epEOujbwDRQ5lWIMg9l_RxiD6rU"
         }
       ],
       "services": {

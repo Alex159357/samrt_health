@@ -1,5 +1,4 @@
-
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,20 +27,27 @@ class PageThree extends BaseStateLess {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  child: getTranslatedText( text: "Slogan 3", style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),),
-                ),
-                SizedBox(
-                  width: 300,
-                  height: 300,
-                  child: SvgPicture.asset(
-                      "assets/img/slide_3.svg",
-                      semanticsLabel: 'Acme Logo'
+                  child: getTranslatedText(
+                    text: "Slogan 3",
+                    style:
+                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26)),
                   ),
                 ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width / 5,
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).size.height / 2,
+                  child: SvgPicture.asset("assets/img/slide_3.svg",
+                      semanticsLabel: 'Acme Logo'),
+                ),
                 Container(
-                  child: Center(child: SizedBox(width: 300, child:
-                  getTranslatedText( text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the ")
-                  )),
+                  child: Center(
+                      child: SizedBox(
+                          width: MediaQuery.of(context).size.width  - MediaQuery.of(context).size.width / 5,
+                          child: getTranslatedText(
+                              text:
+                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the "))),
                 )
               ],
             ),
@@ -53,14 +59,14 @@ class PageThree extends BaseStateLess {
                         child: Buttons.mainButton(
                             onPressed: () {
                               prefs.setBool("intro", true);
-                              context.read<MainNavCubit>().goTeScreen(Pages.AUTH);
+                              context
+                                  .read<MainNavCubit>()
+                                  .goToScreen(Pages.AUTH);
                             },
-                            text:  translation
-                                .getTranslate("signIn"),
+                            text: tr("signIn"),
                             background: Colors.white,
                             textColor: Color(0xff8167e6),
-                            borderColor: Color(0xff8167e6)))
-                ))
+                            borderColor: Color(0xff8167e6)))))
           ],
         ),
       ),

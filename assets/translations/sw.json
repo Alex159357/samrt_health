@@ -1,0 +1,15 @@
+{
+"Login_error_try_to_sign_up":"Hitilafu ya kuingia jaribu kujisajili",
+"emailErrorText":"anwani ya barua pepe batili",
+"emailCaption":"barua pepe",
+"passwordErrorText":"nenosiri ni fupi mno",
+"forgot_password":"Umesahau nywila?",
+"skip":"Ruka",
+"signUp":"kujiandikisha",
+"passwordCaption":"nenosiri",
+"reset":"weka upya nenosiri",
+"signIn":"Weka sahihi",
+"passwords_are_different":"nywila ni tofauti",
+"email_not_found":"Barua pepe haikupatikana",
+"re_enter_password":"ingiza tena nenosiri"
+}
