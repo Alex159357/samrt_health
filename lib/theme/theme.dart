@@ -6,11 +6,13 @@ import 'package:samrt_health/theme/theme_controller.dart';
 class AppTheme {
   ThemeData _darkTheme = ThemeData.dark().copyWith();
 
+
   final ThemeData _lightTheme = ThemeData(
       brightness: Brightness.light,
       visualDensity: const VisualDensity(vertical: 0.5, horizontal: 0.5),
       primarySwatch: const MaterialColor(
-        0xFFF5E0C3,
+        0xff8167e6,
+        //todo change colors to primary
         <int, Color>{
           50: Color(0x1a5D4524),
           100: Color(0xa15D4524),
@@ -34,9 +36,9 @@ class AppTheme {
       canvasColor: const Color(0xff457BE0),
       accentColor: const Color(0xff457BE0),
       accentColorBrightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xffcccccc),
+      scaffoldBackgroundColor: const Color(0xfff2f9fc),
       backgroundColor: const Color(0xfff4f8fe),
-      bottomAppBarColor: const Color(0xffcfd8dc),
+      bottomAppBarColor: const Color(0xffeceff1),
       cardColor: const Color(0xaa311F06),
       dividerColor: const Color(0x1f6D42CE),
       focusColor: const Color(0x1a311F06),

@@ -26,7 +26,8 @@ class App extends StatelessWidget {
                   (locale, Iterable<Locale> supportedLocales) {
                 return locale;
               },
-              home: MainPage());
+              home: ThemeSwitchingArea(
+              child:MainPage()));
         });
   }
 }

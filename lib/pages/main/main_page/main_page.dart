@@ -6,7 +6,7 @@ import 'package:samrt_health/event/db/fb_event.dart';
 import 'package:samrt_health/repository/firebase_repository.dart';
 import 'package:samrt_health/state/fb/fb_state.dart';
 
-import '../user_data.dart';
+import '../user_data_view.dart';
 
 class MainPage extends StatelessWidget {
   final FirebaseRepository _firebaseRepository =

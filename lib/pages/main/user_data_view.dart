@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:samrt_health/bloc/user_data/user_data_bloc.dart';
 import 'package:samrt_health/state/user_data/user_data_state.dart';
+import 'package:samrt_health/theme/theme.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:weight_slider/weight_slider.dart';
 import 'package:samrt_health/event/user_data/user_data_event.dart';
@@ -16,6 +18,31 @@ class UserData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          ThemeSwitcher(
+              clipper: ThemeSwitcherCircleClipper(),
+              builder: (context) {
+                return ThemeSwitcher(
+                  builder: (context) {
+                    return IconButton(
+                      onPressed: () {
+                        var brightness = ThemeProvider.of(context)!.brightness;
+                        ThemeSwitcher.of(context)!.changeTheme(
+                          theme: brightness == Brightness.light
+                              ? AppTheme.darkTheme
+                              : AppTheme.lightTheme,
+                          reverseAnimation:
+                              brightness == Brightness.dark ? true : false,
+                        );
+                      },
+                      icon: ThemeProvider.of(context)!.brightness == Brightness.light? Icon(Icons.brightness_3, size: 25): Icon(Icons.brightness_4, size: 25),
+                    );
+                  },
+                );
+              })
+        ],
+      ),
       body: BlocProvider(
           create: (BuildContext context) => UserDataBloc(),
           child: SafeArea(child: _getBody(context))),
@@ -57,11 +84,7 @@ class UserData extends StatelessWidget {
                 child: Container(
                   child: ResponsiveGridRow(children: [
                     ResponsiveGridCol(
-                        xs: 5,
-                        sm: 5,
-                        md: 5,
-                        lg: 4,
-                        child:  _getHeightSlider),
+                        xs: 5, sm: 5, md: 5, lg: 4, child: _getHeightSlider),
                     ResponsiveGridCol(
                         xs: 7, sm: 7, md: 7, lg: 4, child: _getWeight),
                     ResponsiveGridCol(
@@ -129,47 +152,47 @@ class UserData extends StatelessWidget {
         builder: (BuildContext context, state) {
           return _getContainer(
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                child: WeightSlider(
-            weight: state.weight.toInt(),
-            minWeight: 40,
-            maxWeight: 120,
-            onChange: (val) => context.read<UserDataBloc>().add(OnWeightChangeEvent(val.toDouble())),
-            unit: tr('kg'), // optional
-          ),
-              ));
+            duration: const Duration(milliseconds: 500),
+            child: WeightSlider(
+              weight: state.weight.toInt(),
+              minWeight: 40,
+              maxWeight: 120,
+              onChange: (val) => context
+                  .read<UserDataBloc>()
+                  .add(OnWeightChangeEvent(val.toDouble())),
+              unit: tr('kg'), // todo add selector metric system
+            ),
+          ));
         },
       );
 
-  Widget get _getHeightSlider => BlocBuilder<UserDataBloc, UserDataState>(builder: (BuildContext context, state) {
-    return _getContainer(
-        child: SleekCircularSlider(
-          appearance: CircularSliderAppearance(
-              customWidths: CustomSliderWidths(
-                progressBarWidth: 5,
-              ),
-              counterClockwise: false,
-              infoProperties: InfoProperties(
-                bottomLabelText: tr("height"),
-                // topLabelText: "label",
-                modifier: percentageModifier,
-              ),
-              customColors: CustomSliderColors(
-                  trackColor: Color(0x338167e6),
-                  dotColor: Colors.pink,
-                  progressBarColors: [
-                    Color(0xff8167e6),
-                    Colors.tealAccent
-                  ])),
-          min: 100,
-          max: 250,
-          initialValue: 130,
-          onChangeEnd: (double endValue) => context.read<UserDataBloc>().add(OnHeightChangeEvent(endValue.ceil().toDouble())),
-        ));
-  },
-  );
-
-
+  Widget get _getHeightSlider => BlocBuilder<UserDataBloc, UserDataState>(
+        builder: (BuildContext context, state) {
+          return _getContainer(
+              child: SleekCircularSlider(
+            appearance: CircularSliderAppearance(
+                customWidths: CustomSliderWidths(
+                  progressBarWidth: 5,
+                ),
+                counterClockwise: false,
+                infoProperties: InfoProperties(
+                  bottomLabelText: tr("height"),
+                  // topLabelText: "label",
+                  modifier: percentageModifier,
+                ),
+                customColors: CustomSliderColors(
+                    trackColor: Color(0x338167e6),
+                    dotColor: Colors.pink,
+                    progressBarColors: [Color(0xff8167e6), Colors.tealAccent])),
+            min: 100,
+            max: 250,
+            initialValue: 130,
+            onChangeEnd: (double endValue) => context
+                .read<UserDataBloc>()
+                .add(OnHeightChangeEvent(endValue.ceil().toDouble())),
+          ));
+        },
+      );
 }
 
 String percentageModifier(double value) {
