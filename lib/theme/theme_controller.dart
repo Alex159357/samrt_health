@@ -23,7 +23,6 @@ extension Theme on CurrentTheme {
         return 5;
     }
   }
-
 }
 
 class ThemeController {

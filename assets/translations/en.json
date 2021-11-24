@@ -16,5 +16,16 @@
   "login_by_facebook": "sig in by Facebook",
   "height": "Height",
   "weight": "Weight",
-  "kg": "kg"
+  "kg": "kg",
+  "sm": "sm",
+  "user_data_text": "Please fill in all the fields, it won't take long. All data you fill in is stored in encrypted form and is not available to third parties. The data you enter is only needed for more accurate operation of the application and more correct advice.",
+  "smoking": "Smoking?",
+  "drink_alcohol": "Drinking alcohol?",
+  "steps_per_day":"Steps per day",
+  "steps_per_day_description": "Indicate an approximate average number of steps per day",
+  "birthday": "Birthday date",
+  "gender": "Gender",
+  "sports_per_week": "Sports activities per week",
+  "sports_per_week_description": "Indicate the average time you spend on sports per week",
+  "ok_button":"Let's do it"
 }

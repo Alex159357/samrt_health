@@ -1,17 +1,21 @@
+
+
+import 'dart:ffi';
+
 class UserDataState {
   final String name;
   final String email;
   final int age;
   final double weight;
   final double height;
-  final int stepsPerDay;
+  final double stepsPerDay;
   final String avatar;
   final String gender;
   final bool isVegan;
   final double hourSportPerWeek;
   final int alcohol;
   final int smoke;
-  final String birthday;
+  final int birthday;
 
   bool get isNameValid => name.length > 3;
 
@@ -25,14 +29,14 @@ class UserDataState {
       this.age = 0,
       this.weight = 0,
       this.height = 0,
-      this.stepsPerDay = 0,
+      this.stepsPerDay = 500,
       this.avatar = "",
       this.gender = "",
       this.isVegan = false,
       this.hourSportPerWeek = 0,
       this.alcohol = 0,
       this.smoke = 0,
-      this.birthday = ""});
+      this.birthday = 0 });
 
   UserDataState copy(
           {String? name,
@@ -40,14 +44,14 @@ class UserDataState {
           int? age,
           double? weight,
           double? height,
-          int? stepsPerDay,
+          double? stepsPerDay,
           String? avatar,
           String? gender,
           bool? isVegan,
           double? hourSportPerWeek,
           int? alcohol,
           int? smoke,
-          String? birthday}) =>
+            int? birthday}) =>
       UserDataState(
           name: name ?? this.name,
           age: age ?? this.age,

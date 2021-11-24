@@ -18,6 +18,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     if (event is OnVeganChangeEvent) yield state.copy(isVegan: event.ifVegan);
     if (event is OnHoursSportChangeEvent) yield state.copy(hourSportPerWeek: event.hourSportPerWeek);
     if (event is OnAlcoholChangeEvent) yield state.copy(alcohol: event.alcohol);
-    // if(event is OnBirthdayChangeEvent) yield state.copy(birthday: event.birthday);
+    if(event is OnBirthdayChangeEvent) yield state.copy(birthday: event.birthday);
+    if(event is OnSmokeChangeEvent) yield state.copy(smoke: event.smoke);
   }
 }

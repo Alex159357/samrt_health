@@ -36,7 +36,7 @@ class OnHeightChangeEvent extends UserDataEvent{
 }
 
 class OnStetsChangeEvent extends UserDataEvent{
-  final int steps;
+  final double steps;
 
   OnStetsChangeEvent(this.steps);
 }
@@ -72,9 +72,15 @@ class OnAlcoholChangeEvent extends UserDataEvent{
 }
 
 class OnBirthdayChangeEvent extends UserDataEvent{
-  final String birthday;
+  final int birthday;
 
   OnBirthdayChangeEvent(this.birthday);
+}
+
+class OnSmokeChangeEvent extends UserDataEvent{
+  final int smoke;
+
+  OnSmokeChangeEvent(this.smoke);
 }
 
 

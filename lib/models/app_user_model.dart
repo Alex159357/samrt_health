@@ -5,7 +5,7 @@ class UserModel {
   final int age;
   final double weight;
   final double height;
-  final int stepsPerDay;
+  final double stepsPerDay;
   final String avatar;
   final String gender;
   final bool isVegan;

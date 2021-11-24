@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:samrt_health/theme/theme_controller.dart';
 
 class AppTheme {
@@ -10,44 +11,49 @@ class AppTheme {
   final ThemeData _lightTheme = ThemeData(
       brightness: Brightness.light,
       visualDensity: const VisualDensity(vertical: 0.5, horizontal: 0.5),
-      primarySwatch: const MaterialColor(
-        0xff8167e6,
-        //todo change colors to primary
-        <int, Color>{
-          50: Color(0x1a5D4524),
-          100: Color(0xa15D4524),
-          200: Color(0xaa5D4524),
-          300: Color(0xaf5D4524),
-          400: Color(0x1a483112),
-          500: Color(0xa1483112),
-          600: Color(0xaa483112),
-          700: Color(0xff483112),
-          800: Color(0xaf2F1E06),
-          900: Color(0xff2F1E06)
-        },
-      ),
       appBarTheme: const AppBarTheme(
-          backgroundColor:  Color(0xff457BE0)
+          backgroundColor:  Colors.white
       ),
-      primaryColor: const Color(0xff5D4524),
-      primaryColorBrightness: Brightness.dark,
-      primaryColorLight: const Color(0x1a311F06),
+      primaryColor: const Color(0xff8167e6),
+      primaryColorBrightness: Brightness.light,
+      primaryColorLight: const Color(0x218167e6),
       primaryColorDark: const Color(0xff0a46cd),
       canvasColor: const Color(0xff457BE0),
-      accentColor: const Color(0xff457BE0),
-      accentColorBrightness: Brightness.dark,
       scaffoldBackgroundColor: const Color(0xfff2f9fc),
-      backgroundColor: const Color(0xfff4f8fe),
+      backgroundColor: const Color(0xffeeeeee),
       bottomAppBarColor: const Color(0xffeceff1),
-      cardColor: const Color(0xaa311F06),
+      cardColor: const Color(0xffffffff),
       dividerColor: const Color(0x1f6D42CE),
       focusColor: const Color(0x1a311F06),
       bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Color(0xffcfd8dc)
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(primary: const Color(0xff0a46cd)),
-      )
+        style: TextButton.styleFrom(primary: const Color(0xff8167e6)),
+      ),
+      textTheme: TextTheme(
+        headline6: GoogleFonts.roboto(color: Colors.black38),
+        caption: GoogleFonts.roboto(fontSize: 24),
+        bodyText1: GoogleFonts.roboto(fontSize: 14, color: Colors.black45, fontWeight: FontWeight.w100),
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.black38
+      ),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: const MaterialColor(
+        0xff8167e6,
+        //todo change colors to primary
+        <int, Color>{
+          50: Color(0xff8167e6),
+          100: Color(0xff8167e6),
+          200: Color(0xff8167e6),
+          300: Color(0xff8167e6),
+          400: Color(0xff8167e6),
+          600: Color(0xff8167e6),
+          700: Color(0xff8167e6),
+          800: Color(0xff8167e6),
+          900: Color(0xff8167e6)
+        },
+      )).copyWith(secondary: const Color(0xff00bcd4))
   );
 
   final ThemeData _pinkTheme = ThemeData(

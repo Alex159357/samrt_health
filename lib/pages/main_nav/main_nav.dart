@@ -1,3 +1,4 @@
+import 'package:device_info/device_info.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,7 @@ class MainNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    fevice();
     return BlocProvider(
         create: (ctx)=> AuthenticationBloc(userRepository: UserRepository()),
     child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -54,9 +56,14 @@ class MainNav extends StatelessWidget {
         ),
       );
     }));
+
   }
 
-
+  Future<void> fevice()async{
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print('Running on ${androidInfo.androidId}');  // e.g. "Moto G (4)"
+  }
 
 
 }

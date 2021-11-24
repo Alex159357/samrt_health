@@ -11,6 +11,11 @@ late FirebaseApp firebaseApp;
 late String locale;
 Translation translation = Translation();
 
+bool get ifTablet {
+  final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
+  return data.size.shortestSide > 600;
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
