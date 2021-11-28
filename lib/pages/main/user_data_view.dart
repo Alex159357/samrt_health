@@ -105,7 +105,7 @@ class UserData extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
         child: ElevatedButton(child: Text("Start using"), onPressed: () {
-          // context.read<AuthenticationBloc>().add(SignOut());
+          context.read<AuthenticationBloc>().add(SignOut());
           if (_formKey.currentState!.validate()) {
 
           }
@@ -137,13 +137,15 @@ class UserData extends StatelessWidget {
 
   Widget _getBody(BuildContext context) {
     // context.read<AuthenticationBloc>().add(SignOut());
+    var user =( context.read<AuthenticationBloc>().state as Authenticated).user;
     return  CustomScrollView(
         slivers: [
           SliverAppBar(
             iconTheme: Theme.of(context).iconTheme,
             backgroundColor: Theme.of(context).backgroundColor,
             collapsedHeight: 60,
-            title: Text("Text", style: Theme.of(context).textTheme.caption),
+            pinned: false,
+            floating: false,
             actions: [
               ThemeSwitcher(
                   clipper: const ThemeSwitcherCircleClipper(),
@@ -259,66 +261,49 @@ class UserData extends StatelessWidget {
               context.read<AuthenticationBloc>().state as Authenticated;
           var avatar =  ClipRRect(
               borderRadius: BorderRadius.circular(1000),
-              child: authState.user.photoURL == null?
+              child: authState.user.photoURL != null?
               Image.network(
                 authState.user.photoURL!,
                 fit: BoxFit.cover,
-                height: 150.0,
-                width: 150.0,
+                height: 100.0,
+                width: 100.0,
               ): Container(width: 150, height: 150, color: Theme.of(context).primaryColor.withOpacity(0.5), child: Icon(Icons.add, size: 100, color: Colors.white,)));
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ResponsiveGridRow(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Row(
                   children: [
-                    ResponsiveGridCol(
-                      xs: 12,
-                      sm: 4,
-                      md: 6,
-                      lg: 3,
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: ()=>_showBottomSheet(context),
-                            child: avatar,
-                          )
-                        ],
-                      )
-                    ),
-                    // ResponsiveGridCol(
-                    //   xs: 12,
-                    //   sm: 4,
-                    //   md: 6,
-                    //   lg: 6,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Card(
-                    //       color: Theme.of(context).cardColor.withOpacity(0.5),
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(12.0),
-                    //         child: Column(
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           children: [
-                    //             Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: _getNameField,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: _getEmailField,
-                    //             )
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      margin: EdgeInsets.only(top: 26),
+                        child: GestureDetector(
+                          onTap: ()=>_showBottomSheet(context),
+                            child: avatar)),
+
+                    Container(
+                        margin: EdgeInsets.symmetric(horizontal: 6, vertical: 26),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(authState.user.displayName?? "", style: Theme.of(context).textTheme.headline5),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(authState.user.email?? "",),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(authState.user.phoneNumber??"",),
+                            ),
+                          ],
+                        )),
                   ],
-                ),
+                )
               ],
             ),
           );

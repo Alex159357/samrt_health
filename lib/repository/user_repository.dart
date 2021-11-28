@@ -32,8 +32,8 @@ class UserRepository {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  Future<UserCredential> signInWithCredentials(String email, String password) {
-    return _firebaseAuth.signInWithEmailAndPassword(
+  Future<UserCredential> signInWithCredentials(String email, String password)async {
+    return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -55,6 +55,7 @@ class UserRepository {
   }
 
   Future<void> signOut() async {
+    await _googleSignIn.signOut();
     return _firebaseAuth.signOut();
   }
 

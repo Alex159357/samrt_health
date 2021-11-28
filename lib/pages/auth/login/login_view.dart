@@ -10,6 +10,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:samrt_health/bloc.dart';
 import 'package:samrt_health/bloc/auth/login_bloc.dart';
 import 'package:samrt_health/cubit/auth/auth_cubit.dart';
 import 'package:samrt_health/event/auth/login_event.dart';
@@ -37,7 +38,9 @@ class LoginView extends AuthStateLess {
         listener: (BuildContext context, state) {
           final formStatus = state.formStatus;
           if (formStatus is SubmissionFailed) {}
-          if (formStatus is SubmissionSuccess) {}
+          if (formStatus is SubmissionSuccess) {
+            context.read<AuthenticationBloc>().add(CheckLogin());
+          }
         },
         child: Container(
             child: _getForm()),
@@ -142,9 +145,12 @@ class LoginView extends AuthStateLess {
         validator: (value) => state.isValidUsername
             ? null
             : tr("emailErrorText"),
-        onChanged: (value) => context
-            .read<LoginBloc>()
-            .add(LoginEventOnChangedUsername(username: value)),
+        onChanged: (value) {
+          context
+              .read<LoginBloc>()
+              .add(LoginEventOnChangedUsername(username: value));
+
+        },
       );
     });
   }

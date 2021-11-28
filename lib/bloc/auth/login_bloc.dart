@@ -26,8 +26,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginEventOnSubmitted) {
       yield state.copyWith(formStatus: FormSubmitting());
       try {
-        await Future.delayed(const Duration(milliseconds: 3000));
         await userRepo.signInWithCredentials(state.email, state.password);
+        await Future.delayed(const Duration(milliseconds: 3000));
         yield state.copyWith(formStatus: SubmissionSuccess());
       } catch (e) {
         yield state.copyWith(formStatus: SubmissionFailed(e as Exception));

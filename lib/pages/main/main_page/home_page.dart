@@ -25,7 +25,6 @@ class HomePage extends StatelessWidget {
         child: BlocListener<FbBloc, FbState>(
           listener: (context, state) {
             if (state is InitialisedState) {
-              print("asdsasasad");
               context.read<FbBloc>().add(IfUserExistsEvent(user.uid));
             }
           },

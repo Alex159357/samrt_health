@@ -12,7 +12,7 @@ class AppTheme {
       brightness: Brightness.light,
       visualDensity: const VisualDensity(vertical: 0.5, horizontal: 0.5),
       appBarTheme: const AppBarTheme(
-          backgroundColor:  Colors.white
+          backgroundColor:  Color(0xff8167e6)
       ),
       primaryColor: const Color(0xff8167e6),
       primaryColorBrightness: Brightness.light,
