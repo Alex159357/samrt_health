@@ -38,5 +38,9 @@
   "male": "Male",
   "others": "Others",
   "usual": "Usual",
-  "name": "Name"
+  "name": "Name",
+  "take_photo":"take photo",
+  "select_from_device": "select from device",
+  "cancel": "cancel",
+  "profile_photo": "profile photo"
 }

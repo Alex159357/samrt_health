@@ -21,6 +21,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:weight_slider/weight_slider.dart';
 import 'package:samrt_health/event/user_data/user_data_event.dart';
 import '../../main.dart';
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
 class UserData extends StatelessWidget {
   UserData({Key? key}) : super(key: key);
@@ -282,7 +283,7 @@ class UserData extends StatelessWidget {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: _picFile,
+                            onTap: ()=>_showBottomSheet(context),
                             child: avatar,
                           )
                         ],
@@ -826,5 +827,22 @@ class UserData extends StatelessWidget {
       default:
         return "OTHERS";
     }
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showAdaptiveActionSheet(
+      context: context,
+      title: Text(tr("profile_photo")),
+      actions: <BottomSheetAction>[
+        BottomSheetAction(title: Text(tr("take_photo")), onPressed: () {
+          Navigator.pop(context);
+        }),
+        BottomSheetAction(title: Text(tr("select_from_device")), onPressed:() {
+          Navigator.pop(context);
+          _picFile();
+        }),
+      ],
+      cancelAction: CancelAction(title: Text(tr("cancel"))),// onPressed parameter is optional by default will dismiss the ActionSheet
+    );
   }
 }
