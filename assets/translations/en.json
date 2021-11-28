@@ -1,6 +1,7 @@
 {
   "Login_error_try_to_sign_up": "Login error try to sign up",
   "emailErrorText": "invalid email address",
+  "nameErrorText": "Enter your name please",
   "emailCaption": "e-mail",
   "passwordErrorText": "password is too short",
   "forgot_password": "forgot password?",
@@ -27,5 +28,15 @@
   "gender": "Gender",
   "sports_per_week": "Sports activities per week",
   "sports_per_week_description": "Indicate the average time you spend on sports per week",
-  "ok_button":"Let's do it"
+  "ok_button":"Let's do it",
+  "food_preferences":"Food preferences",
+  "no": "No",
+  "electronic": "Electronic",
+  "ordinary": "Ordinary",
+  "vegan": "Vegan",
+  "female":"Female",
+  "male": "Male",
+  "others": "Others",
+  "usual": "Usual",
+  "name": "Name"
 }

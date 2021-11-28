@@ -2,6 +2,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:samrt_health/pages/runner/runner.dart';
 import 'package:samrt_health/utils/translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,9 +12,11 @@ late FirebaseApp firebaseApp;
 late String locale;
 Translation translation = Translation();
 
+
 bool get ifTablet {
-  final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
-  return data.size.shortestSide > 600;
+  // final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
+  // return data.size.shortestSide > 600;
+  return Device.get().isIos && Device.get().isTablet;
 }
 
 void main() async {

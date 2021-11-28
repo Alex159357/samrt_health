@@ -18,7 +18,7 @@ class AppTheme {
       primaryColorBrightness: Brightness.light,
       primaryColorLight: const Color(0x218167e6),
       primaryColorDark: const Color(0xff0a46cd),
-      canvasColor: const Color(0xff457BE0),
+
       scaffoldBackgroundColor: const Color(0xfff2f9fc),
       backgroundColor: const Color(0xffeeeeee),
       bottomAppBarColor: const Color(0xffeceff1),
@@ -33,7 +33,7 @@ class AppTheme {
       ),
       textTheme: TextTheme(
         headline6: GoogleFonts.roboto(color: Colors.black38),
-        caption: GoogleFonts.roboto(fontSize: 24),
+        // caption: GoogleFonts.roboto(fontSize: 24),
         bodyText1: GoogleFonts.roboto(fontSize: 14, color: Colors.black45, fontWeight: FontWeight.w100),
       ),
       iconTheme: IconThemeData(

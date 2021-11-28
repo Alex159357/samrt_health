@@ -1,35 +1,34 @@
-import 'dart:ffi';
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_picker/Picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gender_picker/source/enums.dart';
-import 'package:gender_picker/source/gender_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:samrt_health/bloc.dart';
 import 'package:samrt_health/bloc/user_data/user_data_bloc.dart';
 import 'package:samrt_health/state/user_data/user_data_state.dart';
 import 'package:samrt_health/theme/theme.dart';
 import 'package:samrt_health/theme/widget_themes.dart';
-import 'package:samrt_health/view/men.dart';
 import 'package:samrt_health/view/test2.dart';
-import 'package:samrt_health/view/user_chart_rounded.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:weight_slider/weight_slider.dart';
 import 'package:samrt_health/event/user_data/user_data_event.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:sensors/sensors.dart';
 import '../../main.dart';
 
 class UserData extends StatelessWidget {
   UserData({Key? key}) : super(key: key);
-  ScrollController _scrollController = ScrollController();
+
+  final _formKey = GlobalKey<FormState>();
+  final border = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20.0),
+  );
 
   Future<void> _showMyDialog(BuildContext context) async {
     Dialog errorDialog = Dialog(
@@ -69,7 +68,10 @@ class UserData extends StatelessWidget {
                     },
                     child: Text(
                       tr("ok_button"),
-                      style: GoogleFonts.roboto(color: Theme.of(context).colorScheme.primary, fontSize: 18.0, fontWeight: FontWeight.w300),
+                      style: GoogleFonts.roboto(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w300),
                     ))
               ],
             ),
@@ -91,18 +93,50 @@ class UserData extends StatelessWidget {
     //     return Text("TEST");
     //   });
     // });
-    _scrollController.addListener(() {
-      if (!(prefs.getBool("if_user_data_aller_shown") ?? false)) _showMyDialog(context);
+    Future.wait({Future.delayed(Duration(seconds: 1))}).then((value) {
+      if (!(prefs.getBool("if_user_data_aller_shown") ?? false)) {
+        _showMyDialog(context);
+        prefs.setBool("if_user_data_aller_shown", true);
+      }
     });
     return Scaffold(
-      body: BlocProvider(
+      resizeToAvoidBottomInset: true,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+        child: ElevatedButton(child: Text("Start using"), onPressed: () {
+          // context.read<AuthenticationBloc>().add(SignOut());
+          if (_formKey.currentState!.validate()) {
+
+          }
+        }),
+      ),
+      body:
+      BlocProvider(
           create: (BuildContext context) => UserDataBloc(),
-          child: _getBody(context)),
+          child: BlocListener<UserDataBloc, UserDataState>(
+            listener: (BuildContext context, state){
+              var authState =context.read<AuthenticationBloc>().state as Authenticated;
+              if(state.email.isEmpty) {
+                if (authState.user.email != null) {
+                  context.read<UserDataBloc>().add(
+                      OnEmailChangeEvent(authState.user.email!));
+                }
+              }
+              if(state.name.isEmpty){
+                if (authState.user.displayName != null) {
+                  context.read<UserDataBloc>().add(
+                      OnNameChangeEvent(authState.user.displayName!));
+                }
+              }
+            },
+            child:_getBody(context),
+          )),
     );
   }
 
-  Widget _getBody(BuildContext context) => CustomScrollView(
-        controller: _scrollController,
+  Widget _getBody(BuildContext context) {
+    // context.read<AuthenticationBloc>().add(SignOut());
+    return  CustomScrollView(
         slivers: [
           SliverAppBar(
             iconTheme: Theme.of(context).iconTheme,
@@ -111,7 +145,7 @@ class UserData extends StatelessWidget {
             title: Text("Text", style: Theme.of(context).textTheme.caption),
             actions: [
               ThemeSwitcher(
-                  clipper: ThemeSwitcherCircleClipper(),
+                  clipper: const ThemeSwitcherCircleClipper(),
                   builder: (context) {
                     return ThemeSwitcher(
                       builder: (context) {
@@ -155,7 +189,7 @@ class UserData extends StatelessWidget {
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
-
+                  child: _getUserAvatar,
                 ),
               ),
               stretchModes: [
@@ -165,66 +199,140 @@ class UserData extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: ResponsiveGridRow(children: [
-              // ResponsiveGridCol(
-              //   lg: 4,
-              //   md: 5,
-              //   xs: 5,
-              //   sm: 5,
-              //   child: Container(
-              //     height: 500,
-              //     color: Colors.purple,
-              //     child: SfSlider.vertical(
-              //       min: 130.0,
-              //       max: 250.0,
-              //       value: 150,
-              //       interval: 20,
-              //       showTicks: true,
-              //       showLabels: true,
-              //       enableTooltip: true,
-              //       minorTicksPerInterval: 1,
-              //       onChanged: (dynamic value) {
-              //
-              //       },
-              //     ),
-              //   ),
-              // ),
-              ResponsiveGridCol(
-                lg: 12,
-                md: 12,
-                xs: 12,
-                sm: 12,
-                child: Container(
-                  child: ResponsiveGridRow(children: [
-                    ResponsiveGridCol(
-                        xs: 5, sm: 5, md: 5, lg: 4, child: _getHeightSlider),
-                    ResponsiveGridCol(
-                        xs: 7, sm: 7, md: 7, lg: 4, child: _getWeight),
-                    ResponsiveGridCol(
-                      xs: 12,
-                      sm: 4,
-                      md: 4,
-                      lg: 4,
-                      child: _getStepsPerDay,
+            child: Form(
+              key: _formKey,
+              child: ResponsiveGridRow(
+                children: [
+                  ResponsiveGridCol(
+                    xs: 12,
+                    sm: 4,
+                    md: 6,
+                    lg: 6,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _getEmailField,
                     ),
-                    ResponsiveGridCol(
-                        xs: 12,
-                        sm: 5,
-                        md: 5,
-                        lg: 5,
-                        child: _geWeekSportTimeSlider),
-                    ResponsiveGridCol(
-                        xs: 12, sm: 12, md: 7, lg: 7, child: _getBirthday),
-                  ]),
-                ),
+                  ),
+                  ResponsiveGridCol(
+                    xs: 12,
+                    sm: 4,
+                    md: 6,
+                    lg: 6,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _getNameField,
+                    ),
+                  ),
+                ],
               ),
-            ]),
+            ),
           ),
           SliverList(
               delegate: SliverChildListDelegate(
-                  [_getGender, _getSmoking, _getAlcohol]))
+                  [_getAlcohol, _getSmoking, _getGender, _getIsVegan])),
+          SliverToBoxAdapter(
+            child: ResponsiveGridRow(children: [
+              ResponsiveGridCol(
+                  xs: 5, sm: 5, md: 5, lg: 4, child: _getHeightSlider),
+              ResponsiveGridCol(xs: 7, sm: 7, md: 7, lg: 4, child: _getWeight),
+              ResponsiveGridCol(
+                xs: 12,
+                sm: 4,
+                md: 4,
+                lg: 4,
+                child: _getStepsPerDay,
+              ),
+              ResponsiveGridCol(
+                  xs: 12, sm: 5, md: 5, lg: 5, child: _geWeekSportTimeSlider),
+              ResponsiveGridCol(
+                  xs: 12, sm: 12, md: 7, lg: 7, child: _getBirthday),
+            ]),
+          ),
         ],
       );
+  }
+
+  Widget get _getUserAvatar => BlocBuilder<UserDataBloc, UserDataState>(
+        builder: (context, state) {
+          var authState =
+              context.read<AuthenticationBloc>().state as Authenticated;
+          var avatar =  ClipRRect(
+              borderRadius: BorderRadius.circular(1000),
+              child: authState.user.photoURL == null?
+              Image.network(
+                authState.user.photoURL!,
+                fit: BoxFit.cover,
+                height: 150.0,
+                width: 150.0,
+              ): Container(width: 150, height: 150, color: Theme.of(context).primaryColor.withOpacity(0.5), child: Icon(Icons.add, size: 100, color: Colors.white,)));
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ResponsiveGridRow(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ResponsiveGridCol(
+                      xs: 12,
+                      sm: 4,
+                      md: 6,
+                      lg: 3,
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: _picFile,
+                            child: avatar,
+                          )
+                        ],
+                      )
+                    ),
+                    // ResponsiveGridCol(
+                    //   xs: 12,
+                    //   sm: 4,
+                    //   md: 6,
+                    //   lg: 6,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Card(
+                    //       color: Theme.of(context).cardColor.withOpacity(0.5),
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(12.0),
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.center,
+                    //           children: [
+                    //             Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: _getNameField,
+                    //             ),
+                    //             Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: _getEmailField,
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      );
+
+
+  void _picFile()async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    print(result!.paths.toString());
+  }
 
   Widget _getContainer(
       {required BuildContext context,
@@ -252,84 +360,231 @@ class UserData extends StatelessWidget {
       ),
     );
   }
+  var t = 0;
+
+  Widget get _getEmailField =>
+      BlocBuilder<UserDataBloc, UserDataState>(
+          builder: (BuildContext context, state) {
+            var authState =context.read<AuthenticationBloc>().state as Authenticated;
+          return TextFormField(
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                borderSide: BorderSide.none,
+              ),
+              prefixIcon: Icon(
+                FontAwesomeIcons.at,
+                color: Theme.of(context).textTheme.caption!.color!,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).cardColor,
+              hintText: tr("emailCaption"),
+            ),
+            onFieldSubmitted: (v){
+              _formKey.currentState!.validate();
+            },
+            textInputAction: TextInputAction.next,
+            initialValue: authState.user.email,
+            validator: (value) =>
+                state.isEmailValid ? null : tr("emailErrorText"),
+            onChanged: (value) =>
+                context.read<UserDataBloc>().add(OnEmailChangeEvent(value)),
+          );
+        });
+
+  Widget get _getNameField => BlocBuilder<UserDataBloc, UserDataState>(
+          builder: (BuildContext context, state) {
+            var authState =context.read<AuthenticationBloc>().state as Authenticated;
+          return TextFormField(
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                borderSide: BorderSide.none,
+              ),
+              prefixIcon: Icon(
+                FontAwesomeIcons.user,
+                color: Theme.of(context).textTheme.caption!.color!,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).cardColor,
+              hintText: tr("name"),
+            ),
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (v){
+              _formKey.currentState!.validate();
+            },
+            initialValue: authState.user.displayName,
+            validator: (value) =>
+                state.isNameValid? null : tr("nameErrorText"),
+            onChanged: (value) =>
+                context.read<UserDataBloc>().add(OnNameChangeEvent(value)),
+          );
+        });
 
   Widget get _getSmoking => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
-          List<String> list = ["No", "Electronic", "Classic"];
+          List<String> list = [tr("no"), tr("electronic"), tr("ordinary")];
           return Card(
-            child: ListTile(
-                title: Text(tr('smoking')),
-                trailing: SizedBox(
-                    width: 260,
-                    child: ListView.builder(
-                        itemCount: list.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              onTap: () {
-                                context
-                                    .read<UserDataBloc>()
-                                    .add(OnSmokeChangeEvent(index));
-                              },
-                              child: Center(
-                                  child: Container(
-                                      padding: EdgeInsets.all(8),
-                                      margin:
-                                          EdgeInsets.only(left: 8, right: 8),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: state.smoke == index
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .primary
-                                                : Theme.of(context).cardColor,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: Text(list[index]))));
-                        }))),
+            child: Stack(
+              children: [
+                Positioned(
+                    right: -45,
+                    top: 0,
+                    child: Opacity(
+                        opacity: 0.1,
+                        child: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
+                                ],
+                              )),
+                        ))),
+                ListTile(
+                  title: Text(tr("smoking")),
+                  trailing: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<String>(
+                      value: list[state.smoke],
+                      borderRadius: BorderRadius.circular(10),
+                      underline: SizedBox(),
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        context
+                            .read<UserDataBloc>()
+                            .add(OnSmokeChangeEvent(list.indexOf(newValue!)));
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+
+  Widget get _getIsVegan => BlocBuilder<UserDataBloc, UserDataState>(
+        builder: (BuildContext context, state) {
+          List<String> list = [tr("normal"), tr("vegan")];
+          return Card(
+            child: Stack(
+              children: [
+                Positioned(
+                    right: -45,
+                    top: 0,
+                    child: Opacity(
+                        opacity: 0.1,
+                        child: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
+                                ],
+                              )),
+                        ))),
+                ListTile(
+                  title: Text(tr("food_preferences")),
+                  trailing: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<String>(
+                      value: state.isVegan ? list[1] : list[0],
+                      borderRadius: BorderRadius.circular(10),
+                      underline: const SizedBox(),
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        context
+                            .read<UserDataBloc>()
+                            .add(OnVeganChangeEvent(newValue == list[1]));
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       );
 
   Widget get _getGender => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
-          List<String> list = ["Female", "Male", "Others"];
+          List<String> list = [tr("female"), tr("male"), tr("others")];
           return Card(
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 1500),
-              child: ListTile(
-                  title: Text(tr('gender')),
-                  trailing: SizedBox(
-                      width: 265,
-                      child: ListView.builder(
-                          itemCount: list.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                                onTap: () {
-                                  context
-                                      .read<UserDataBloc>()
-                                      .add(OnGenderChangeEvent(list[index]));
-                                },
-                                child: Center(
-                                    child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        margin:
-                                            EdgeInsets.only(left: 8, right: 8),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: state.gender == list[index]
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .primary
-                                                  : Theme.of(context).cardColor,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20))),
-                                        child: Text(list[index]))));
-                          }))),
+            child: Stack(
+              children: [
+                Positioned(
+                    right: -45,
+                    top: 0,
+                    child: Opacity(
+                        opacity: 0.1,
+                        child: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
+                                ],
+                              )),
+                        ))),
+                ListTile(
+                  title: Text(tr("gender")),
+                  trailing: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<String>(
+                      value:
+                          list.contains(state.gender) ? state.gender : list[0],
+                      borderRadius: BorderRadius.circular(10),
+                      underline: const SizedBox(),
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        context
+                            .read<UserDataBloc>()
+                            .add(OnGenderChangeEvent(newValue!));
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
@@ -337,39 +592,56 @@ class UserData extends StatelessWidget {
 
   Widget get _getAlcohol => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
-          List<String> list = ["No", "Some times", "Evry day"];
+          List<String> list = [tr("no"), tr("rarely"), tr("often")];
           return Card(
-            child: ListTile(
-                title: Text(tr("drink_alcohol")),
-                trailing: SizedBox(
-                    width: 260,
-                    child: ListView.builder(
-                        itemCount: list.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              onTap: () {
-                                context
-                                    .read<UserDataBloc>()
-                                    .add(OnAlcoholChangeEvent(index));
-                              },
-                              child: Center(
-                                  child: Container(
-                                      padding: EdgeInsets.all(8),
-                                      margin:
-                                          EdgeInsets.only(left: 8, right: 8),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: state.alcohol == index
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .primary
-                                                : Theme.of(context).cardColor,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: Text(list[index]))));
-                        }))),
+            child: Stack(
+              children: [
+                Positioned(
+                    right: -45,
+                    top: 0,
+                    child: Opacity(
+                        opacity: 0.1,
+                        child: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
+                                ],
+                              )),
+                        ))),
+                ListTile(
+                  title: Text(tr("drink_alcohol")),
+                  trailing: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<String>(
+                      value: list[state.alcohol],
+                      borderRadius: BorderRadius.circular(10),
+                      underline: SizedBox(),
+                      elevation: 16,
+                      onChanged: (String? newValue) {
+                        context
+                            .read<UserDataBloc>()
+                            .add(OnAlcoholChangeEvent(list.indexOf(newValue!)));
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -533,38 +805,6 @@ class UserData extends StatelessWidget {
               ));
         },
       );
-
-  // Widget get _getGenderSelector => BlocBuilder<UserDataBloc, UserDataState>(
-  //       builder: (BuildContext context, state) {
-  //         return _getContainer(
-  //             customHeight: 100,
-  //             context: context,
-  //             child: GenderPickerWithImage(
-  //               showOtherGender: true,
-  //               verticalAlignedText: true,
-  //               selectedGender: getGenderByString(state.gender),
-  //               selectedGenderTextStyle: TextStyle(
-  //                   color: Theme.of(context).cardColor,
-  //                   fontWeight: FontWeight.bold),
-  //               unSelectedGenderTextStyle: TextStyle(
-  //                   color: Theme.of(context).cardColor,
-  //                   fontWeight: FontWeight.normal),
-  //               onChanged: (gender) {
-  //                 context
-  //                     .read<UserDataBloc>()
-  //                     .add(OnGenderChangeEvent(getGenderString(gender)));
-  //               },
-  //               equallyAligned: true,
-  //               animationDuration: Duration(milliseconds: 500),
-  //               isCircular: true,
-  //               // default : true,
-  //               opacityOfGradient: 0.4,
-  //               padding: const EdgeInsets.all(3),
-  //               size: ifTablet ? 150 : 50, //default : 40
-  //             ),
-  //             title: "gender");
-  //       },
-  //     );
 
   Gender getGenderByString(String s) {
     switch (s.toUpperCase()) {

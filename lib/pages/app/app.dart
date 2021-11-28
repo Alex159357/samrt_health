@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:samrt_health/pages/main/main_page/main_page.dart';
+import 'package:samrt_health/pages/main/main_page/home_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:samrt_health/theme/theme_controller.dart';
 
@@ -12,6 +12,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final initTheme = ThemeController().getCurrentTheme();
     return ThemeProvider(
         initTheme: initTheme,
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
           return MaterialApp(
               title: 'Smart Health',
               theme: myTheme,
+              debugShowCheckedModeBanner: false,
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
@@ -27,7 +29,7 @@ class App extends StatelessWidget {
                 return locale;
               },
               home: ThemeSwitchingArea(
-              child:MainPage()));
+              child:HomePage()));
         });
   }
 }

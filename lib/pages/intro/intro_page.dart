@@ -83,7 +83,7 @@ class _IntroPageState extends State<IntroPage> {
 
                               TextButton(
                                 onPressed: (){
-                                  // prefs.setBool("hint", true);
+                                  prefs.setBool("hint", true);
                                   setState(() {});
                                   context.read<IntroCubit>().add(Intro.HIDE_HINT);
                                 },

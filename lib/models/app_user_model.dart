@@ -69,7 +69,7 @@ class UserModel {
       age: map["age"],
       weight: map["weight"],
       height: map["height"],
-      stepsPerDay: map["stepsPerDay"],
+      stepsPerDay: double.parse(map["stepsPerDay"].toString()),
       gender: map["gender"],
       isVegan: map["isVegan"],
       hourSportPerWeek: map["hourSportPerWeek"],

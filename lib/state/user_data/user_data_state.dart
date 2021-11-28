@@ -17,7 +17,7 @@ class UserDataState {
   final int smoke;
   final int birthday;
 
-  bool get isNameValid => name.length > 3;
+  bool get isNameValid => name.length >= 3;
 
   bool get isEmailValid => RegExp(
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -54,6 +54,7 @@ class UserDataState {
             int? birthday}) =>
       UserDataState(
           name: name ?? this.name,
+          email: email?? this.email,
           age: age ?? this.age,
           weight: weight ?? this.weight,
           height: height ?? this.height,

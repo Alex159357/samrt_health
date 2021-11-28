@@ -136,7 +136,7 @@ class LoginView extends AuthStateLess {
             color: Colors.black12,
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).cardColor,
           hintText: tr("emailCaption"),
         ),
         validator: (value) => state.isValidUsername

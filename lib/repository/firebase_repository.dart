@@ -24,7 +24,12 @@ class FirebaseRepository {
     //   'company': "company", // Stokes and Sons
     //   'age': "32"
     // });
-    return await user.get().then((value) => UserModel.fromMap(value.data()!));
+    // var t = await user.get().then((value) => UserModel.fromMap(value.data()!));
+    var raw = await user.get();
+    if(raw.exists){
+      return UserModel.fromMap(raw.data()!);
+    }
+    return null;
   }
 
   Future<UserModel?> createUser(String uid) async {
