@@ -36,8 +36,8 @@ class HomePage extends StatelessWidget {
 
   Widget get _getBody => BlocBuilder<FbBloc, FbState>(
         builder: (BuildContext context, state) {
+          var user = (context.read<AuthenticationBloc>().state as Authenticated).user;
           if (state is InitialisedState) {
-            var user = (context.read<AuthenticationBloc>().state as Authenticated).user;
             context.read<FbBloc>().add(IfUserExistsEvent(user.uid));
             return Center(child: LoadingView().loadingWhiteBg(context));
           }

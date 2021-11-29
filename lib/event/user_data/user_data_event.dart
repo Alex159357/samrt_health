@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -83,7 +85,18 @@ class OnSmokeChangeEvent extends UserDataEvent{
   OnSmokeChangeEvent(this.smoke);
 }
 
+class OnPictureSelected extends UserDataEvent{
+  final File image;
 
+  OnPictureSelected(this.image);
+}
 
+class SetUserId extends UserDataEvent{
+  final String uid;
+
+  SetUserId(this.uid);
+}
+
+class UploadData extends UserDataEvent{}
 
 

@@ -2,7 +2,6 @@ class UserModel {
   final String uid;
   final String name;
   final String email;
-  final int age;
   final double weight;
   final double height;
   final double stepsPerDay;
@@ -11,13 +10,13 @@ class UserModel {
   final bool isVegan;
   final double hourSportPerWeek;
   final bool isBlocked;
-  final String lastActiveDate;
-  final String registrationDate;
+  final int lastActiveDate;
+  final int registrationDate;
   final String role;
   final String state;
   final int alcohol;
   final int smoke;
-  final String birthday;
+  final int birthday;
 
   UserModel(
       {required this.alcohol,
@@ -27,7 +26,6 @@ class UserModel {
       required this.isBlocked,
       required this.lastActiveDate,
       required this.registrationDate,
-      required this.age,
       required this.gender,
       required this.isVegan,
       required this.hourSportPerWeek,
@@ -45,7 +43,6 @@ class UserModel {
         "name": name,
         "avatar": avatar,
         "email": email,
-        "age": age,
         "weight": weight,
         "height": height,
         "stepsPerDay": stepsPerDay,
@@ -66,7 +63,6 @@ class UserModel {
       uid: map["uid"],
       name: map["name"],
       email: map["email"],
-      age: map["age"],
       weight: map["weight"],
       height: map["height"],
       stepsPerDay: double.parse(map["stepsPerDay"].toString()),

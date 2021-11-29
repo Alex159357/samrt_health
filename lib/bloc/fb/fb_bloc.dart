@@ -21,11 +21,6 @@ class FbBloc extends Bloc<FbEvent, FbState> {
       } else {
         yield UserNotFoundState();
       }
-      // if(user == null){
-      //   user = await _firebaseRepository.createUser(event.uid);
-      //   yield UserExistsState(user);
-      // }
-      // yield UserExistsState();
     }
   }
 }

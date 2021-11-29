@@ -72,7 +72,7 @@ class _IntroPageState extends State<IntroPage> {
                           )
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 30),
+                        margin: EdgeInsets.all(30),
                         child: textTranslate1,
                       ),
                       Container(

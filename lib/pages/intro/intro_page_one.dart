@@ -16,14 +16,13 @@ class PageOne extends BaseStateLess {
 
   @override
   Widget build(BuildContext context) {
-//todo add blocBuilder from BlocBuilder<IntroCubit, Intro> to update text
   final textScale = MediaQuery.of(context).textScaleFactor;
     return BlocBuilder<IntroCubit, Intro>(builder: (context, state) {
       return Material(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Color(0xffffffff),
+          color: Theme.of(context).backgroundColor,
           child: Stack(
             children: [
               Column(
@@ -70,7 +69,7 @@ class PageOne extends BaseStateLess {
                                     .goToScreen(Pages.AUTH);
                               },
                               text: tr("skip"),
-                              background: Colors.white,
+                              background: Theme.of(context).backgroundColor,
                               textColor: Color(0xff8167e6),
                               borderColor: Color(0xff8167e6)))))
             ],

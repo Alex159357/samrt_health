@@ -19,7 +19,7 @@ class PageThree extends BaseStateLess {
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Color(0xffffffff),
+        color: Theme.of(context).backgroundColor,
         child: Stack(
           children: [
             Column(
@@ -64,7 +64,7 @@ class PageThree extends BaseStateLess {
                                   .goToScreen(Pages.AUTH);
                             },
                             text: tr("signIn"),
-                            background: Colors.white,
+                            background: Theme.of(context).backgroundColor,
                             textColor: Color(0xff8167e6),
                             borderColor: Color(0xff8167e6)))))
           ],

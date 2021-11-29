@@ -55,7 +55,7 @@ class RestorePasswordView extends AuthStateLess {
                           Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: Colors.white,
+                                color:  Theme.of(context).cardColor,
                               ),
                               padding: EdgeInsets.all(12),
                               margin: EdgeInsets.only(bottom: 12),
@@ -68,7 +68,7 @@ class RestorePasswordView extends AuthStateLess {
                                     margin: EdgeInsets.only(top: 15),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: Colors.white,
+                                      color:  Theme.of(context).cardColor,
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Colors.black26,
@@ -106,12 +106,12 @@ class RestorePasswordView extends AuthStateLess {
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             borderSide: BorderSide.none,
           ),
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             FontAwesomeIcons.at,
-            color: Colors.black12,
+            color: Theme.of(context).iconTheme.color,
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor:  Theme.of(context).cardColor,
           hintText: tr("emailCaption"),
         ),
         validator: (value) => state.isValidEmail ? null : 'email invalid',
@@ -129,7 +129,7 @@ class RestorePasswordView extends AuthStateLess {
         children: [
           TextButton(
               onPressed: () => context.read<AuthCubit>().goTo(AuthPages.LOGIN),
-              child: Text(tr("signIn"), style: TextStyle(color: Colors.black))),
+              child: Text(tr("signIn"))),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: ElevatedButton(

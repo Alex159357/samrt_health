@@ -68,6 +68,19 @@
 			<string>fbshareextension</string>
 		</array>
 		<!-- FACEBOOK&GOOGLE CONFIG END HERE -->
+<!------- BLUETOOTH START ------->
+		  <key>NSBluetoothAlwaysUsageDescription</key>
+        	    <string>Need BLE permission</string>
+        	    <key>NSBluetoothPeripheralUsageDescription</key>
+        	    <string>Need BLE permission</string>
+        	    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        	    <string>Need Location permission</string>
+        	    <key>NSLocationAlwaysUsageDescription</key>
+        	    <string>Need Location permission</string>
+        	    <key>NSLocationWhenInUseUsageDescription</key>
+        	    <string>Need Location permission</string>
+<!------- BLUETOOTH END ------->
+
 		<!------- Localisation ------->
 		<key>CFBundleLocalizations</key>
 		<array>

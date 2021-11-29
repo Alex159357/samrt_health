@@ -5,7 +5,32 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:samrt_health/theme/theme_controller.dart';
 
 class AppTheme {
-  ThemeData _darkTheme = ThemeData.dark().copyWith();
+  final ThemeData _darkTheme = ThemeData.dark().copyWith(
+    textTheme: TextTheme(
+      headline6: GoogleFonts.roboto(color: Colors.grey),
+      // caption: GoogleFonts.roboto(fontSize: 24),
+      bodyText1: GoogleFonts.roboto(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w100),
+    ),
+    iconTheme: IconThemeData(
+      color: Colors.grey
+    ),
+    backgroundColor: const Color(0xff212121),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: const MaterialColor(
+        0xff8167e6,
+        //todo change colors to primary
+        <int, Color>{
+          50: Color(0xff8167e6),
+          100: Color(0xff8167e6),
+          200: Color(0xff8167e6),
+          300: Color(0xff8167e6),
+          400: Color(0xff8167e6),
+          600: Color(0xff8167e6),
+          700: Color(0xff8167e6),
+          800: Color(0xff8167e6),
+          900: Color(0xff8167e6)
+        },
+      )).copyWith(secondary: const Color(0xff00bcd4))
+  );
 
 
   final ThemeData _lightTheme = ThemeData(

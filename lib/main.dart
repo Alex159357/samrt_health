@@ -7,6 +7,7 @@ import 'package:samrt_health/pages/runner/runner.dart';
 import 'package:samrt_health/utils/translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 late SharedPreferences prefs;
 late FirebaseApp firebaseApp;
 late String locale;
@@ -34,6 +35,10 @@ void main() async {
         child: const Runner()),
   );
 }
+
+
+
+
 
 final List<String> appLanguages = [
   'af',

@@ -134,9 +134,8 @@ class LoginView extends AuthStateLess {
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             borderSide: BorderSide.none,
           ),
-          prefixIcon: const Icon(
-            FontAwesomeIcons.at,
-            color: Colors.black12,
+          prefixIcon: Icon(
+            FontAwesomeIcons.at, color: Theme.of(context).iconTheme.color,
           ),
           filled: true,
           fillColor: Theme.of(context).cardColor,
@@ -164,23 +163,21 @@ class LoginView extends AuthStateLess {
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             borderSide: BorderSide.none,
           ),
-          prefixIcon: const Icon(
-            FontAwesomeIcons.key,
-            color: Colors.black12,
+          prefixIcon: Icon(
+            FontAwesomeIcons.key, color: Theme.of(context).iconTheme.color,
           ),
           suffixIcon: state.passwordIsVisible
               ? InkWell(
-                  child: const Icon(FontAwesomeIcons.eyeSlash,
-                      color: Colors.black12),
+                  child:  Icon(FontAwesomeIcons.eyeSlash, color: Theme.of(context).iconTheme.color,),
                   onTap: () => context.read<LoginBloc>().add(
                       LoginEventPasswordVisibility(!state.passwordIsVisible)))
               : InkWell(
                   child:
-                      const Icon(FontAwesomeIcons.eye, color: Colors.black12),
+                      Icon(FontAwesomeIcons.eye, color: Theme.of(context).iconTheme.color,),
                   onTap: () => context.read<LoginBloc>().add(
                       LoginEventPasswordVisibility(!state.passwordIsVisible))),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Theme.of(context).cardColor,
           hintText: tr("passwordCaption"),
         ),
         obscureText: !state.passwordIsVisible,
@@ -219,7 +216,6 @@ class LoginView extends AuthStateLess {
                       context.read<AuthCubit>().goTo(AuthPages.REGISTRATION),
                   child: Text(
                   tr("signUp"),
-                    style: TextStyle(color: Colors.black),
                   ))
             ],
           ),

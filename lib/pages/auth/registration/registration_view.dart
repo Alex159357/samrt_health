@@ -82,12 +82,12 @@ class RegistrationView extends AuthStateLess {
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 FontAwesomeIcons.at,
-                color: Colors.black12,
+                color: Theme.of(context).iconTheme.color,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).cardColor,
               hintText: tr("emailCaption"),
             ),
             validator: (value) =>
@@ -108,21 +108,21 @@ class RegistrationView extends AuthStateLess {
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 FontAwesomeIcons.key,
-                color: Colors.black12,
+                color: Theme.of(context).iconTheme.color,
               ),
               suffixIcon: state.passwordIsVisible
                   ? InkWell(
-                  child: const Icon(FontAwesomeIcons.eyeSlash, color: Colors.black12),
+                  child: Icon(FontAwesomeIcons.eyeSlash, color:  Theme.of(context).iconTheme.color),
                   onTap: () => context.read<RegistrationBloc>().add(
                       RegistrationEventPasswordVisibility(!state.passwordIsVisible)))
                   : InkWell(
-                  child: const Icon(FontAwesomeIcons.eye, color: Colors.black12),
+                  child: Icon(FontAwesomeIcons.eye, color:  Theme.of(context).iconTheme.color),
                   onTap: () => context.read<RegistrationBloc>().add(
                       RegistrationEventPasswordVisibility(!state.passwordIsVisible))),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).cardColor,
               hintText: tr("passwordCaption"),
             ),
             obscureText: !state.passwordIsVisible,
@@ -146,12 +146,12 @@ class RegistrationView extends AuthStateLess {
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(
+              prefixIcon:  Icon(
                 FontAwesomeIcons.key,
-                color: Colors.black12,
+                color:  Theme.of(context).iconTheme.color,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).cardColor,
               hintText: tr("re_enter_password"),
             ),
             obscureText: !state.passwordIsVisible,
@@ -176,7 +176,6 @@ class RegistrationView extends AuthStateLess {
                   child:  Text(
                     tr(
                         "signIn"),
-                    style: TextStyle(color: Colors.black),
                   )),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(

@@ -26,7 +26,7 @@ class AuthPage extends AuthStateLess {
   Widget _getBody(BuildContext context) => Material(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          color: const Color(0xfff2f9fc),
+          color: Theme.of(context).backgroundColor,
           child:
           Stack(
             children: [
