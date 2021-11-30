@@ -21,24 +21,7 @@ class RootNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final initTheme = ThemeController().getCurrentTheme();
-    return ThemeProvider(
-        initTheme: initTheme,
-        builder: (_, myTheme) {
-          return MaterialApp(
-              title: 'Smart Health',
-              theme: myTheme,
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              localeResolutionCallback:
-                  (locale, Iterable<Locale> supportedLocales) {
-                return locale;
-              },
-              home: ThemeSwitchingArea(
-                  child:_getBody));
-        });
+    return _getBody;
   }
 
   Widget get _getBody => BlocProvider(
@@ -58,7 +41,6 @@ class RootNav extends StatelessWidget {
                 context.read<MainNavCubit>().emit(Pages.MAIN);
               }
             },
-            //todo fix auth by credentials
             child: BlocBuilder<MainNavCubit, Pages>(
               builder: (BuildContext context, page) {
                 context.read<AuthenticationBloc>().add(CheckLogin());

@@ -1,3 +1,6 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:camera/camera.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:samrt_health/navigation/runner/runner_cubit.dart';
 import 'package:samrt_health/pages/main_nav/root_nav.dart';
 import 'package:samrt_health/services/notifiation_service.dart';
+import 'package:samrt_health/theme/theme_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
@@ -37,7 +41,24 @@ class Runner extends StatelessWidget {
               _init()
                   .then((value) => context.read<RunnerCubit>().complete(value));
               if (state) {
-                return const RootNav();
+                final initTheme = ThemeController().getCurrentTheme();
+                return ThemeProvider(
+                    initTheme: ThemeController().getCurrentTheme(),
+                    builder: (_, myTheme) {
+                      return MaterialApp(
+                          title: 'Smart Health',
+                          theme: myTheme,
+                          debugShowCheckedModeBanner: false,
+                          localizationsDelegates: context.localizationDelegates,
+                          supportedLocales: context.supportedLocales,
+                          locale: context.locale,
+                          localeResolutionCallback:
+                              (locale, Iterable<Locale> supportedLocales) {
+                            return locale;
+                          },
+                          home: ThemeSwitchingArea(
+                              child:const RootNav()));
+                    });
               }
               return const MaterialApp(home: Splash());
             })));
@@ -52,6 +73,7 @@ class Runner extends StatelessWidget {
     await NotificationService.init();
     prefs = await SharedPreferences.getInstance();
     firebaseApp = await Firebase.initializeApp();
+    cameras = await availableCameras();
     return true;
   }
 }

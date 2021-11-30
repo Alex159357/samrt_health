@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:samrt_health/event/user_data/user_data_event.dart';
 import 'package:samrt_health/repository/firebase_repository.dart';
@@ -6,7 +7,13 @@ import 'package:samrt_health/state/user_data/user_data_state.dart';
 
 class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   FirebaseRepository _repository = FirebaseRepository();
-  UserDataBloc() : super(UserDataState());
+  final User user;
+
+  UserDataBloc({required this.user})
+      : super(UserDataState(
+            email: user.email ?? "",
+            name: user.displayName ?? "",
+            avatar: user.photoURL ?? "", uid: user.uid));
 
   @override
   Stream<UserDataState> mapEventToState(UserDataEvent event) async* {
@@ -18,23 +25,25 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     if (event is OnAvatarChangeEvent) yield state.copy(avatar: event.avatar);
     if (event is OnGenderChangeEvent) yield state.copy(gender: event.gender);
     if (event is OnVeganChangeEvent) yield state.copy(isVegan: event.ifVegan);
-    if (event is OnHoursSportChangeEvent) yield state.copy(hourSportPerWeek: event.hourSportPerWeek);
+    if (event is OnHoursSportChangeEvent)
+      yield state.copy(hourSportPerWeek: event.hourSportPerWeek);
     if (event is OnAlcoholChangeEvent) yield state.copy(alcohol: event.alcohol);
-    if(event is OnBirthdayChangeEvent) yield state.copy(birthday: event.birthday);
-    if(event is OnSmokeChangeEvent) yield state.copy(smoke: event.smoke);
-    if(event is SetUserId) yield state.copy(uid: event.uid);
-    if(event is OnPictureSelected) yield state.copy(imageFile: event.image);
-    if(event is UploadData){
+    if (event is OnBirthdayChangeEvent)
+      yield state.copy(birthday: event.birthday);
+    if (event is OnSmokeChangeEvent) yield state.copy(smoke: event.smoke);
+    if (event is SetUserId) yield state.copy(uid: event.uid);
+    if (event is OnPictureSelected) yield state.copy(imageFile: event.image);
+    if (event is UploadData) {
       yield state.copy(formStatus: FormSubmitting());
       try {
         if (state.imageFile != null) {
           var url = (await _repository.uploadImageToFirebase(state.imageFile!,
-              "users/image/user_avatar/" + state.uid + ".jpg"))!;
+              "users/image/user_avatar/${state.email}_${state.uid}/${state.uid}" + state.uid + ".jpg"))!;
           yield state.copy(avatar: url);
         }
         await _repository.createUser(state.map());
         yield state.copy(formStatus: SubmissionSuccess());
-      } on Exception catch(e){
+      } on Exception catch (e) {
         yield state.copy(formStatus: SubmissionFailed(e));
       }
     }

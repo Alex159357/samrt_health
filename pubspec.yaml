@@ -64,6 +64,7 @@ dependencies:
   adaptive_action_sheet: ^2.0.0
   firebase_storage: ^10.1.0
   flutter_native_image: ^0.0.6
+  camera:
 
 
 dev_dependencies:

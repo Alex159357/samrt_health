@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 late SharedPreferences prefs;
 late FirebaseApp firebaseApp;
 late String locale;
+late List<CameraDescription> cameras;
 Translation translation = Translation();
 
 

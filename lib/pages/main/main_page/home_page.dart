@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:samrt_health/bloc.dart';
@@ -5,6 +6,7 @@ import 'package:samrt_health/bloc/fb/fb_bloc.dart';
 import 'package:samrt_health/event/db/fb_event.dart';
 import 'package:samrt_health/repository/firebase_repository.dart';
 import 'package:samrt_health/state/fb/fb_state.dart';
+import 'package:samrt_health/theme/theme.dart';
 import 'package:samrt_health/view/loading_view.dart';
 
 import '../user_data_view.dart';
@@ -52,6 +54,26 @@ class HomePage extends StatelessWidget {
                   title: Text(state.userModel.role),
                   subtitle: Text("Role"),
                   //Todo  change Text in title to TextField to user can edit it
+                ),ListTile(
+                  title: Text(state.userModel.role),
+                  subtitle: Text("Log out"),
+                  onTap: ()=>  context.read<AuthenticationBloc>().add(SignOut()),
+                ),
+                ThemeSwitcher(
+                  clipper: ThemeSwitcherCircleClipper(),
+                  builder: (context) {
+                    return OutlinedButton(
+                      child: Text('dark theme'),
+                      onPressed: () {
+                        ThemeSwitcher.of(context)!.changeTheme(
+                          theme: ThemeProvider.of(context)!.brightness ==
+                              Brightness.light
+                              ? AppTheme.darkTheme
+                              : AppTheme.lightTheme,
+                        );
+                      },
+                    );
+                  },
                 )
               ],
             );

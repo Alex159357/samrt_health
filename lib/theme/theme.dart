@@ -6,6 +6,7 @@ import 'package:samrt_health/theme/theme_controller.dart';
 
 class AppTheme {
   final ThemeData _darkTheme = ThemeData.dark().copyWith(
+    brightness: Brightness.dark,
     textTheme: TextTheme(
       headline6: GoogleFonts.roboto(color: Colors.grey),
       // caption: GoogleFonts.roboto(fontSize: 24),

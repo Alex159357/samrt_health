@@ -20,6 +20,7 @@ import 'package:samrt_health/state/form_submission_status.dart';
 import 'package:samrt_health/state/user_data/user_data_state.dart';
 import 'package:samrt_health/theme/theme.dart';
 import 'package:samrt_health/theme/widget_themes.dart';
+import 'package:samrt_health/view/camera/cameraView.dart';
 import 'package:samrt_health/view/loading_view.dart';
 import 'package:samrt_health/view/test2.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -76,10 +77,7 @@ class UserData extends StatelessWidget {
                     child: Text(
                       tr("ok_button"),
                       style: GoogleFonts.roboto(
-                          color: Theme
-                              .of(context)
-                              .colorScheme
-                              .primary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 18.0,
                           fontWeight: FontWeight.w300),
                     ))
@@ -110,80 +108,57 @@ class UserData extends StatelessWidget {
         prefs.setBool("if_user_data_aller_shown", true);
       }
     });
-
+    var authState = context.read<AuthenticationBloc>().state as Authenticated;
     return BlocProvider(
-      create: (BuildContext context) => UserDataBloc(),
-      child: BlocListener<UserDataBloc, UserDataState>(
-          listener: (BuildContext context, state) {
-            var authState =
-            context
-                .read<AuthenticationBloc>()
-                .state as Authenticated;
-            if(state.formStatus is SubmissionSuccess){
-              context.read<FbBloc>().add(IfUserExistsEvent(authState.user.uid));
-            }
-
-            if (state.email.isEmpty) {
-              if (authState.user.email != null) {
-                context
-                    .read<UserDataBloc>()
-                    .add(OnEmailChangeEvent(authState.user.email!));
-              }
-            }
-            if (state.name.isEmpty) {
-              if (authState.user.displayName != null) {
-                context
-                    .read<UserDataBloc>()
-                    .add(OnNameChangeEvent(authState.user.displayName!));
-              }
-            }
-          },
-          child: BlocBuilder<UserDataBloc, UserDataState>(
-              builder: (context, state) {
-                return Scaffold(
-                    resizeToAvoidBottomInset: true,
-                    bottomNavigationBar: state.formStatus is InitialFormStatus || state.formStatus is SubmissionFailed? Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 30),
-                      child: ElevatedButton(
-                          child: Text("Start using"),
-                          onPressed: () {
-                            // context.read<AuthenticationBloc>().add(SignOut());
-                            if (_formKey.currentState!.validate()) {
-                              context.read<UserDataBloc>().add(UploadData());
-                            }
-                          }),
-                    ): null,
-                    body:
-                    state.formStatus is InitialFormStatus
-                        ? _getBody(context: context) : state.formStatus is FormSubmitting
-                        ? _loadingView(context) : state.formStatus is SubmissionSuccess
-                    ? Center(child: Text("SUCCESS")): _getBody(context: context, error: "ERROR")
-                );
-              }
-          )),
+      create: (BuildContext context) => UserDataBloc(user: authState.user),
+      child: BlocListener<UserDataBloc, UserDataState>(listener:
+          (BuildContext context, state) {
+        if (state.formStatus is SubmissionSuccess) {
+          context.read<FbBloc>().add(IfUserExistsEvent(state.uid));
+        }
+      }, child:
+          BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
+        return GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            bottomNavigationBar: state.formStatus is InitialFormStatus ||
+                    state.formStatus is SubmissionFailed
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 30),
+                    child: ElevatedButton(
+                        child: Text("Start using"),
+                        onPressed: () {
+                          // context.read<AuthenticationBloc>().add(SignOut());
+                          if (_formKey.currentState!.validate()) {
+                            context.read<UserDataBloc>().add(UploadData());
+                          }
+                        }),
+                  )
+                : null,
+            body: state.formStatus is InitialFormStatus
+                ? _getBody(context: context)
+                : state.formStatus is FormSubmitting
+                    ? _loadingView(context)
+                    : state.formStatus is SubmissionSuccess
+                        ? Center(child: Text("SUCCESS"))
+                        : _getBody(context: context, error: "ERROR")));
+      })),
     );
   }
 
   Widget _getBody({required BuildContext context, String? error}) {
-    // context.read<AuthenticationBloc>().add(SignOut());
-    var user = (context
-        .read<AuthenticationBloc>()
-        .state as Authenticated).user;
-    context.read<UserDataBloc>().add(SetUserId(user.uid));
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          iconTheme: Theme
-              .of(context)
-              .iconTheme,
-          backgroundColor: Theme
-              .of(context)
-              .backgroundColor,
+          iconTheme: Theme.of(context).iconTheme,
+          backgroundColor: Theme.of(context).backgroundColor,
           collapsedHeight: 60,
           pinned: false,
           floating: false,
           actions: [
+
             ThemeSwitcher(
                 clipper: const ThemeSwitcherCircleClipper(),
                 builder: (context) {
@@ -198,11 +173,11 @@ class UserData extends StatelessWidget {
                                 ? AppTheme.darkTheme
                                 : AppTheme.lightTheme,
                             reverseAnimation:
-                            brightness == Brightness.dark ? true : false,
+                                brightness == Brightness.dark ? true : false,
                           );
                         },
                         icon: ThemeProvider.of(context)!.brightness ==
-                            Brightness.light
+                                Brightness.light
                             ? Icon(Icons.brightness_3, size: 25)
                             : Icon(Icons.brightness_4, size: 25),
                       );
@@ -210,10 +185,7 @@ class UserData extends StatelessWidget {
                   );
                 })
           ],
-          expandedHeight: MediaQuery
-              .of(context)
-              .size
-              .height / 3,
+          expandedHeight: MediaQuery.of(context).size.height / 3,
           stretch: true,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.parallax,
@@ -231,11 +203,7 @@ class UserData extends StatelessWidget {
                 ),
               ),
               child: Container(
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .primary
-                    .withOpacity(0.7),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
                 child: _getUserAvatar,
               ),
             ),
@@ -246,7 +214,7 @@ class UserData extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: error != null? _errorWidget(error): Container(),
+          child: error != null ? _errorWidget(error) : Container(),
         ),
         SliverToBoxAdapter(
           child: Form(
@@ -283,16 +251,8 @@ class UserData extends StatelessWidget {
         SliverToBoxAdapter(
           child: ResponsiveGridRow(children: [
             ResponsiveGridCol(
-                xs: 5,
-                sm: 5,
-                md: 5,
-                lg: 4,
-                child: _getHeightSlider),
-            ResponsiveGridCol(xs: 7,
-                sm: 7,
-                md: 7,
-                lg: 4,
-                child: _getWeight),
+                xs: 5, sm: 5, md: 5, lg: 4, child: _getHeightSlider),
+            ResponsiveGridCol(xs: 7, sm: 7, md: 7, lg: 4, child: _getWeight),
             ResponsiveGridCol(
               xs: 12,
               sm: 4,
@@ -301,58 +261,43 @@ class UserData extends StatelessWidget {
               child: _getStepsPerDay,
             ),
             ResponsiveGridCol(
-                xs: 12,
-                sm: 5,
-                md: 5,
-                lg: 5,
-                child: _geWeekSportTimeSlider),
+                xs: 12, sm: 5, md: 5, lg: 5, child: _geWeekSportTimeSlider),
             ResponsiveGridCol(
-                xs: 12,
-                sm: 12,
-                md: 7,
-                lg: 7,
-                child: _getBirthday),
+                xs: 12, sm: 12, md: 7, lg: 7, child: _getBirthday),
           ]),
         ),
       ],
     );
   }
 
-  Widget get _getUserAvatar =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getUserAvatar => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (context, state) {
-          var authState =
-          context
-              .read<AuthenticationBloc>()
-              .state as Authenticated;
           var avatar = ClipRRect(
               borderRadius: BorderRadius.circular(1000),
-              child: authState.user.photoURL != null
-                  ? state.imageFile == null
-                  ? Image.network(
-                authState.user.photoURL!,
-                fit: BoxFit.cover,
-                height: 100.0,
-                width: 100.0,
-              )
-                  : Image.file(
-                state.imageFile!,
-                height: 100.0,
-                width: 100.0,
-                fit: BoxFit.cover,
-              )
-                  : Container(
-                  width: 150,
-                  height: 150,
-                  color: Theme
-                      .of(context)
-                      .primaryColor
-                      .withOpacity(0.5),
-                  child: Icon(
-                    Icons.add,
-                    size: 100,
-                    color: Colors.white,
-                  )));
+              child: state.imageFile != null
+                  ? Image.file(
+                      state.imageFile!,
+                      height: 100.0,
+                      width: 100.0,
+                      fit: BoxFit.cover,
+                    )
+                  : state.avatar.isNotEmpty
+                      ? Image.network(
+                          state.avatar,
+                          fit: BoxFit.cover,
+                          height: 100.0,
+                          width: 100.0,
+                        )
+                      : Container(
+                          width: 150,
+                          height: 150,
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.5),
+                          child: const Icon(
+                            Icons.add,
+                            size: 100,
+                            color: Colors.white,
+                          )));
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -368,29 +313,20 @@ class UserData extends StatelessWidget {
                             child: avatar)),
                     Container(
                         margin:
-                        EdgeInsets.symmetric(horizontal: 6, vertical: 26),
+                            EdgeInsets.symmetric(horizontal: 6, vertical: 26),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(authState.user.displayName ?? "",
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline5),
+                              child: Text(state.name,
+                                  style: Theme.of(context).textTheme.headline5),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                authState.user.email ?? "",
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                authState.user.phoneNumber ?? "",
+                                state.email,
                               ),
                             ),
                           ],
@@ -403,10 +339,11 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget _getContainer({required BuildContext context,
-    required Widget child,
-    required String title,
-    double? customHeight}) {
+  Widget _getContainer(
+      {required BuildContext context,
+      required Widget child,
+      required String title,
+      double? customHeight}) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.all(1),
@@ -419,10 +356,7 @@ class UserData extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child:
-                Text(title, style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline6),
+                    Text(title, style: Theme.of(context).textTheme.headline6),
               ),
               SizedBox(height: customHeight ?? 150, child: child),
             ],
@@ -434,84 +368,62 @@ class UserData extends StatelessWidget {
 
   var t = 0;
 
-  Widget get _getEmailField =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getEmailField => BlocBuilder<UserDataBloc, UserDataState>(
           builder: (BuildContext context, state) {
-            var authState =
-            context
-                .read<AuthenticationBloc>()
-                .state as Authenticated;
-            return TextFormField(
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  borderSide: BorderSide.none,
-                ),
-                prefixIcon: Icon(
-                  FontAwesomeIcons.at,
-                  color: Theme
-                      .of(context)
-                      .iconTheme
-                      .color!,
-                ),
-                filled: true,
-                fillColor: Theme
-                    .of(context)
-                    .cardColor,
-                hintText: tr("emailCaption"),
-              ),
-              onFieldSubmitted: (v) {
-                _formKey.currentState!.validate();
-              },
-              textInputAction: TextInputAction.next,
-              initialValue: authState.user.email,
-              validator: (value) =>
+        return TextFormField(
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              borderSide: BorderSide.none,
+            ),
+            prefixIcon: Icon(
+              FontAwesomeIcons.at,
+              color: Theme.of(context).iconTheme.color!,
+            ),
+            filled: true,
+            fillColor: Theme.of(context).cardColor,
+            hintText: tr("emailCaption"),
+          ),
+          onFieldSubmitted: (v) {
+            _formKey.currentState!.validate();
+          },
+          textInputAction: TextInputAction.next,
+          initialValue: state.email,
+          validator: (value) =>
               state.isEmailValid ? null : tr("emailErrorText"),
-              onChanged: (value) =>
-                  context.read<UserDataBloc>().add(OnEmailChangeEvent(value)),
-            );
-          });
+          onChanged: (value) =>
+              context.read<UserDataBloc>().add(OnEmailChangeEvent(value)),
+        );
+      });
 
-  Widget get _getNameField =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getNameField => BlocBuilder<UserDataBloc, UserDataState>(
           builder: (BuildContext context, state) {
-            var authState =
-            context
-                .read<AuthenticationBloc>()
-                .state as Authenticated;
-            return TextFormField(
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  borderSide: BorderSide.none,
-                ),
-                prefixIcon: Icon(
-                  FontAwesomeIcons.user,
-                  color: Theme
-                      .of(context)
-                      .iconTheme
-                      .color!,
-                ),
-                filled: true,
-                fillColor: Theme
-                    .of(context)
-                    .cardColor,
-                hintText: tr("name"),
-              ),
-              textInputAction: TextInputAction.done,
-              onFieldSubmitted: (v) {
-                _formKey.currentState!.validate();
-              },
-              initialValue: authState.user.displayName,
-              validator: (value) =>
-              state.isNameValid ? null : tr("nameErrorText"),
-              onChanged: (value) =>
-                  context.read<UserDataBloc>().add(OnNameChangeEvent(value)),
-            );
-          });
+        return TextFormField(
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              borderSide: BorderSide.none,
+            ),
+            prefixIcon: Icon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).iconTheme.color!,
+            ),
+            filled: true,
+            fillColor: Theme.of(context).cardColor,
+            hintText: tr("name"),
+          ),
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (v) {
+            _formKey.currentState!.validate();
+          },
+          initialValue: state.name,
+          validator: (value) => state.isNameValid ? null : tr("nameErrorText"),
+          onChanged: (value) =>
+              context.read<UserDataBloc>().add(OnNameChangeEvent(value)),
+        );
+      });
 
-  Widget get _getSmoking =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getSmoking => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           List<String> list = [tr("no"), tr("electronic"), tr("ordinary")];
           return Card(
@@ -531,13 +443,8 @@ class UserData extends StatelessWidget {
                                 begin: Alignment.topRight,
                                 end: Alignment.bottomLeft,
                                 colors: [
-                                  Theme
-                                      .of(context)
-                                      .primaryColor,
-                                  Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .secondary,
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
                                 ],
                               )),
                         ))),
@@ -546,7 +453,7 @@ class UserData extends StatelessWidget {
                   trailing: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<String>(
                       value: list[state.smoke],
                       borderRadius: BorderRadius.circular(10),
@@ -572,8 +479,7 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getIsVegan =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getIsVegan => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           List<String> list = [tr("normal"), tr("vegan")];
           return Card(
@@ -593,13 +499,8 @@ class UserData extends StatelessWidget {
                                 begin: Alignment.topRight,
                                 end: Alignment.bottomLeft,
                                 colors: [
-                                  Theme
-                                      .of(context)
-                                      .primaryColor,
-                                  Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .secondary,
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
                                 ],
                               )),
                         ))),
@@ -608,7 +509,7 @@ class UserData extends StatelessWidget {
                   trailing: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<String>(
                       value: state.isVegan ? list[1] : list[0],
                       borderRadius: BorderRadius.circular(10),
@@ -634,10 +535,9 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getGender =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getGender => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
-          List<String> list = [tr("female"), tr("male"), tr("others")];
+          List<String> list = ["female", "male", "others"];
           return Card(
             child: Stack(
               children: [
@@ -655,13 +555,8 @@ class UserData extends StatelessWidget {
                                 begin: Alignment.topRight,
                                 end: Alignment.bottomLeft,
                                 colors: [
-                                  Theme
-                                      .of(context)
-                                      .primaryColor,
-                                  Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .secondary,
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
                                 ],
                               )),
                         ))),
@@ -670,10 +565,10 @@ class UserData extends StatelessWidget {
                   trailing: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<String>(
                       value:
-                      list.contains(state.gender) ? state.gender : list[0],
+                          list.contains(state.gender) ? state.gender : list[0],
                       borderRadius: BorderRadius.circular(10),
                       underline: const SizedBox(),
                       elevation: 16,
@@ -685,7 +580,7 @@ class UserData extends StatelessWidget {
                       items: list.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(tr(value)),
                         );
                       }).toList(),
                     ),
@@ -697,8 +592,7 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getAlcohol =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getAlcohol => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           List<String> list = [tr("no"), tr("rarely"), tr("often")];
           return Card(
@@ -718,13 +612,8 @@ class UserData extends StatelessWidget {
                                 begin: Alignment.topRight,
                                 end: Alignment.bottomLeft,
                                 colors: [
-                                  Theme
-                                      .of(context)
-                                      .primaryColor,
-                                  Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .secondary,
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.secondary,
                                 ],
                               )),
                         ))),
@@ -733,7 +622,7 @@ class UserData extends StatelessWidget {
                   trailing: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<String>(
                       value: list[state.alcohol],
                       borderRadius: BorderRadius.circular(10),
@@ -759,8 +648,7 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getStepsPerDay =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getStepsPerDay => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
               context: context,
@@ -777,16 +665,12 @@ class UserData extends StatelessWidget {
                         fontSize: 22,
                         foreground: Paint()
                           ..shader = WidgetThemes.linearGradient(context)),
-                    textStyle: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyText1,
+                    textStyle: Theme.of(context).textTheme.bodyText1,
                     itemHeight: 70,
                     axis: Axis.horizontal,
-                    onChanged: (value) =>
-                        context
-                            .read<UserDataBloc>()
-                            .add(OnStetsChangeEvent(value.toDouble())),
+                    onChanged: (value) => context
+                        .read<UserDataBloc>()
+                        .add(OnStetsChangeEvent(value.toDouble())),
                     // decoration: BoxDecoration(
                     //     image: DecorationImage(
                     //       image: AssetImage("assets/img/blob.png"),
@@ -802,28 +686,25 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getBirthday =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getBirthday => BlocBuilder<UserDataBloc, UserDataState>(
           builder: (BuildContext context, state) {
-            return _getContainer(
-                context: context,
-                customHeight: 200,
-                title: tr("birthday"),
-                child: Center(
-                    child: SfDateRangePicker(
-                        minDate: DateTime(1950, 1, 1),
-                        maxDate: DateTime(2010, 12, 31),
-                        selectionTextStyle: TextStyle(fontSize: 12),
-                        initialSelectedDate: DateTime(1989, 1, 11),
-                        initialDisplayDate: DateTime(1989, 1, 11),
-                        onSelectionChanged: (v) =>
-                            context.read<UserDataBloc>().add(
-                                OnBirthdayChangeEvent(
-                                    v.value.millisecondsSinceEpoch)))));
-          });
+        return _getContainer(
+            context: context,
+            customHeight: 200,
+            title: tr("birthday"),
+            child: Center(
+                child: SfDateRangePicker(
+                    minDate: DateTime(1950, 1, 1),
+                    maxDate: DateTime(2010, 12, 31),
+                    selectionTextStyle: TextStyle(fontSize: 12),
+                    initialSelectedDate: DateTime(1989, 1, 11),
+                    initialDisplayDate: DateTime(1989, 1, 11),
+                    onSelectionChanged: (v) => context.read<UserDataBloc>().add(
+                        OnBirthdayChangeEvent(
+                            v.value.millisecondsSinceEpoch)))));
+      });
 
-  Widget get _getWeight =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getWeight => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
               customHeight: 100,
@@ -836,10 +717,9 @@ class UserData extends StatelessWidget {
                     weight: state.weight.toInt(),
                     minWeight: 40,
                     maxWeight: 120,
-                    onChange: (val) =>
-                        context
-                            .read<UserDataBloc>()
-                            .add(OnWeightChangeEvent(val.toDouble())),
+                    onChange: (val) => context
+                        .read<UserDataBloc>()
+                        .add(OnWeightChangeEvent(val.toDouble())),
                     unit: tr("kg"), // todo add selector metric system
                   ),
                 ),
@@ -847,8 +727,7 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget get _getHeightSlider =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _getHeightSlider => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
               customHeight: 100,
@@ -868,33 +747,23 @@ class UserData extends StatelessWidget {
                           WidgetThemes.percentageModifier(v, tr("sm")),
                     ),
                     customColors: CustomSliderColors(
-                        trackColor: Theme
-                            .of(context)
-                            .primaryColorLight,
+                        trackColor: Theme.of(context).primaryColorLight,
                         dotColor: Colors.transparent,
                         progressBarColors: [
-                          Theme
-                              .of(context)
-                              .colorScheme
-                              .primary,
-                          Theme
-                              .of(context)
-                              .colorScheme
-                              .secondary
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
                         ])),
                 min: 100,
                 max: 250,
                 initialValue: 130,
-                onChangeEnd: (double endValue) =>
-                    context
-                        .read<UserDataBloc>()
-                        .add(OnHeightChangeEvent(endValue.ceil().toDouble())),
+                onChangeEnd: (double endValue) => context
+                    .read<UserDataBloc>()
+                    .add(OnHeightChangeEvent(endValue.ceil().toDouble())),
               ));
         },
       );
 
-  Widget get _geWeekSportTimeSlider =>
-      BlocBuilder<UserDataBloc, UserDataState>(
+  Widget get _geWeekSportTimeSlider => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
               customHeight: 200,
@@ -920,27 +789,18 @@ class UserData extends StatelessWidget {
                               WidgetThemes.percentageModifier(v, ":00"),
                         ),
                         customColors: CustomSliderColors(
-                            trackColor: Theme
-                                .of(context)
-                                .primaryColorLight,
+                            trackColor: Theme.of(context).primaryColorLight,
                             dotColor: Colors.transparent,
                             progressBarColors: [
-                              Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .primary,
-                              Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .secondary
+                              Theme.of(context).colorScheme.primary,
+                              Theme.of(context).colorScheme.secondary
                             ])),
                     min: 0,
                     max: 6,
                     initialValue: 1,
-                    onChangeEnd: (double endValue) =>
-                        context
-                            .read<UserDataBloc>()
-                            .add(OnHoursSportChangeEvent(
+                    onChangeEnd: (double endValue) => context
+                        .read<UserDataBloc>()
+                        .add(OnHoursSportChangeEvent(
                             endValue.ceil().toDouble())),
                   ),
                 ],
@@ -948,22 +808,22 @@ class UserData extends StatelessWidget {
         },
       );
 
-  Widget _loadingView(BuildContext context)=> Column(
-    children: [
-      Center(child: LoadingView().loadingWhiteBg(context)),
-      Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Text("SOME TEXT"),
-      )
-    ],
-  );
+  Widget _loadingView(BuildContext context) => Column(
+        children: [
+          Center(child: LoadingView().loadingWhiteBg(context)),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text("SOME TEXT"),
+          )
+        ],
+      );
 
-  Widget  _errorWidget(String error) => Container(
-    color: Colors.red,
-    child: Center(
-      child: Text(error),
-    ),
-  );
+  Widget _errorWidget(String error) => Container(
+        color: Colors.red,
+        child: Center(
+          child: Text(error),
+        ),
+      );
 
   Gender getGenderByString(String s) {
     switch (s.toUpperCase()) {
@@ -997,7 +857,7 @@ class UserData extends StatelessWidget {
       List<File> files = result.paths.map((path) => File(path!)).toList();
       context.read<UserDataBloc>().add(OnPictureSelected(files.first));
     } else {
-      // User canceled the picker
+      print("ERROR SELECT PHOTO");
     }
   }
 
@@ -1010,6 +870,18 @@ class UserData extends StatelessWidget {
             title: Text(tr("take_photo")),
             onPressed: () {
               Navigator.pop(context);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return const CameraApp(
+                  title: 'Str',
+                );
+              })).then((value) {
+                if (value is List<File>) {
+                  context
+                      .read<UserDataBloc>()
+                      .add(OnPictureSelected(value.first));
+                }
+              });
             }),
         BottomSheetAction(
             title: Text(tr("select_from_device")),
@@ -1023,6 +895,4 @@ class UserData extends StatelessWidget {
               "cancel"))), // onPressed parameter is optional by default will dismiss the ActionSheet
     );
   }
-
-
 }
