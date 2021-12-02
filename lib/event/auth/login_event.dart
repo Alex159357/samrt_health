@@ -1,7 +1,7 @@
 
+import 'package:flutter/cupertino.dart';
 
-import 'package:samrt_health/pages/auth/login/login_view.dart';
-
+@immutable
 abstract class LoginEvent{}
 
 class LoginEventOnChangedUsername extends LoginEvent{

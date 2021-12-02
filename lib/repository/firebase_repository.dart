@@ -41,6 +41,11 @@ class FirebaseRepository {
     return null;
   }
 
+  Future<UserModel> getUser(String uid) async{
+    var user = store.collection('users').doc(uid);
+    return await user.get().then((value) => UserModel.fromMap(value.data()!));
+  }
+
   Future<String?> uploadImageToFirebase(File file, String destination) async {
     var mRef = ref.ref(destination);
     try{
@@ -60,26 +65,6 @@ class FirebaseRepository {
   Future<UserModel?> createUser(Map<String, dynamic> map) async {
     var user = store.collection('users').doc(map["uid"]);
     await user.set(map);
-    // UserModel(
-    //     alcohol: 0,
-    //     smoke: 0,
-    //     role: "role",
-    //     state: "state",
-    //     isBlocked: false,
-    //     lastActiveDate: "lastActiveDate",
-    //     registrationDate: "registrationDate",
-    //     age: 0,
-    //     gender: "gender",
-    //     isVegan: false,
-    //     hourSportPerWeek: 0,
-    //     uid: "uid",
-    //     name: "name",
-    //     email: "email",
-    //     weight: 0,
-    //     height: 0,
-    //     stepsPerDay: 0,
-    //     avatar: "avatar", birthday: "")
-    //     .map
     return null;
   }
 }

@@ -15,11 +15,15 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:samrt_health/bloc.dart';
 import 'package:samrt_health/bloc/fb/fb_bloc.dart';
 import 'package:samrt_health/bloc/user_data/user_data_bloc.dart';
+import 'package:samrt_health/bloc/user_db/user_db_bloc.dart';
 import 'package:samrt_health/event/db/fb_event.dart';
 import 'package:samrt_health/state/form_submission_status.dart';
 import 'package:samrt_health/state/user_data/user_data_state.dart';
 import 'package:samrt_health/theme/theme.dart';
 import 'package:samrt_health/theme/widget_themes.dart';
+import 'package:samrt_health/utils/DataConvertor.dart';
+import 'package:samrt_health/view/auth_state_less.dart';
+import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/camera/cameraView.dart';
 import 'package:samrt_health/view/loading_view.dart';
 import 'package:samrt_health/view/test2.dart';
@@ -30,10 +34,12 @@ import 'package:samrt_health/event/user_data/user_data_event.dart';
 import '../../main.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
-class UserData extends StatelessWidget {
+final _formKey = GlobalKey<FormState>();
+
+class UserData extends BaseStateLess {
   UserData({Key? key}) : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
+
   final border = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(20.0),
   );
@@ -93,6 +99,7 @@ class UserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("UPDATED");
     // gyroscopeEvents.listen((GyroscopeEvent event) {
     //   // _scrollController.jumpTo(event.y);
     // });
@@ -109,42 +116,47 @@ class UserData extends StatelessWidget {
       }
     });
     var authState = context.read<AuthenticationBloc>().state as Authenticated;
-    return BlocProvider(
-      create: (BuildContext context) => UserDataBloc(user: authState.user),
-      child: BlocListener<UserDataBloc, UserDataState>(listener:
-          (BuildContext context, state) {
-        if (state.formStatus is SubmissionSuccess) {
-          context.read<FbBloc>().add(IfUserExistsEvent(state.uid));
-        }
-      }, child:
-          BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
-        return GestureDetector(
-            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            bottomNavigationBar: state.formStatus is InitialFormStatus ||
-                    state.formStatus is SubmissionFailed
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 30),
-                    child: ElevatedButton(
-                        child: Text("Start using"),
-                        onPressed: () {
-                          // context.read<AuthenticationBloc>().add(SignOut());
-                          if (_formKey.currentState!.validate()) {
-                            context.read<UserDataBloc>().add(UploadData());
-                          }
-                        }),
-                  )
-                : null,
-            body: state.formStatus is InitialFormStatus
-                ? _getBody(context: context)
-                : state.formStatus is FormSubmitting
-                    ? _loadingView(context)
-                    : state.formStatus is SubmissionSuccess
-                        ? Center(child: Text("SUCCESS"))
-                        : _getBody(context: context, error: "ERROR")));
-      })),
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (BuildContext context, state) {},
+      child: BlocProvider(
+        create: (BuildContext context) => UserDataBloc(user: authState.user, userDb: context.read<UserDbBloc>().userDb),
+        child:
+        BlocListener<UserDataBloc, UserDataState>(listener:
+            (BuildContext context, state) {
+          if (state.formStatus is SubmissionSuccess) {
+            context.read<AuthenticationBloc>().add(CheckLogin());
+          }
+        }, child:
+            BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
+          return GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: Scaffold(
+              resizeToAvoidBottomInset: true,
+              bottomNavigationBar: state.formStatus is InitialFormStatus ||
+                      state.formStatus is SubmissionFailed
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 30),
+                      child: ElevatedButton(
+                          child: Text("Start using"),
+                          onPressed: () {
+                            // context.read<AuthenticationBloc>().add(SignOut());
+                            if (_formKey.currentState!.validate()) {
+                              context.read<UserDataBloc>().add(UploadData());
+                            }
+                          }),
+                    )
+                  : null,
+              body: state.formStatus is InitialFormStatus
+                  ? _getBody(context: context)
+                  : state.formStatus is FormSubmitting
+                      ? _loadingView(context)
+                      : state.formStatus is SubmissionSuccess
+                          ? Center(child: Text("SUCCESS"))
+                          : _getBody(context: context, error: "ERROR")));
+        })
+        ),
+      ),
     );
   }
 

@@ -1,4 +1,6 @@
 
+import 'package:samrt_health/view/loading_view.dart';
+
 import '../../main.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
@@ -18,21 +20,25 @@ class _CameraAppState extends State<CameraApp> {
   late CameraController controller;
   static int currentCamera = 0;
   static bool isSaving = false;
+  GlobalKey maskKey = GlobalKey();
+  double maskHeight = 0;
 
   @override
   void initState() {
     super.initState();
-    controller = CameraController(cameras[0], ResolutionPreset.max);
+    controller = CameraController(cameras[1], ResolutionPreset.max);
   }
 
   @override
   void dispose() {
+    isSaving = false;
     controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
       future: controller.initialize(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -46,20 +52,57 @@ class _CameraAppState extends State<CameraApp> {
                         height: MediaQuery.of(context).size.height,
                         color: Colors.redAccent,
                         child: CameraPreview(controller)),
-                    // Positioned.fill(
-                    //     child: Align(
-                    //         alignment: Alignment.topLeft,
-                    //         child: Container(
-                    //             child: _getAppBar(orientation)
-                    //         )
-                    //     )
-                    // ),
+                    Positioned.fill(
+                      top: 0,
+                        left: 0,
+                        bottom: (MediaQuery.of(context).size.height / 2)+ MediaQuery.of(context).size.width / 2,
+                        child: Container(
+                      color: Color(0x80000000),
+                    )),
+                    Positioned.fill(
+                        // bottom: 170,
+                        // left: 0,
+                        // top: 170,
+                        child:
+                        // Image.asset(
+                        //   "assets/img/square.png", height: 200,)
+                        Container(
+                          height: 200,
+                          key: maskKey,
+                          // decoration: BoxDecoration(
+                          //   image: DecorationImage(
+                          //     image: AssetImage("assets/img/square.png"),
+                          //     fit: BoxFit.fill,
+                          //   ),
+                          // ),
+                          child: Image.asset(
+                            "assets/img/square.png"),
+                        )
+
+                    ),
+                    Positioned.fill(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        top: (MediaQuery.of(context).size.height / 2)+ MediaQuery.of(context).size.width / 2,
+                        child: Container(
+                          color: Color(0x80000000),
+                        )),
+                    Positioned.fill(
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                                child: _getAppBar()
+                            )
+                        )
+                    ),
                     Positioned.fill(
                       child: Align(
                           alignment: Alignment.bottomCenter,
                           child: GestureDetector(
                               onTap: () {
                                 if (!isSaving) {
+                                  isSaving = true;
                                   controller.takePicture().then((value) {
                                     File file = File(value.path);
                                     List<File> fList = [file];
@@ -123,14 +166,12 @@ class _CameraAppState extends State<CameraApp> {
   }
 
 
-  Widget _getAppBar(Orientation orientation){
-    if(orientation == Orientation.portrait) {
+  Widget _getAppBar(){
       return Container(
           width: MediaQuery
               .of(context)
               .size
               .width,
-          color: Color(0x44000000),
           padding: EdgeInsets.only(top: 30),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -148,32 +189,6 @@ class _CameraAppState extends State<CameraApp> {
               ],
             ),
           ));
-    }else {
-      return Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          margin: EdgeInsets.only(top: 24, left: 5),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                Container(
-                    child:_getAppBarLead()
-                ),
-                Expanded(
-                    child: RotatedBox(
-                        quarterTurns: -1,
-                        child: Padding(
-                          padding:
-                          const EdgeInsets.only(right: 12),
-                          child: _getAppBarTitle(),
-                        )))
-              ],
-            ),
-          ));
-    }
   }
 
   Widget _getAppBarLead(){

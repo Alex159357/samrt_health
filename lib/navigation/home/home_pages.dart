@@ -1,0 +1,5 @@
+
+
+enum HomePage{
+  MAIN, PROGRAMMS, TARGETS, USER_DATA
+}

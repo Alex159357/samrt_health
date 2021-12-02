@@ -1,15 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:samrt_health/data_base/user_db/user_db.dart';
 import 'package:samrt_health/event/user_data/user_data_event.dart';
+import 'package:samrt_health/models/app_user_model.dart';
 import 'package:samrt_health/repository/firebase_repository.dart';
 import 'package:samrt_health/state/form_submission_status.dart';
 import 'package:samrt_health/state/user_data/user_data_state.dart';
 
-class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
+import '../../main.dart';
+
+class UserDataBloc extends Bloc<UserDataEvent, UserDataState>{
   FirebaseRepository _repository = FirebaseRepository();
   final User user;
+  final UserDb userDb;
 
-  UserDataBloc({required this.user})
+  UserDataBloc({required this.user, required this.userDb})
       : super(UserDataState(
             email: user.email ?? "",
             name: user.displayName ?? "",
@@ -25,11 +30,13 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     if (event is OnAvatarChangeEvent) yield state.copy(avatar: event.avatar);
     if (event is OnGenderChangeEvent) yield state.copy(gender: event.gender);
     if (event is OnVeganChangeEvent) yield state.copy(isVegan: event.ifVegan);
-    if (event is OnHoursSportChangeEvent)
+    if (event is OnHoursSportChangeEvent) {
       yield state.copy(hourSportPerWeek: event.hourSportPerWeek);
+    }
     if (event is OnAlcoholChangeEvent) yield state.copy(alcohol: event.alcohol);
-    if (event is OnBirthdayChangeEvent)
+    if (event is OnBirthdayChangeEvent) {
       yield state.copy(birthday: event.birthday);
+    }
     if (event is OnSmokeChangeEvent) yield state.copy(smoke: event.smoke);
     if (event is SetUserId) yield state.copy(uid: event.uid);
     if (event is OnPictureSelected) yield state.copy(imageFile: event.image);
@@ -42,6 +49,8 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
           yield state.copy(avatar: url);
         }
         await _repository.createUser(state.map());
+        UserModel user = await _repository.getUser(state.uid);
+        await userDb.insertUser(user);
         yield state.copy(formStatus: SubmissionSuccess());
       } on Exception catch (e) {
         yield state.copy(formStatus: SubmissionFailed(e));

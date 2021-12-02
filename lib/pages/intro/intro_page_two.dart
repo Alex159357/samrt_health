@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/src/provider.dart';
-import 'package:samrt_health/cubit/main/main_nav_cubit.dart';
-import 'package:samrt_health/navigation/main/pages.dart';
+import 'package:samrt_health/cubit/auth/auth_root_cubit.dart';
 import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/buttons.dart';
 
@@ -59,10 +58,7 @@ class PageTwo extends BaseStateLess {
                         margin: const EdgeInsets.only(bottom: 50),
                         child: Buttons.mainButton(
                             onPressed: () {
-                              prefs.setBool("intro", true);
-                              context
-                                  .read<MainNavCubit>()
-                                  .goToScreen(Pages.AUTH);
+                              context.read<AuthRootCubit>().setIntroDone(true);
                             },
                             text: tr("skip"),
                             background: Color(0xff8167e6),

@@ -13,6 +13,7 @@ class AuthView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("AUTH3");
     return BlocBuilder<AuthCubit, AuthPages>(
       builder: (BuildContext context, state) {
         return AnimatedSwitcher(

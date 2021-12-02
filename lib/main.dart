@@ -8,6 +8,9 @@ import 'package:samrt_health/pages/runner/runner.dart';
 import 'package:samrt_health/utils/translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data_base/user_db/user_db.dart';
+import 'utils/DataConvertor.dart';
+
 
 late SharedPreferences prefs;
 late FirebaseApp firebaseApp;
@@ -34,7 +37,7 @@ void main() async {
         useOnlyLangCode: true,
         fallbackLocale: Locale(locale),
         //locale.split("_")[0]
-        child: const Runner()),
+        child: Runner()),
   );
 }
 

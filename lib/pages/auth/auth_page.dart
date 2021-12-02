@@ -10,10 +10,11 @@ import '../../bloc.dart';
 import 'auth_view.dart';
 
 class AuthPage extends AuthStateLess {
-  AuthPage({Key? key}) : super(key: key);
+   AuthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (BuildContext context, state) {
           if (state is Authenticated) {}
@@ -22,7 +23,6 @@ class AuthPage extends AuthStateLess {
             resizeToAvoidBottomInset: true,
             body: _getBody(context)));
   }
-//TODO create password restore
   Widget _getBody(BuildContext context) => Material(
         child: Container(
           height: MediaQuery.of(context).size.height,

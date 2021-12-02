@@ -65,6 +65,10 @@ dependencies:
   firebase_storage: ^10.1.0
   flutter_native_image: ^0.0.6
   camera:
+  bottom_bar_with_sheet: ^2.0.1
+  base32: 2.1.1
+  encrypt: ^5.0.1
+  sqflite: ^2.0.0+4
 
 
 dev_dependencies:
