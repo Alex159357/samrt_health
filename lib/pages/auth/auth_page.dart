@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
 import 'package:samrt_health/cubit/auth/auth_cubit.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
 import 'package:samrt_health/view/auth_state_less.dart';
 import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/test.dart';
@@ -47,24 +49,22 @@ class AuthPage extends AuthStateLess {
                       size: Size(900, (500*0.8666666666666666).toDouble()),
                     ),
                   )),
-              Container(
-                child: SizedBox(
-                  child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                      builder: (BuildContext context, state) {
-                    if (state is SocialLoginInProgress) {
-                      print("login_social");
-                      return Center(child: loadingWhite(context));
-                    } else {
-                      return  BlocProvider(
-                          create: (context) => AuthCubit(),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: AuthView(),
-                          ),
-                      );
-                    }
-                  }),
-                ),
+              SizedBox(
+                child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (BuildContext context, state) {
+                  if (state is SocialLoginInProgress) {
+                    print("login_social");
+                    return Center(child: loadingWhite(context));
+                  } else {
+                    return  BlocProvider(
+                        create: (context) => AuthCubit(),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: AuthView(),
+                        ),
+                    );
+                  }
+                }),
               ),
             ],
           ),

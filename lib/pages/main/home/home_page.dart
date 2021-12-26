@@ -1,150 +1,224 @@
-import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/src/public_ext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:samrt_health/bloc.dart';
-import 'package:samrt_health/const/ui_state.dart';
-import 'package:samrt_health/cubit/home/home_ui_cubit.dart';
-import 'package:samrt_health/view/bottom_aheet.dart';
-import 'package:samrt_health/view/bottom_bar_item.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/bloc/home/home_ui_bloc.dart';
+import 'package:samrt_health/bloc/bloc/home/profile_ui_bloc.dart';
+import 'package:samrt_health/bloc/state/home/home/home_ui_state.dart';
+import 'package:samrt_health/cubit/home/bottom_nav_cubit.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
+import 'package:samrt_health/theme/theme_controller.dart';
+import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
+import 'package:samrt_health/view/widgets/bottom_nav.dart';
+import 'add_action/add_action_view.dart';
+import 'user_profile_page/user_profile_page.dart';
+
+int lastOpened = 0;
+SlidingUpPanelController panelController = SlidingUpPanelController();
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (c) => HomeUiCubit(HomeUiState.INITIAL),
-      child: BlocBuilder<HomeUiCubit, HomeUiState>(builder: (context, action) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Test"),
-            actions: [
-              GestureDetector(
-                onTap: ()=> context.read<AuthenticationBloc>().add(SignOut()),
-                child:  Icon(Icons.six_ft_apart_outlined),
+    return ThemeProvider(
+        initTheme: ThemeController().getCurrentTheme(),
+        builder: (_, myTheme) {
+          return MaterialApp(
+              title: 'Smart Health',
+              theme: myTheme,
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              localeResolutionCallback:
+                  (locale, Iterable<Locale> supportedLocales) {
+                return locale;
+              },
+              home: ThemeSwitchingArea(
+                  child: MultiBlocProvider(providers: [
+                    BlocProvider(create: (ctx) => BottomNavCubit(lastOpened)),
+                    BlocProvider(create: (ctx) {
+                      User user =
+                          (ctx
+                              .read<AuthenticationBloc>()
+                              .state as Authenticated)
+                              .user;
+                      // ctx.read<FirebaseRepository>().getCurrentUser(user.uid);
+                      return ProfileUiBloc(user: user);
+                    }),
+                    BlocProvider(create: (ctx) => HomeMainUiBloc()),
+                  ], child: Phoenix(child: _getBody))));
+        });
+  }
+
+
+  Widget get _getBody =>
+      BlocListener<HomeMainUiBloc, HomeMainUiState>(
+          listener: (context, state) {
+            if (state.ifActionsOpened) {
+              onFabClicked(context);
+            } else if (!state.ifActionsOpened) {
+              Navigator.of(context).pop();
+            }
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            floatingActionButtonLocation: FloatingActionButtonLocation
+                .centerDocked,
+            floatingActionButton: _getFab,
+            bottomNavigationBar: BottomNav(),
+            body: Stack(
+              children: [
+                BlocBuilder<BottomNavCubit, int>(
+                  builder: (context, it) {
+                    lastOpened = it;
+                    if (it == 0) {
+                      return Center(child: Text(" MAIN"));
+                    } else if (it == 1) {
+                      return Center(child: Text(" TARGET LIST"));
+                    } else if (it == 2) {
+                      return Center(child: Text("OYHERS"));
+                    }
+                    return UserProfileScreen();
+                  },
+                ),
+              ],
+            ),
+          )
+      );
+
+
+  Widget get _getBottomNav =>
+      BlocBuilder<BottomNavCubit, int>(builder: (context, it) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30.0),
+            child: BottomAppBar(
+              color: Colors.redAccent,
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(icon: Icon(Icons.search, color: Colors.white,),
+                    onPressed: () => context.read<BottomNavCubit>().emit(0),),
+                  IconButton(icon: Icon(Icons.print, color: Colors.white,),
+                    onPressed: () => context.read<BottomNavCubit>().emit(1),),
+                  IconButton(icon: Icon(Icons.people, color: Colors.white,),
+                    onPressed: () => context.read<BottomNavCubit>().emit(2),),
+                  IconButton(icon: Icon(Icons.people, color: Colors.white,),
+                    onPressed: () => context.read<BottomNavCubit>().emit(3),),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+
+  Widget get _getFab =>
+      BlocBuilder<HomeMainUiBloc, HomeMainUiState>(
+          builder: (context, state) {
+            return BlocBuilder<BottomNavCubit, int>(
+                builder: (context, it) {
+                  if (it == 3) {
+                    return Container();
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: FloatingActionButton(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      heroTag: "add_action",
+                      onPressed: () => onFabClicked(context),
+                      child: Icon(Icons.add),),
+
+                  );
+                });
+          }
+      );
+
+
+  Widget get _getPane =>
+      SlidingUpPanelWidget(
+        child: Material(
+          color: Colors.blue,
+          child: PageView(
+
+            /// [PageView.scrollDirection] defaults to [Axis.horizontal].
+            /// Use [Axis.vertical] to scroll vertically.
+
+            children: const <Widget>[
+              Center(
+                child: Text('First Page'),
+              ),
+              Center(
+                child: Text('Second Page'),
+              ),
+              Center(
+                child: Text('Third Page'),
               )
             ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-          //     // if(action == HomeUiState.BS_SHOW)
-          //     // context.read<HomeUiCubit>().action(HomeUiState.BS_HIDE);
-          //     // else context.read<HomeUiCubit>().action(HomeUiState.BS_SHOW);
-          //     showModalBottomSheet(
-          //         context: context,
-          //         builder: (context) {
-          //           return Container(
-          //             color: Colors.red,
-          //           );
-          //         });
-          //   },
-          //   tooltip: 'Increment',
-          //   child: Icon(Icons.add),
-          //   elevation: 2.0,
-          // ),
+        ),
+        controlHeight: 0.0,
+        anchor: 0.4,
+        panelController: panelController,
+        enableOnTap: true,
+        dragDown: (details) {
+          print('dragDown');
+        },
+        dragStart: (details) {
+          print('dragStart');
+        },
+        dragCancel: () {
+          print('dragCancel');
+        },
+        dragUpdate: (details) {
+          print('dragUpdate,${panelController.status ==
+              SlidingUpPanelStatus.dragging ? 'dragging' : ''}');
+        },
+        dragEnd: (details) {
+          print('dragEnd');
+        },
+      );
 
-          resizeToAvoidBottomInset: true,
-          bottomNavigationBar: BottomBarWithSheet(
-            selectedIndex: 0,
-            sheetChild:
-                const Center(child: Text("Place for your another content")),
-            bottomBarTheme: BottomBarTheme(
-                mainButtonPosition: MainButtonPosition.middle,
-                selectedItemIconColor: Theme.of(context).primaryColor,
-                decoration: BoxDecoration()),
-            mainActionButtonTheme: MainActionButtonTheme(
-              size: 60,
-              color: Theme.of(context).primaryColor,
-              icon: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 35,
-              ),
+
+  void onFabClicked(BuildContext context) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: Duration(milliseconds: 500),
+        pageBuilder: (BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return AddActionView(lastOpened: lastOpened,);
+        },
+        transitionsBuilder: (BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child) {
+          return Align(
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
             ),
-            onSelectItem: (index) => print('item $index was pressed'),
-            items: const [
-              BottomBarWithSheetItem(icon: Icons.people),
-              BottomBarWithSheetItem(icon: Icons.shopping_cart),
-              BottomBarWithSheetItem(icon: Icons.settings),
-              BottomBarWithSheetItem(icon: Icons.favorite),
-            ],
-          ),
-          // BottomAppBar(
-          //   shape: CircularNotchedRectangle(),
-          //   child: Row(
-          //     mainAxisSize: MainAxisSize.max,
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: const <Widget>[
-          //       BottomBarItem(
-          //         icon: Icons.add,
-          //         caption: "Test",
-          //       ),
-          //       BottomBarItem(
-          //         icon: Icons.add,
-          //         caption: "Test",
-          //       ),
-          //       BottomBarItem(
-          //         icon: Icons.add,
-          //         caption: "Test",
-          //       ),
-          //       BottomBarItem(
-          //         icon: Icons.add,
-          //         caption: "Test",
-          //       ),
-          //     ],
-          //   ),
-          //   // notchedShape: CircularNotchedRectangle(),
-          //   color: Colors.blueGrey,
-          // ),
-          body: Stack(
-            children: [
-              _getBottomSheet,
-              // _getBottomSheet,
-              // _getBottomSheet
-            ],
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 
-  Widget get _getBottomSheet => FutureBuilder(
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return DraggableScrollableSheet(
-              maxChildSize: 0.95,
-              minChildSize: 0.1,
-              initialChildSize: 0.1,
-              builder: (context, scrollController) {
-                List<Widget> _sliverList(int size, int sliverChildCount) {
-                  List<Widget> widgetList = [];
-                  for (int index = 0; index < size; index++)
-                    widgetList
-                      ..add(SliverAppBar(
-                        title: Text("Title $index"),
-                        pinned: true,
-                      ))
-                      ..add(SliverFixedExtentList(
-                        itemExtent: 50.0,
-                        delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              return Container(
-                                alignment: Alignment.center,
-                                color: Colors.lightBlue[100 * (index % 9)],
-                                child: Text('list item $index'),
-                              );
-                            }, childCount: sliverChildCount),
-                      ));
 
-                  return widgetList;
-                }
+  void toggleBs() {
+    if (panelController.status == SlidingUpPanelStatus.collapsed) {
+      panelController.expand();
+    } else {
+      panelController.collapse();
+    }
+  }
 
-                return CustomScrollView(
-                  controller: scrollController,
-                  slivers: _sliverList(50, 10),
-                );
-              });
-        },
-      );
+
 }

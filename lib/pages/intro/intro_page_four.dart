@@ -4,6 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:samrt_health/bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/event/auth/authentication_event.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
 
 class PageFour extends StatelessWidget {
   const PageFour({Key? key}) : super(key: key);

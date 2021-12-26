@@ -24,21 +24,21 @@ class UserModel {
       uid: map["uid"],
       name: map["name"],
       email: map["email"],
-      weight: double.parse(map["weight"]),
-      height: double.parse(map["height"]),
+      weight:double.parse(map["weight"].toString()),
+      height: double.parse(map["height"].toString()),
       stepsPerDay: double.parse(map["stepsPerDay"].toString()),
       gender: map["gender"],
       isVegan: map["isVegan"].toString().parseBool(),
-      hourSportPerWeek: double.parse(map["hourSportPerWeek"]),
+      hourSportPerWeek: double.parse(map["hourSportPerWeek"].toString()),
       isBlocked: map["isBlocked"].toString().parseBool(),
       lastActiveDate: map["lastActiveDate"],
       registrationDate: map["registrationDate"],
       role: map["role"].toString().isNotEmpty? map["role"]: "none",
       state: map["state"].toString().isNotEmpty? map["state"]: "none",
-      alcohol: (map["alcohol"] as double).parseInt(),
-      smoke: (map["smoke"] as double).parseInt(),
+      alcohol: (double.parse(map["alcohol"].toString())).parseInt(),
+      smoke: (double.parse(map["smoke"].toString())).parseInt(),
       avatar: map["avatar"],
-      birthday: int.parse(map["birthday"])
+      birthday: int.parse(map["birthday"].toString())
   );
 
   static int calc_ranks(ranks) {

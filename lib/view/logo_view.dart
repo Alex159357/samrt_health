@@ -11,7 +11,7 @@ class LogoView extends StatelessWidget {
     return SizedBox(
       width: 150,
       height: 150,
-      child: SvgPicture.asset("assets/img/slide_1.svg",
+      child: SvgPicture.asset("assets/img/icon.png",
           semanticsLabel: 'Acme Logo'),
     );
   }

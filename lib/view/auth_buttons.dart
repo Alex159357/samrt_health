@@ -5,8 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:samrt_health/event/auth/authentication_event.dart';
-import 'package:samrt_health/state/auth/authentication_state.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/event/auth/authentication_event.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
 
 import '../bloc.dart';
 

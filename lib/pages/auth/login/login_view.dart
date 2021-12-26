@@ -11,15 +11,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:samrt_health/bloc.dart';
-import 'package:samrt_health/bloc/auth/login_bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/login_bloc.dart';
 import 'package:samrt_health/cubit/auth/auth_cubit.dart';
-import 'package:samrt_health/event/auth/login_event.dart';
+import 'package:samrt_health/bloc/event/auth/authentication_event.dart';
+import 'package:samrt_health/bloc/event/auth/login_event.dart';
 import 'package:samrt_health/navigation/auth/auth_pages.dart';
 import 'package:samrt_health/pages/runner/runner.dart';
 import 'package:samrt_health/repository/user_repository.dart';
 import 'package:samrt_health/services/notifiation_service.dart';
-import 'package:samrt_health/state/auth/login_state.dart';
-import 'package:samrt_health/state/form_submission_status.dart';
+import 'package:samrt_health/bloc/state/auth/login_state.dart';
+import 'package:samrt_health/bloc/state/form_submission_status.dart';
 import 'package:samrt_health/utils/translation.dart';
 import 'package:samrt_health/view/auth_state_less.dart';
 
@@ -51,6 +53,7 @@ class LoginView extends AuthStateLess {
   Widget _getForm() {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (BuildContext context, state) {
+        bool ifRestore  = prefs.getBool("ifRestore")?? false;
         return Stack(
           children: [
             AnimatedSwitcher(
@@ -69,8 +72,6 @@ class LoginView extends AuthStateLess {
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    appLogo,
-                                    Text(locale),
                                     Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: _getUsernameField(),
@@ -79,6 +80,8 @@ class LoginView extends AuthStateLess {
                                       padding: const EdgeInsets.all(12.0),
                                       child: _getPasswordField(),
                                     ),
+                                    ifRestore? Text(tr("reset_hint_on_login"),  style: TextStyle(
+                                        color: Colors.redAccent)): Container(),
                                     state.formStatus is SubmissionFailed
                                         ? Padding(
                                             padding: EdgeInsets.all(12.0),

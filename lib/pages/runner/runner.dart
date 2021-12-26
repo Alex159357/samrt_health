@@ -6,22 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:samrt_health/bloc.dart';
-import 'package:samrt_health/bloc/auth/authentication_bloc.dart';
-import 'package:samrt_health/bloc/user_db/user_db_bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/bloc/user_data/user_data_bloc.dart';
+import 'package:samrt_health/bloc/bloc/user_db/user_db_bloc.dart';
 import 'package:samrt_health/cubit/auth/auth_root_cubit.dart';
 import 'package:samrt_health/data_base/user_db/user_db.dart';
+import 'package:samrt_health/models/app_user_model.dart';
 import 'package:samrt_health/navigation/runner/runner_cubit.dart';
 import 'package:samrt_health/pages/auth/auth_page.dart';
 import 'package:samrt_health/pages/intro/intro_page.dart';
-import 'package:samrt_health/pages/main/home/home_page.dart';
-import 'package:samrt_health/pages/main/user_data_view.dart';
+
+import 'package:samrt_health/pages/runner/runner_wrapper.dart';
 import 'package:samrt_health/repository/firebase_repository.dart';
 import 'package:samrt_health/repository/user_repository.dart';
 import 'package:samrt_health/services/notifiation_service.dart';
-import 'package:samrt_health/theme/theme_controller.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
 import 'package:samrt_health/view/base_state_less.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
 
@@ -29,7 +29,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 class Runner extends BaseStateLess {
-  late UserDb userDb;
+  UserModel? userModel;
 
   Runner({Key? key}) : super(key: key);
 
@@ -51,73 +51,71 @@ class Runner extends BaseStateLess {
               _init()
                   .then((value) => context.read<RunnerCubit>().complete(value));
               if (state) {
-                return BlocProvider(
-                  create: (context) => UserDbBloc(userDatsBase: userDb),
-                  child: ThemeProvider(
-                      initTheme: ThemeController().getCurrentTheme(),
-                      builder: (_, myTheme) {
-                        return MaterialApp(
-                            title: 'Smart Health',
-                            theme: myTheme,
-                            debugShowCheckedModeBanner: false,
-                            localizationsDelegates:
-                                context.localizationDelegates,
-                            supportedLocales: context.supportedLocales,
-                            locale: context.locale,
-                            localeResolutionCallback:
-                                (locale, Iterable<Locale> supportedLocales) {
-                              return locale;
-                            },
-                            home: ThemeSwitchingArea(
-                                child: BlocProvider(
-                                    create: (ctx) => AuthenticationBloc(
-                                        userRepository: UserRepository()),
-                                    child: BlocBuilder<AuthenticationBloc,
-                                            AuthenticationState>(
-                                        builder: (context, state) {
-                                      if (state is Authenticated) {
-                                        return FutureBuilder(
-                                          future: userDb.readUser(state.user.uid),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<dynamic> snapshot) {
-                                            if (snapshot.connectionState == ConnectionState.done) {
-                                              if (snapshot.hasData) {
-                                                return const HomePage();
-                                              } else {
-                                                return FutureBuilder(
-                                                  future: FirebaseRepository().instance().getUser(state.user.uid),
-                                                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                                                    if(snapshot.connectionState == ConnectionState.done) {
-                                                      if (snapshot.hasData) {
-                                                        return const HomePage();
-                                                      } else {
-                                                        return UserData();
-                                                      }
-                                                    }
-                                                    return Center(child: Text("Loading"));
-                                                  },
-                                                );
-                                              }
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                    create: (context) => UserDbBloc(userDatsBase: userDb)),
+                  BlocProvider(
+                  create: (ctx) => AuthenticationBloc(
+                  userRepository: UserRepository())),
+                  ],
+                  child: BlocBuilder<AuthenticationBloc,
+                              AuthenticationState>(builder: (context, state) {
+                            if (state is Authenticated) {
+                              return FutureBuilder(
+                                future: userDb.readUser(state.user.uid),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<UserModel?> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.hasData) {
+                                      print("Loading from DB");
+                                      return RunnerWrapper(page: 1);
+                                    } else if (!snapshot.hasData ||
+                                        snapshot.hasError) {
+                                      return FutureBuilder(
+                                        future: FirebaseRepository()
+                                            .instance()
+                                            .getUser(state.user.uid),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<UserModel?> snapshot) {
+                                          int status = 0;
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapshot.hasData) {
+                                              status = 1;
+                                            } else {
+                                              status = 2;
                                             }
-                                            return SizedBox(
-                                                width: 100,
-                                                height: 100,
-                                                child: const CircularProgressIndicator());
-                                          },
-                                        );
-                                      }
-                                      return BlocProvider(create: (stx)=> AuthRootCubit(),
-                                        child: BlocBuilder<AuthRootCubit, bool>(
-                                          builder: (context, st){
-                                            if(st){
-                                              return AuthPage();
-                                            }
-                                            return const IntroPage();
-                                          },
-                                        ),
+                                          }
+                                          return  RunnerWrapper(page: status, userModel: snapshot.data,); //0
+                                        },
                                       );
-                                    }))));
-                      }),
+                                    }
+                                  }
+                                  return SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: const RunnerWrapper(page: 0));
+                                },
+                              );
+                            } else {
+                              userDb.delete().then((value) {
+                                print("All user db was deleted");
+                              });
+                              return BlocProvider(
+                                create: (ctx)=> AuthRootCubit(),
+                                child: BlocBuilder<AuthRootCubit, bool>(
+                                  builder: (context, st) {
+                                    if (st) {
+                                      return AuthPage();
+                                    }
+                                    return IntroPage();
+                                  },
+                                ),
+                              );
+                            }
+                          }),
                 );
               }
               return const MaterialApp(
@@ -132,7 +130,7 @@ class Runner extends BaseStateLess {
     // await EasyLocalization.ensureInitialized();
     await Firebase.initializeApp();
     await NotificationService.init();
-    prefs = await SharedPreferences.getInstance();
+
     firebaseApp = await Firebase.initializeApp();
     userDb = await UserDb().instance();
     cameras = await availableCameras();

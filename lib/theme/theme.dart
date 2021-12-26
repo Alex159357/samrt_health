@@ -30,7 +30,7 @@ class AppTheme {
           800: Color(0xff8167e6),
           900: Color(0xff8167e6)
         },
-      )).copyWith(secondary: const Color(0xff00bcd4))
+      )).copyWith(secondary: const Color(0xff00bcd4), background: Color(0xFF212121))
   );
 
 
@@ -61,6 +61,7 @@ class AppTheme {
         headline6: GoogleFonts.roboto(color: Colors.black38),
         // caption: GoogleFonts.roboto(fontSize: 24),
         bodyText1: GoogleFonts.roboto(fontSize: 14, color: Colors.black45, fontWeight: FontWeight.w100),
+        bodyText2: GoogleFonts.roboto(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
       ),
       iconTheme: IconThemeData(
         color: Colors.black38
@@ -79,7 +80,7 @@ class AppTheme {
           800: Color(0xff8167e6),
           900: Color(0xff8167e6)
         },
-      )).copyWith(secondary: const Color(0xff00bcd4))
+      )).copyWith(secondary: const Color(0xff00bcd4), background: const Color(0xFFdee2fd))
   );
 
   final ThemeData _pinkTheme = ThemeData(

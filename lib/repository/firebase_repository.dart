@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:samrt_health/const/firebase_fields.dart';
+import 'package:samrt_health/data_base/user_db/user_db.dart';
 import 'package:samrt_health/models/app_user_model.dart';
 import 'package:samrt_health/utils/image.dart';
 
@@ -43,7 +45,9 @@ class FirebaseRepository {
 
   Future<UserModel> getUser(String uid) async{
     var user = store.collection('users').doc(uid);
-    return await user.get().then((value) => UserModel.fromMap(value.data()!));
+    UserModel userModel = await user.get().then((value) => UserModel.fromMap(value.data()!));
+    await userDb.insertUser(userModel);
+    return userModel;
   }
 
   Future<String?> uploadImageToFirebase(File file, String destination) async {
@@ -52,8 +56,8 @@ class FirebaseRepository {
       mRef.delete();
     }catch(e){}
     try{
-      File cFile = await convertor.compressImage(file: file, quality: 30, percentage: 30, targetWidth: 200, targetHeight: 200);
-      var task = mRef.putFile(cFile);
+      // File cFile = await convertor.compressImage(file: file, quality: 30, percentage: 30, targetWidth: 600, targetHeight: 600);
+      var task = mRef.putFile(file);
       var snapshot = await task.whenComplete(() {});
       return await snapshot.ref.getDownloadURL();
     }on FirebaseException catch(e){
@@ -67,4 +71,9 @@ class FirebaseRepository {
     await user.set(map);
     return null;
   }
+  Future<UserModel?> getCurrentUser(String uid) async{
+    UserModel? userModel = await userDb.readUser(uid);
+    return userModel ?? await getUser(uid);
+  }
+
 }

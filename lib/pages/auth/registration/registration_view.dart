@@ -2,13 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:samrt_health/bloc/auth/registration_bloc.dart';
+import 'package:samrt_health/bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/bloc/auth/registration_bloc.dart';
 import 'package:samrt_health/cubit/auth/auth_cubit.dart';
-import 'package:samrt_health/event/auth/registration_event.dart';
+import 'package:samrt_health/bloc/event/auth/authentication_event.dart';
+import 'package:samrt_health/bloc/event/auth/registration_event.dart';
 import 'package:samrt_health/navigation/auth/auth_pages.dart';
 import 'package:samrt_health/repository/user_repository.dart';
-import 'package:samrt_health/state/auth/registration_state.dart';
-import 'package:samrt_health/state/form_submission_status.dart';
+import 'package:samrt_health/bloc/state/auth/registration_state.dart';
+import 'package:samrt_health/bloc/state/form_submission_status.dart';
 import 'package:samrt_health/view/auth_state_less.dart';
 import 'package:samrt_health/view/logo_view.dart';
 
@@ -24,7 +27,11 @@ class RegistrationView extends AuthStateLess {
     return BlocProvider(
       create: (context) => RegistrationBloc(userRepository: userRepository),
       child: BlocListener<RegistrationBloc, RegistrationState>(
-        listener: (BuildContext context, state) {},
+        listener: (BuildContext context, state) {
+          if(state.formStatus is SubmissionSuccess){
+            context.read<AuthenticationBloc>().add(CheckLogin());
+          }
+        },
         child: _getForm(),
       ),
     );

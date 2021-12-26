@@ -10,35 +10,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:height_slider/height_slider.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-import 'package:samrt_health/bloc.dart';
-import 'package:samrt_health/bloc/fb/fb_bloc.dart';
-import 'package:samrt_health/bloc/user_data/user_data_bloc.dart';
-import 'package:samrt_health/bloc/user_db/user_db_bloc.dart';
-import 'package:samrt_health/event/db/fb_event.dart';
-import 'package:samrt_health/state/form_submission_status.dart';
-import 'package:samrt_health/state/user_data/user_data_state.dart';
-import 'package:samrt_health/theme/theme.dart';
+import 'package:samrt_health/bloc/bloc/auth/authentication_bloc.dart';
+import 'package:samrt_health/bloc/bloc/user_data/user_data_bloc.dart';
+import 'package:samrt_health/bloc/bloc/user_db/user_db_bloc.dart';
+import 'package:samrt_health/bloc/event/auth/authentication_event.dart';
+import 'package:samrt_health/bloc/state/auth/authentication_state.dart';
+import 'package:samrt_health/bloc/state/form_submission_status.dart';
+import 'package:samrt_health/bloc/state/user_data/user_data_state.dart';
+import 'package:samrt_health/models/app_user_model.dart';
+import 'package:samrt_health/theme/theme_controller.dart';
 import 'package:samrt_health/theme/widget_themes.dart';
-import 'package:samrt_health/utils/DataConvertor.dart';
-import 'package:samrt_health/view/auth_state_less.dart';
+import 'package:samrt_health/utils/image.dart';
 import 'package:samrt_health/view/base_state_less.dart';
 import 'package:samrt_health/view/camera/cameraView.dart';
 import 'package:samrt_health/view/loading_view.dart';
 import 'package:samrt_health/view/test2.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:weight_slider/weight_slider.dart';
-import 'package:samrt_health/event/user_data/user_data_event.dart';
+
+import 'package:samrt_health/bloc/event/user_data/user_data_event.dart';
 import '../../main.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
 final _formKey = GlobalKey<FormState>();
 
 class UserData extends BaseStateLess {
-  UserData({Key? key}) : super(key: key);
+  final bool dialogEnabled;
+  final UserModel? userModel;
 
+  UserData({this.dialogEnabled = true, this.userModel, Key? key}) : super(key: key);
 
   final border = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(20.0),
@@ -108,184 +112,203 @@ class UserData extends BaseStateLess {
     //     return Text("TEST");
     //   });
     // });
-
-    Future.wait({Future.delayed(Duration(seconds: 1))}).then((value) {
-      if (!(prefs.getBool("if_user_data_aller_shown") ?? false)) {
-        _showMyDialog(context);
-        prefs.setBool("if_user_data_aller_shown", true);
-      }
-    });
+    if (dialogEnabled) {
+      Future.wait({Future.delayed(Duration(seconds: 1))}).then((value) {
+        if (!(prefs.getBool("if_user_data_aller_shown") ?? false)) {
+          _showMyDialog(context);
+          prefs.setBool("if_user_data_aller_shown", true);
+        }
+      });
+    }
     var authState = context.read<AuthenticationBloc>().state as Authenticated;
     return BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (BuildContext context, state) {},
-      child: BlocProvider(
-        create: (BuildContext context) => UserDataBloc(user: authState.user, userDb: context.read<UserDbBloc>().userDb),
-        child:
-        BlocListener<UserDataBloc, UserDataState>(listener:
-            (BuildContext context, state) {
-          if (state.formStatus is SubmissionSuccess) {
-            context.read<AuthenticationBloc>().add(CheckLogin());
-          }
-        }, child:
-            BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
-          return GestureDetector(
-              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      listener: (BuildContext context, state) {},
+      child: BlocListener<UserDataBloc, UserDataState>(listener:
+          (BuildContext context, state) {
+        if (state.formStatus is SubmissionSuccess) {
+          context.read<AuthenticationBloc>().add(CheckLogin());
+        }
+      }, child:
+          BlocListener<UserDataBloc, UserDataState>(
+            listener: (context, state){
+            },
+            child: BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
+        return GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                FocusScope.of(context).unfocus();
+                TextEditingController().clear();
+              },
               child: Scaffold(
-              resizeToAvoidBottomInset: true,
-              bottomNavigationBar: state.formStatus is InitialFormStatus ||
-                      state.formStatus is SubmissionFailed
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 30),
-                      child: ElevatedButton(
-                          child: Text("Start using"),
-                          onPressed: () {
-                            // context.read<AuthenticationBloc>().add(SignOut());
-                            if (_formKey.currentState!.validate()) {
-                              context.read<UserDataBloc>().add(UploadData());
-                            }
-                          }),
-                    )
-                  : null,
-              body: state.formStatus is InitialFormStatus
-                  ? _getBody(context: context)
-                  : state.formStatus is FormSubmitting
-                      ? _loadingView(context)
-                      : state.formStatus is SubmissionSuccess
-                          ? Center(child: Text("SUCCESS"))
-                          : _getBody(context: context, error: "ERROR")));
-        })
-        ),
-      ),
+                  resizeToAvoidBottomInset: true,
+                  bottomNavigationBar: (dialogEnabled)
+                      ? state.formStatus is InitialFormStatus ||
+                              state.formStatus is SubmissionFailed
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 30),
+                              child: ElevatedButton(
+                                  child: Text("Start using"),
+                                  onPressed: () => _uploadData(context)),
+                            )
+                          : null
+                      : null,
+                  body: dialogEnabled
+                      ? state.formStatus is InitialFormStatus
+                          ? _getBody(context: context, state: state)
+                          : state.formStatus is FormSubmitting
+                              ? _loadingView(context)
+                              : state.formStatus is SubmissionSuccess
+                                  ? Center(child: Text("SUCCESS"))
+                                  : _getBody(context: context, error: "ERROR", state: state)
+                      : _getBody(context: context, state: state)));
+      }),
+          )),
     );
   }
 
-  Widget _getBody({required BuildContext context, String? error}) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          iconTheme: Theme.of(context).iconTheme,
-          backgroundColor: Theme.of(context).backgroundColor,
-          collapsedHeight: 60,
-          pinned: false,
-          floating: false,
-          actions: [
+  void _removeFocus(){
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+  void _uploadData(BuildContext context){
+    if (_formKey.currentState!.validate()) {
+      context
+          .read<UserDataBloc>()
+          .add(UploadData());
+    }
+  }
 
-            ThemeSwitcher(
-                clipper: const ThemeSwitcherCircleClipper(),
-                builder: (context) {
-                  return ThemeSwitcher(
-                    builder: (context) {
-                      return IconButton(
-                        onPressed: () {
-                          var brightness =
-                              ThemeProvider.of(context)!.brightness;
-                          ThemeSwitcher.of(context)!.changeTheme(
-                            theme: brightness == Brightness.light
-                                ? AppTheme.darkTheme
-                                : AppTheme.lightTheme,
-                            reverseAnimation:
-                                brightness == Brightness.dark ? true : false,
-                          );
-                        },
-                        icon: ThemeProvider.of(context)!.brightness ==
-                                Brightness.light
-                            ? Icon(Icons.brightness_3, size: 25)
-                            : Icon(Icons.brightness_4, size: 25),
-                      );
-                    },
-                  );
-                })
+  Widget _getBody({required BuildContext context, String? error, required UserDataState state }) {
+    return Builder(
+      builder: (context) {
+        return CustomScrollView(
+          slivers: [
+            SliverAppBar(
+                iconTheme: Theme.of(context).iconTheme,
+                backgroundColor: Theme.of(context).backgroundColor,
+                collapsedHeight: 60,
+                pinned: !dialogEnabled,
+                floating: false,
+                expandedHeight: dialogEnabled? MediaQuery.of(context).size.height / 3: MediaQuery.of(context).size.height / 3,
+                stretch: true,
+                actions: [
+                  state.ifDataChanged?
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                      onTap: ()=> _uploadData(context),
+                      child: Icon(Icons.check),
+                    ),
+                  ): Container()
+                ],
+                flexibleSpace: dialogEnabled
+                    ? FlexibleSpaceBar(
+                        collapseMode: CollapseMode.parallax,
+                        background: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(0.0),
+                                bottomRight: Radius.circular(0.0)),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  Theme.of(context).brightness == Brightness.light
+                                      ? "assets/img/day.jpg"
+                                      : "assets/img/night.jpg"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Container(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.7),
+                            child: _getUserAvatar,
+                          ),
+                        ),
+                        stretchModes: [
+                          StretchMode.blurBackground,
+                          StretchMode.zoomBackground
+                        ],
+                      )
+                    : FlexibleSpaceBar(
+                        collapseMode: CollapseMode.parallax,
+                        background: Container(
+                          color: Theme.of(context).colorScheme.background,
+                          padding: EdgeInsets.only(top: 50, left: 30),
+                          child: Column(
+                            children: [
+                              Text(
+                                "EDIT USER",
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                              _getUserAvatar
+                            ],
+                          ),
+                        ),
+                      )),
+            SliverToBoxAdapter(
+              child: error != null ? _errorWidget(error) : Container(),
+            ),
+            SliverToBoxAdapter(
+              child: Form(
+                key: _formKey,
+                child: ResponsiveGridRow(
+                  children: [
+                    ResponsiveGridCol(
+                      xs: 12,
+                      sm: 4,
+                      md: 6,
+                      lg: 6,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _getEmailField,
+                      ),
+                    ),
+                    ResponsiveGridCol(
+                      xs: 12,
+                      sm: 4,
+                      md: 6,
+                      lg: 6,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _getNameField,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SliverList(
+                delegate: SliverChildListDelegate(
+                    [_getAlcohol, _getSmoking, _getGender, _getIsVegan])),
+            SliverToBoxAdapter(
+              child: ResponsiveGridRow(children: [
+                ResponsiveGridCol(
+                    xs: 7, sm: 8, md: 8, lg: 5, child: _getHeightSlider),
+                ResponsiveGridCol(xs: 5, sm: 4, md: 3, lg: 2, child: _getWeight),
+                ResponsiveGridCol(
+                  xs: 12,
+                  sm: 4,
+                  md: 5,
+                  lg: 5,
+                  child: _getStepsPerDay,
+                ),
+                ResponsiveGridCol(
+                    xs: 12, sm: 5, md: 5, lg: 5, child: _geWeekSportTimeSlider),
+                ResponsiveGridCol(
+                    xs: 12, sm: 12, md: 7, lg: 7, child: _getBirthday),
+              ]),
+            ),
           ],
-          expandedHeight: MediaQuery.of(context).size.height / 3,
-          stretch: true,
-          flexibleSpace: FlexibleSpaceBar(
-            collapseMode: CollapseMode.parallax,
-            background: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(0.0),
-                    bottomRight: Radius.circular(0.0)),
-                image: DecorationImage(
-                  image: AssetImage(
-                      ThemeProvider.of(context)!.brightness == Brightness.light
-                          ? "assets/img/day.jpg"
-                          : "assets/img/night.jpg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Container(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                child: _getUserAvatar,
-              ),
-            ),
-            stretchModes: [
-              StretchMode.blurBackground,
-              StretchMode.zoomBackground
-            ],
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: error != null ? _errorWidget(error) : Container(),
-        ),
-        SliverToBoxAdapter(
-          child: Form(
-            key: _formKey,
-            child: ResponsiveGridRow(
-              children: [
-                ResponsiveGridCol(
-                  xs: 12,
-                  sm: 4,
-                  md: 6,
-                  lg: 6,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _getEmailField,
-                  ),
-                ),
-                ResponsiveGridCol(
-                  xs: 12,
-                  sm: 4,
-                  md: 6,
-                  lg: 6,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _getNameField,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate(
-                [_getAlcohol, _getSmoking, _getGender, _getIsVegan])),
-        SliverToBoxAdapter(
-          child: ResponsiveGridRow(children: [
-            ResponsiveGridCol(
-                xs: 5, sm: 5, md: 5, lg: 4, child: _getHeightSlider),
-            ResponsiveGridCol(xs: 7, sm: 7, md: 7, lg: 4, child: _getWeight),
-            ResponsiveGridCol(
-              xs: 12,
-              sm: 4,
-              md: 4,
-              lg: 4,
-              child: _getStepsPerDay,
-            ),
-            ResponsiveGridCol(
-                xs: 12, sm: 5, md: 5, lg: 5, child: _geWeekSportTimeSlider),
-            ResponsiveGridCol(
-                xs: 12, sm: 12, md: 7, lg: 7, child: _getBirthday),
-          ]),
-        ),
-      ],
+        );
+      }
     );
   }
 
   Widget get _getUserAvatar => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (context, state) {
           var avatar = ClipRRect(
-              borderRadius: BorderRadius.circular(1000),
+              borderRadius: BorderRadius.circular(10.0),
               child: state.imageFile != null
                   ? Image.file(
                       state.imageFile!,
@@ -301,13 +324,13 @@ class UserData extends BaseStateLess {
                           width: 100.0,
                         )
                       : Container(
-                          width: 150,
-                          height: 150,
+                          width: 100,
+                          height: 100,
                           color:
                               Theme.of(context).primaryColor.withOpacity(0.5),
                           child: const Icon(
                             Icons.add,
-                            size: 100,
+                            size: 50,
                             color: Colors.white,
                           )));
           return Padding(
@@ -471,7 +494,9 @@ class UserData extends BaseStateLess {
                       borderRadius: BorderRadius.circular(10),
                       underline: SizedBox(),
                       elevation: 16,
+                        onTap: ()=>_removeFocus(),
                       onChanged: (String? newValue) {
+                        _removeFocus();
                         context
                             .read<UserDataBloc>()
                             .add(OnSmokeChangeEvent(list.indexOf(newValue!)));
@@ -493,7 +518,7 @@ class UserData extends BaseStateLess {
 
   Widget get _getIsVegan => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
-          List<String> list = [tr("normal"), tr("vegan")];
+          List<String> list = [tr("usual"), tr("vegan")];
           return Card(
             child: Stack(
               children: [
@@ -527,7 +552,9 @@ class UserData extends BaseStateLess {
                       borderRadius: BorderRadius.circular(10),
                       underline: const SizedBox(),
                       elevation: 16,
+                      onTap: ()=>_removeFocus(),
                       onChanged: (String? newValue) {
+                        _removeFocus();
                         context
                             .read<UserDataBloc>()
                             .add(OnVeganChangeEvent(newValue == list[1]));
@@ -584,7 +611,9 @@ class UserData extends BaseStateLess {
                       borderRadius: BorderRadius.circular(10),
                       underline: const SizedBox(),
                       elevation: 16,
+                      onTap: ()=>_removeFocus(),
                       onChanged: (String? newValue) {
+                        _removeFocus();
                         context
                             .read<UserDataBloc>()
                             .add(OnGenderChangeEvent(newValue!));
@@ -640,7 +669,9 @@ class UserData extends BaseStateLess {
                       borderRadius: BorderRadius.circular(10),
                       underline: SizedBox(),
                       elevation: 16,
+                      onTap: ()=>_removeFocus(),
                       onChanged: (String? newValue) {
+                        _removeFocus();
                         context
                             .read<UserDataBloc>()
                             .add(OnAlcoholChangeEvent(list.indexOf(newValue!)));
@@ -660,11 +691,12 @@ class UserData extends BaseStateLess {
         },
       );
 
+
   Widget get _getStepsPerDay => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
               context: context,
-              customHeight: 110,
+              customHeight: 300,
               child: Column(
                 children: [
                   Text(tr("steps_per_day_description")),
@@ -709,8 +741,8 @@ class UserData extends BaseStateLess {
                     minDate: DateTime(1950, 1, 1),
                     maxDate: DateTime(2010, 12, 31),
                     selectionTextStyle: TextStyle(fontSize: 12),
-                    initialSelectedDate: DateTime(1989, 1, 11),
-                    initialDisplayDate: DateTime(1989, 1, 11),
+                    initialSelectedDate: DateTime.fromMicrosecondsSinceEpoch(state.birthday*1000),
+                    initialDisplayDate: DateTime.fromMicrosecondsSinceEpoch(state.birthday*1000),
                     onSelectionChanged: (v) => context.read<UserDataBloc>().add(
                         OnBirthdayChangeEvent(
                             v.value.millisecondsSinceEpoch)))));
@@ -719,21 +751,50 @@ class UserData extends BaseStateLess {
   Widget get _getWeight => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
-              customHeight: 100,
+              customHeight: 300,
               context: context,
               title: tr("weight"),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
-                child: Container(
-                  child: WeightSlider(
-                    weight: state.weight.toInt(),
-                    minWeight: 40,
-                    maxWeight: 120,
-                    onChange: (val) => context
-                        .read<UserDataBloc>()
-                        .add(OnWeightChangeEvent(val.toDouble())),
-                    unit: tr("kg"), // todo add selector metric system
-                  ),
+                child: Stack(
+                  children: [
+                    const Positioned(
+                        child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(FontAwesomeIcons.caretLeft),
+                    )),
+                    Positioned.fill(
+                        child: Material(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(180)),
+                      color: Colors.grey.withOpacity(0.1),
+                    )),
+                    NumberPicker(
+                      value: state.weight.toInt(),
+                      minValue: 0,
+                      maxValue: 150,
+                      itemCount: 6,
+                      step: 1,
+                      itemWidth: 130,
+                      selectedTextStyle: TextStyle(
+                          fontSize: 22,
+                          foreground: Paint()
+                            ..shader = WidgetThemes.linearGradient(context)),
+                      textStyle: Theme.of(context).textTheme.bodyText1,
+                      itemHeight: 60,
+                      axis: Axis.vertical,
+                      onChanged: (value) => context
+                          .read<UserDataBloc>()
+                          .add(OnWeightChangeEvent(value.toDouble())),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/img/blob.png"),
+                        ),
+                        // borderRadius: BorderRadius.circular(1000),
+                        // border: Border.all(color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ),
+                  ],
                 ),
               ));
         },
@@ -742,36 +803,19 @@ class UserData extends BaseStateLess {
   Widget get _getHeightSlider => BlocBuilder<UserDataBloc, UserDataState>(
         builder: (BuildContext context, state) {
           return _getContainer(
-              customHeight: 100,
-              context: context,
-              title: tr("height"),
-              child: SleekCircularSlider(
-                appearance: CircularSliderAppearance(
-                    animationEnabled: true,
-                    customWidths: CustomSliderWidths(
-                      progressBarWidth: 5,
-                    ),
-                    counterClockwise: false,
-                    infoProperties: InfoProperties(
-                      mainLabelStyle: const TextStyle(fontSize: 20),
-                      // topLabelText: "label",
-                      modifier: (v) =>
-                          WidgetThemes.percentageModifier(v, tr("sm")),
-                    ),
-                    customColors: CustomSliderColors(
-                        trackColor: Theme.of(context).primaryColorLight,
-                        dotColor: Colors.transparent,
-                        progressBarColors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary
-                        ])),
-                min: 100,
-                max: 250,
-                initialValue: 130,
-                onChangeEnd: (double endValue) => context
+            customHeight: 300,
+            context: context,
+            title: tr("height"),
+            child: HeightSlider(
+              height: state.height.toInt(),
+              onChange: (val) => {
+                context
                     .read<UserDataBloc>()
-                    .add(OnHeightChangeEvent(endValue.ceil().toDouble())),
-              ));
+                    .add(OnHeightChangeEvent(val.toDouble()))
+              },
+              unit: 'cm', // optional
+            ),
+          );
         },
       );
 
@@ -867,9 +911,38 @@ class UserData extends BaseStateLess {
     );
     if (result != null) {
       List<File> files = result.paths.map((path) => File(path!)).toList();
-      context.read<UserDataBloc>().add(OnPictureSelected(files.first));
+      File cropped = await ImageConvertor().resizePhoto(files.first.path);
+      _cropImage(files.first, context);
     } else {
       print("ERROR SELECT PHOTO");
+    }
+  }
+
+  void _cropImage(File file, BuildContext context) async {
+    File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: file.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        androidUiSettings: const AndroidUiSettings(
+            toolbarTitle: 'Crop',
+            toolbarColor: Colors.black,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            hideBottomControls: true,
+            lockAspectRatio: true),
+        iosUiSettings: const IOSUiSettings());
+    if (croppedFile != null) {
+      var cf = await ImageConvertor().compressImage(
+          file: croppedFile,
+          quality: 30,
+          percentage: 30,
+          targetWidth: 200,
+          targetHeight: 200);
+      context.read<UserDataBloc>().add(OnPictureSelected(cf));
+    } else {
+      const snackBar = SnackBar(content: Text("Error"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -889,9 +962,7 @@ class UserData extends BaseStateLess {
                 );
               })).then((value) {
                 if (value is List<File>) {
-                  context
-                      .read<UserDataBloc>()
-                      .add(OnPictureSelected(value.first));
+                  _cropImage(value.first, context);
                 }
               });
             }),

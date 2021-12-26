@@ -11,6 +11,7 @@ class UserDb {
   Future<UserDb> instance() async {
     var databasesPath = await getDatabasesPath();
     _path = join(databasesPath, 'current_user_data.db');
+    await createDb();
     return this;
   }
 
@@ -18,13 +19,12 @@ class UserDb {
     _database = await openDatabase(_path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
-          'CREATE TABLE IF NOT EXISTS $_tableName (uid t PRIMARY KEY, name t, avatar t, email t, weight r, height r, stepsPerDay r, gender t, isVegan t, hourSportPerWeek r, isBlocked t, lastActiveDate i, registrationDate i, role t, state t, alcohol i, smoke i, birthday r)');
+          'CREATE TABLE IF NOT EXISTS $_tableName (uid t PRIMARY KEY, name TEXT, avatar TEXT, email TEXT, weight r, height r, stepsPerDay r, gender t, isVegan t, hourSportPerWeek r, isBlocked t, lastActiveDate i, registrationDate i, role t, state t, alcohol i, smoke i, birthday r)');
     });
   }
 
   Future<UserModel> insertUser(UserModel userModel) async {
     await createDb();
-    await delete();
     try {
       print("TODB -> ${userModel.map}");
       await _database.insert(_tableName, userModel.dbMap,
@@ -43,13 +43,14 @@ class UserDb {
 
   Future<UserModel?> readUser(String uid) async {
     print("READ DB");
-    await createDb();
     try {
       List<Map<String, Object?>> records = await _database.query(_tableName);
       // print("DB -> ${records.first}");
       if (_database.isOpen) {
         await _database.close();
       }
+      print("UserFormDb");
+      print("${records.first}");
       return UserModel.fromDb(records[0]);
     } catch (e) {
       print("ERROR READ");

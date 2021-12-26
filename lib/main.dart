@@ -1,23 +1,25 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:camera/camera.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:samrt_health/pages/runner/runner.dart';
+import 'package:samrt_health/theme/theme_controller.dart';
 import 'package:samrt_health/utils/translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data_base/user_db/user_db.dart';
 import 'utils/DataConvertor.dart';
 
-
 late SharedPreferences prefs;
 late FirebaseApp firebaseApp;
 late String locale;
 late List<CameraDescription> cameras;
 Translation translation = Translation();
-
+late UserDb userDb;
 
 bool get ifTablet {
   // final data = MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
@@ -27,23 +29,39 @@ bool get ifTablet {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   await EasyLocalization.ensureInitialized();
   locale = (await Devicelocale.currentLocale)!.split("_")[0];
   runApp(
     EasyLocalization(
         supportedLocales: supportedLangs,
         path: 'assets/translations',
-        startLocale: Locale(locale),
+        startLocale: const Locale('en'),
         useOnlyLangCode: true,
-        fallbackLocale: Locale(locale),
+        fallbackLocale: Locale(locale.split("_")[0]),
         //locale.split("_")[0]
-        child: Runner()),
+        child: const App()),
   );
 }
 
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
-
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Smart Health',
+        theme: ThemeController().getCurrentTheme(),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        localeResolutionCallback: (locale, Iterable<Locale> supportedLocales) {
+          return locale;
+        },
+        home: Runner());
+  }
+}
 
 final List<String> appLanguages = [
   'af',
